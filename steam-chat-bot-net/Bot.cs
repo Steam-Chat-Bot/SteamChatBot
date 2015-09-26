@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SteamKit2;
-using Newtonsoft.Json;
 using System.IO;
 using System.Security.Cryptography;
+using SteamKit2;
+using Newtonsoft.Json;
 
 namespace steam_chat_bot_net
 {
