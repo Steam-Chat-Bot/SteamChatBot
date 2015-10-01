@@ -49,7 +49,6 @@ namespace steam_chat_bot_net.src.triggers
         {
             Options options = new Options();
             Log.Instance.Silly(options.ChatBot.Name + "/" + options.Name + ": Sending nondelayed message to " + steamID + ": " + message);
-            return true;
         }
     }
 }
