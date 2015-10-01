@@ -26,7 +26,7 @@ namespace steam_chat_bot_net
         static string autoJoinFile;
         static string sentryFile;
         static string logFile;
-        static Log Log;
+
         private bool disposed = false;
 
         public class UserInfo
@@ -63,6 +63,8 @@ namespace steam_chat_bot_net
         }
         public static void Start(string _username, string _password, string CLL, string FLL, string _logFile, string _displayName, string _autojoinFile, string _sentryFile)
         {
+            Console.WriteLine(_username);
+            Console.WriteLine(_password);
             username = _username;
             logFile = _logFile;
             password = _password;
@@ -87,8 +89,6 @@ namespace steam_chat_bot_net
                     WriteData();
                 }
             }
-            Log = new Log(logFile, _username, (CLL == "" ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) : (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), CLL, true)), (FLL == "" ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) : (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), FLL, true)));
-
             SubForCB();
 
             isRunning = true;
@@ -114,7 +114,7 @@ namespace steam_chat_bot_net
             }
             if (disposing)
             {
-                Log.Dispose();
+                Log.Instance.Dispose();
             }
             disposed = true;
         }
@@ -122,12 +122,12 @@ namespace steam_chat_bot_net
         {
             isRunning = true;
             steamClient.Connect();
-            Log.Verbose("Connecting to Steam...");
+            Log.Instance.Verbose("Connecting to Steam...");
         }
 
         static void LogOn()
         {
-            Log.Verbose("Logging in...");
+            Log.Instance.Verbose("Logging in...");
             steamUser.LogOn(new SteamUser.LogOnDetails
             {
                 Username = username,
@@ -148,31 +148,31 @@ namespace steam_chat_bot_net
             manager.Subscribe<SteamUser.AccountInfoCallback>(OnAccountInfo);
             manager.Subscribe<SteamFriends.ChatMsgCallback>(OnChatMsg);
             manager.Subscribe<SteamFriends.FriendMsgCallback>(OnFriendMsg);
-            Log.Silly("Callback managers subscribed");
+            Log.Instance.Silly("Callback managers subscribed");
         }
 
         static void OnAccountInfo(SteamUser.AccountInfoCallback callback)
         {
-            Log.Debug("Got user info");
+            Log.Instance.Debug("Got user info");
             steamFriends.SetPersonaState(EPersonaState.Online);
             steamFriends.SetPersonaName(displayName);
         }
 
         static void OnFriendMsg(SteamFriends.FriendMsgCallback callback)
         {
-            Log.Info("Friend Msg " + callback.EntryType + " " + callback.Sender + ": " + callback.Message);
+            Log.Instance.Info("Friend Msg " + callback.EntryType + " " + callback.Sender + ": " + callback.Message);
         }
 
         static void OnChatMsg(SteamFriends.ChatMsgCallback callback)
         {
-            Log.Info("Chat Msg " + callback.ChatMsgType + " " + callback.ChatRoomID + ": " + callback.Message);
+            Log.Instance.Info("Chat Msg " + callback.ChatMsgType + " " + callback.ChatRoomID + ": " + callback.Message);
         }
 
         static void OnConnected(SteamClient.ConnectedCallback callback)
         {
             if (callback.Result == EResult.OK)
             {
-                Log.Info("Connected, logging in...");
+                Log.Instance.Info("Connected, logging in...");
                 sentryHash = null;
                 if (File.Exists(username + ".sentry"))
                 {
@@ -185,20 +185,20 @@ namespace steam_chat_bot_net
             else
             {
                 isRunning = false;
-                Log.Warn("EResult for connection: " + callback.Result);
+                Log.Instance.Warn("EResult for connection: " + callback.Result);
             }
         }
 
         static void OnLoggedOff(SteamUser.LoggedOffCallback callback)
         {
-            Log.Error("Logged off from Steam for reason: " + callback.Result + ", logging in again...");
+            Log.Instance.Error("Logged off from Steam for reason: " + callback.Result + ", logging in again...");
             isRunning = false;
             LogOn();
         }
 
         static void OnDisconnected(SteamClient.DisconnectedCallback callback)
         {
-            Log.Error("Disconnected from Steam, reconnecting...");
+            Log.Instance.Error("Disconnected from Steam, reconnecting...");
             isRunning = false;
             Connect();
         }
@@ -207,7 +207,7 @@ namespace steam_chat_bot_net
         {
             if (callback.Result == EResult.OK)
             {
-                Log.Info("Logged in!");
+                Log.Instance.Info("Logged in!");
             }
             else if (callback.Result == EResult.AccountLogonDenied || callback.Result == EResult.AccountLoginDeniedNeedTwoFactor)
             {
@@ -226,7 +226,7 @@ namespace steam_chat_bot_net
             }
             else if (callback.Result == EResult.InvalidPassword)
             {
-                Log.Error("Invalid details! Manually enter your details in the GUI application to change them for future runs!");
+                Log.Instance.Error("Invalid password! Delete login.json and manually enter your details in the GUI application to change them for future runs!");
                 Console.WriteLine("Username: ");
                 string _u = Console.ReadLine();
                 username = _u;
@@ -237,13 +237,13 @@ namespace steam_chat_bot_net
             else
             {
                 isRunning = false;
-                Log.Warn("EResult for logon: " + callback.Result + "/" + callback.ExtendedResult);
+                Log.Instance.Warn("EResult for logon: " + callback.Result + "/" + callback.ExtendedResult);
             }
         }
 
         static void OnUpdateMachineAuth(SteamUser.UpdateMachineAuthCallback callback)
         {
-            Log.Debug("New sentry: " + callback.FileName + ". Writing file...");
+            Log.Instance.Debug("New sentry: " + callback.FileName + ". Writing file...");
 
             int fileSize;
             using (var fs = File.Open(username + ".sentry", FileMode.OpenOrCreate, FileAccess.ReadWrite))
@@ -272,7 +272,7 @@ namespace steam_chat_bot_net
                 SentryFileHash = sentryHash
             });
 
-            Log.Verbose("Sent sentry response!");
+            Log.Instance.Verbose("Sent sentry response!");
         }
     }
 }

@@ -29,7 +29,7 @@ namespace steam_chat_bot_net
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (File.Exists("login.json"))
+            if (File.Exists("login.json") && usernameBox.Text == "" && passwordBox.Text == "" && consoleLLBox.Text == "" && fileLLBox.Text == "" && sentryBox.Text == "" && logBox.Text == "" && autoJoinBox.Text == "" && displaynameBox.Text == "")
             {
                 var _data = Bot.ReadData();
                 logFile = _data.logFile;
@@ -38,16 +38,17 @@ namespace steam_chat_bot_net
                 username = _data.username;
                 password = _data.password;
                 displayName = _data.displayName;
-                Log = new Log(logFile, username, (consoleLLBox.Text == "" ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) : (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), consoleLLBox.Text, true)), (fileLLBox.Text == "" ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) : (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fileLLBox.Text, true)));
-                Log.Silly("Successfully read login data from file");
+                
+                Log = Log.CreateInstance(logFile, username, (consoleLLBox.Text == "" ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) : (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), consoleLLBox.Text, true)), (fileLLBox.Text == "" ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) : (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fileLLBox.Text, true)));
+                Log.Instance.Silly("Successfully read login data from file");
                 Bot.Start(username, password, (consoleLLBox.Text == null ? "Silly" : consoleLLBox.Text), (fileLLBox.Text == null ? "Silly" : fileLLBox.Text), logFile, displayName, autoJoinFile, sentryFile);
             }
             else
             {
                 if (usernameBox.Text != "" && passwordBox.Text != "")
                 {
-                    Log = new Log((logFile == null ? usernameBox.Text + ".log" : logFile), usernameBox.Text, (consoleLLBox.Text == "" ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) : (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), consoleLLBox.Text, true)), (fileLLBox.Text == "" ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) : (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fileLLBox.Text, true)));
-                    Log.Silly("Console started successfully!");
+                    Log = Log.CreateInstance((logBox.Text == "" ? usernameBox.Text + ".log" : logBox.Text), usernameBox.Text, (consoleLLBox.Text == "" ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) : (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), consoleLLBox.Text, true)), (fileLLBox.Text == "" ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) : (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fileLLBox.Text, true)));
+                    Log.Instance.Silly("Console started successfully!");
                     if (passwordBox.Text != "" && displaynameBox.Text != null)
                     {
                         Bot.Start(usernameBox.Text, passwordBox.Text, (consoleLLBox.Text == null ? "Silly" : consoleLLBox.Text), (fileLLBox.Text == null ? "Silly" : fileLLBox.Text), (logFile == null ? usernameBox.Text + ".log" : logFile), displaynameBox.Text, (autoJoinFile == null ? usernameBox.Text + ".autojoin" : autoJoinFile), (sentryFile == null ? usernameBox.Text + ".sentry" : sentryFile));

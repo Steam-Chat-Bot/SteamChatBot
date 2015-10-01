@@ -6,6 +6,43 @@ namespace steam_chat_bot_net
 {
     public class Log : IDisposable
     {
+
+        private static Log instance;
+        private string logFile;
+        private string botName;
+        private LogLevel consoleLogLevel;
+        private LogLevel fileLogLevel;
+
+        public static Log Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    throw new InvalidOperationException("Call Log.CreateInstance to create the instance");
+                }
+                else
+                {
+                    return instance;
+                }
+            }
+        }
+
+        /*
+        private Log(string logFile, string botName, LogLevel consoleLogLevel, LogLevel fileLogLevel)
+        {
+            this.logFile = logFile;
+            this.botName = botName;
+            this.consoleLogLevel = consoleLogLevel;
+            this.fileLogLevel = fileLogLevel;
+        }
+        */
+
+        public static Log CreateInstance(string logFile, string botName, LogLevel consoleLogLevel, LogLevel fileLogLevel)
+        {
+            return instance ?? (instance = new Log(logFile, botName, consoleLogLevel, fileLogLevel));
+        }
+        
         public enum LogLevel
         {
             Silly,
@@ -26,8 +63,13 @@ namespace steam_chat_bot_net
         public ConsoleColor DefaultConsoleColor = ConsoleColor.White;
         public bool ShowBotName { get; set; }
 
-        public Log(string logFile, string botName = "", LogLevel consoleLogLevel = LogLevel.Info, LogLevel fileLogLevel = LogLevel.Info)
+        private Log(string logFile, string botName = "", LogLevel consoleLogLevel = LogLevel.Info, LogLevel fileLogLevel = LogLevel.Info)
         {
+            this.logFile = logFile;
+            this.botName = botName;
+            this.consoleLogLevel = consoleLogLevel;
+            this.fileLogLevel = fileLogLevel;
+
             path = Path.Combine("logs", logFile);
             Directory.CreateDirectory(Path.Combine(System.Windows.Forms.Application.StartupPath, "logs"));
             _botName = botName;

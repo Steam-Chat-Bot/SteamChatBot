@@ -30,34 +30,38 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SteamChatBot));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.button3 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.usernameBox = new System.Windows.Forms.TextBox();
             this.passwordBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.sentryBox = new System.Windows.Forms.TextBox();
+            this.logBox = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.consoleLLBox = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.displaynameBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.fileLLBox = new System.Windows.Forms.ListBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.autoJoinBox = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
-            this.fileLLBox = new System.Windows.Forms.ListBox();
-            this.consoleLLBox = new System.Windows.Forms.ListBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.sentryBox = new System.Windows.Forms.TextBox();
-            this.logBox = new System.Windows.Forms.TextBox();
-            this.autoJoinBox = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.googleTriggerB = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -85,6 +89,16 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(621, 87);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(468, 21);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 21);
+            this.button3.TabIndex = 7;
+            this.button3.Text = "Browse";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label1
             // 
@@ -139,6 +153,30 @@
             this.label4.TabIndex = 5;
             this.label4.Text = "Log File";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(313, 21);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 21);
+            this.button2.TabIndex = 6;
+            this.button2.Text = "Browse";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // sentryBox
+            // 
+            this.sentryBox.Location = new System.Drawing.Point(313, 48);
+            this.sentryBox.Name = "sentryBox";
+            this.sentryBox.Size = new System.Drawing.Size(100, 20);
+            this.sentryBox.TabIndex = 8;
+            // 
+            // logBox
+            // 
+            this.logBox.Location = new System.Drawing.Point(468, 48);
+            this.logBox.Name = "logBox";
+            this.logBox.Size = new System.Drawing.Size(100, 20);
+            this.logBox.TabIndex = 9;
+            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
@@ -187,6 +225,21 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(623, 246);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
+            // consoleLLBox
+            // 
+            this.consoleLLBox.FormattingEnabled = true;
+            this.consoleLLBox.Items.AddRange(new object[] {
+            "Silly",
+            "Debug",
+            "Verbose",
+            "Info",
+            "Warn",
+            "Error"});
+            this.consoleLLBox.Location = new System.Drawing.Point(210, 20);
+            this.consoleLLBox.Name = "consoleLLBox";
+            this.consoleLLBox.Size = new System.Drawing.Size(120, 95);
+            this.consoleLLBox.TabIndex = 11;
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -231,8 +284,42 @@
             this.label9.TabIndex = 9;
             this.label9.Text = "File Log Level";
             // 
+            // fileLLBox
+            // 
+            this.fileLLBox.FormattingEnabled = true;
+            this.fileLLBox.Items.AddRange(new object[] {
+            "Silly",
+            "Debug",
+            "Verbose",
+            "Info",
+            "Warn",
+            "Error"});
+            this.fileLLBox.Location = new System.Drawing.Point(417, 20);
+            this.fileLLBox.Name = "fileLLBox";
+            this.fileLLBox.Size = new System.Drawing.Size(120, 95);
+            this.fileLLBox.TabIndex = 10;
+            this.fileLLBox.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(3, 148);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 12;
+            this.button4.Text = "Browse";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // autoJoinBox
+            // 
+            this.autoJoinBox.Location = new System.Drawing.Point(3, 178);
+            this.autoJoinBox.Name = "autoJoinBox";
+            this.autoJoinBox.Size = new System.Drawing.Size(100, 20);
+            this.autoJoinBox.TabIndex = 13;
+            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.tableLayoutPanel3);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -251,87 +338,28 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // fileLLBox
+            // tableLayoutPanel3
             // 
-            this.fileLLBox.FormattingEnabled = true;
-            this.fileLLBox.Items.AddRange(new object[] {
-            "Silly",
-            "Debug",
-            "Verbose",
-            "Info",
-            "Warn",
-            "Error"});
-            this.fileLLBox.Location = new System.Drawing.Point(417, 20);
-            this.fileLLBox.Name = "fileLLBox";
-            this.fileLLBox.Size = new System.Drawing.Size(120, 95);
-            this.fileLLBox.TabIndex = 10;
-            this.fileLLBox.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.70967F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.29033F));
+            this.tableLayoutPanel3.Controls.Add(this.googleTriggerB, 0, 0);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(6, 6);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(304, 409);
+            this.tableLayoutPanel3.TabIndex = 1;
             // 
-            // consoleLLBox
+            // googleTriggerB
             // 
-            this.consoleLLBox.FormattingEnabled = true;
-            this.consoleLLBox.Items.AddRange(new object[] {
-            "Silly",
-            "Debug",
-            "Verbose",
-            "Info",
-            "Warn",
-            "Error"});
-            this.consoleLLBox.Location = new System.Drawing.Point(210, 20);
-            this.consoleLLBox.Name = "consoleLLBox";
-            this.consoleLLBox.Size = new System.Drawing.Size(120, 95);
-            this.consoleLLBox.TabIndex = 11;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(313, 21);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 21);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Browse";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(468, 21);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 21);
-            this.button3.TabIndex = 7;
-            this.button3.Text = "Browse";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(3, 148);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 12;
-            this.button4.Text = "Browse";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // sentryBox
-            // 
-            this.sentryBox.Location = new System.Drawing.Point(313, 48);
-            this.sentryBox.Name = "sentryBox";
-            this.sentryBox.Size = new System.Drawing.Size(100, 20);
-            this.sentryBox.TabIndex = 8;
-            // 
-            // logBox
-            // 
-            this.logBox.Location = new System.Drawing.Point(468, 48);
-            this.logBox.Name = "logBox";
-            this.logBox.Size = new System.Drawing.Size(100, 20);
-            this.logBox.TabIndex = 9;
-            // 
-            // autoJoinBox
-            // 
-            this.autoJoinBox.Location = new System.Drawing.Point(3, 178);
-            this.autoJoinBox.Name = "autoJoinBox";
-            this.autoJoinBox.Size = new System.Drawing.Size(100, 20);
-            this.autoJoinBox.TabIndex = 13;
+            this.googleTriggerB.AutoSize = true;
+            this.googleTriggerB.Location = new System.Drawing.Point(3, 3);
+            this.googleTriggerB.Name = "googleTriggerB";
+            this.googleTriggerB.Size = new System.Drawing.Size(93, 17);
+            this.googleTriggerB.TabIndex = 0;
+            this.googleTriggerB.Text = "GoogleTrigger";
+            this.googleTriggerB.UseVisualStyleBackColor = true;
             // 
             // SteamChatBot
             // 
@@ -349,6 +377,9 @@
             this.tabPage1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -380,6 +411,8 @@
         private System.Windows.Forms.TextBox sentryBox;
         private System.Windows.Forms.TextBox logBox;
         private System.Windows.Forms.TextBox autoJoinBox;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.CheckBox googleTriggerB;
     }
 }
 
