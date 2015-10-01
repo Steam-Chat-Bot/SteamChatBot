@@ -63,8 +63,6 @@ namespace steam_chat_bot_net
         }
         public static void Start(string _username, string _password, string CLL, string FLL, string _logFile, string _displayName, string _autojoinFile, string _sentryFile)
         {
-            Console.WriteLine(_username);
-            Console.WriteLine(_password);
             username = _username;
             logFile = _logFile;
             password = _password;
