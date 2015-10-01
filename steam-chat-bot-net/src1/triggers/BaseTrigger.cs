@@ -45,7 +45,7 @@ namespace steam_chat_bot_net.src.triggers
 
         public abstract string[] StripCommand(string message, string command);
 
-        public virtual bool SendMessageAfterDelay(SteamID steamID, string message)
+        public virtual void SendMessageAfterDelay(SteamID steamID, string message)
         {
             Options options = new Options();
             Log.Instance.Silly(options.ChatBot.Name + "/" + options.Name + ": Sending nondelayed message to " + steamID + ": " + message);
