@@ -27,6 +27,8 @@ namespace steam_chat_bot_net
         public static string sentryFile;
         public static string logFile;
 
+        //public static List<Triggers.BaseTrigger.Trigger> triggers = new List<Triggers.BaseTrigger.Trigger>();
+
         private bool disposed = false;
 
         public class UserInfo
@@ -159,6 +161,10 @@ namespace steam_chat_bot_net
         static void OnFriendMsg(SteamFriends.FriendMsgCallback callback)
         {
             Log.Instance.Info("Friend Msg " + callback.EntryType + " " + callback.Sender + ": " + callback.Message);
+            //foreach (var trigger in triggers)
+            //{
+                //trigger.O
+            //}
         }
 
         static void OnChatMsg(SteamFriends.ChatMsgCallback callback)

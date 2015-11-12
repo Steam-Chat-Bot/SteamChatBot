@@ -123,7 +123,78 @@ namespace steam_chat_bot_net
 
         }
 
+        private void unactiveTriggers_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (unactiveTriggers.Items.Count == 0)
+                return;
+
+            int index = unactiveTriggers.IndexFromPoint(e.X, e.Y);
+            string s = unactiveTriggers.Items[index].ToString();
+            DragDropEffects dde1 = DoDragDrop(s,
+                DragDropEffects.Move);
+
+            if (dde1 == DragDropEffects.Move)
+            {
+                unactiveTriggers.Items.RemoveAt(unactiveTriggers.IndexFromPoint(e.X, e.Y));
+            }
+        }
+
+        /*
+        private void activeTriggers_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (activeTriggers.Items.Count == 0)
+            {
+                return;
+            }
+
+            int index = activeTriggers.IndexFromPoint(e.X, e.Y);
+            string s = activeTriggers.Items[index].ToString();
+            DragDropEffects dde1 = DoDragDrop(s, DragDropEffects.Move);
+
+            if (dde1 == DragDropEffects.Move)
+            {
+                activeTriggers.Items.RemoveAt(activeTriggers.IndexFromPoint(e.X, e.Y));
+            }
+        }
+        */
+
+        private void activeTriggers_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        /*
+        private void activeTriggers_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+        */
+
+        /*
+        private void unactiveTriggers_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.StringFormat))
+            {
+                string str = (string)e.Data.GetData(DataFormats.StringFormat);
+                activeTriggers.Items.Add(str);
+            }
+        }
+        */
+
+        private void activeTriggers_DragDrop(object sender, System.Windows.Forms.DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.StringFormat))
+            {
+                string str = (string)e.Data.GetData(
+                    DataFormats.StringFormat);
+
+                activeTriggers.Items.Add(str);
+            }
+        }
+
         #endregion
+
+        #region file dialogues
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -166,5 +237,8 @@ namespace steam_chat_bot_net
             autoJoinFile = filename;
             autoJoinBox.Text = filename;
         }
+
+        #endregion
+
     }
 }
