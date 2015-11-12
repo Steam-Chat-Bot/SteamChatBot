@@ -9,16 +9,21 @@ namespace steam_chat_bot_net.Triggers
 {
     public abstract class BaseTrigger
     {
-        public SteamChatBot ChatBot { get; private set; }
         public string Type { get; set; }
         public string Name { get; set; }
-        public Dictionary<string, string> Options { get; set; }
         public bool RespectsMute { get; set; }
         public Log Log { get; set; }
-        public List<SteamID> Admins { get; set; }
+        public Option Options { get; set; }
         public string UserName { get; set; }
         public string UserString { get; set; }
 
+        public class Option
+        {
+            public List<SteamID> Ignore { get; set; }
+            public List<SteamID> User { get; set; }
+            public List<SteamID> Room { get; set; }
+            public string Command { get; set; }
+        }
         /// <summary>
         /// If there is an error, log it easily
         /// </summary>
@@ -31,6 +36,7 @@ namespace steam_chat_bot_net.Triggers
             return string.Format("{0}/{1}: Error: {2}", cbn, name, error);
         }
 
+        #region overriden methods
         /// <summary>
         /// Return true if trigger loads properly
         /// </summary>
@@ -42,7 +48,7 @@ namespace steam_chat_bot_net.Triggers
                 bool ret = onLoad();
                 if (!ret)
                 {
-                    Log.Instance.Error("{0}/{1}: Error loading trigger {2}: OnLoad returned {3}", ChatBot.Name, Name, Name, ret);
+                    Log.Instance.Error("{0}/{1}: Error loading trigger {2}: OnLoad returned {3}", Bot.username, Name, Name, ret);
                     return false;
                 }
                 else
@@ -50,9 +56,9 @@ namespace steam_chat_bot_net.Triggers
                     return true;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                 return false;
             }
         }
@@ -67,9 +73,9 @@ namespace steam_chat_bot_net.Triggers
             {
                 return onLoggedOn();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                 return false;
             }
         }
@@ -84,9 +90,9 @@ namespace steam_chat_bot_net.Triggers
             {
                 return onLoggedOff();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                 return false;
             }
         }
@@ -108,7 +114,7 @@ namespace steam_chat_bot_net.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                     return false;
                 }
             }
@@ -129,9 +135,9 @@ namespace steam_chat_bot_net.Triggers
             {
                 return respondToFriendRequest(userID);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                 return false;
             }
         }
@@ -145,20 +151,20 @@ namespace steam_chat_bot_net.Triggers
         /// <returns></returns>
         public virtual bool OnFriendMessage(SteamID userID, string message, bool haveSentMessage)
         {
-            if(checkUser(userID) && !checkIgnores(userID))
+            if (checkUser(userID) && !checkIgnores(userID, null))
             {
                 try
                 {
                     bool messageSent = respondToFriendMessage(userID, message);
                     if (messageSent)
                     {
-                        Log.Instance.Silly("{0}/{1}: Sent RespondToFriendMessage - {2} - {3}", ChatBot.Name, Name, userID, message);
+                        Log.Instance.Silly("{0}/{1}: Sent RespondToFriendMessage - {2} - {3}", Bot.username, Name, userID, message);
                     }
                     return messageSent;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                     return false;
                 }
             }
@@ -178,13 +184,13 @@ namespace steam_chat_bot_net.Triggers
                 var eventEaten = respondToTradeOffer(number);
                 if (eventEaten)
                 {
-                    Log.Instance.Silly("{0}/{1}: Sent RespondToTradeOffer: {2}", ChatBot.Name, Name, number);
+                    Log.Instance.Silly("{0}/{1}: Sent RespondToTradeOffer: {2}", Bot.username, Name, number);
                 }
                 return eventEaten;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                 return false;
             }
         }
@@ -199,19 +205,20 @@ namespace steam_chat_bot_net.Triggers
         public virtual bool OnTradeProposed(SteamID tradeID, SteamID userID, bool haveEatenEvent)
         {
             try {
-                if (checkUser(userID) && !checkIgnores(userID))
+                if (checkUser(userID) && !checkIgnores(userID, null))
                 {
                     bool eventEaten = respondToTradeProposal(tradeID, userID);
                     if (eventEaten)
                     {
-                        Log.Instance.Silly("{0}/{1}: Sent RespondToTradeProposal: {2}", ChatBot.Name, Name, tradeID);
+                        Log.Instance.Silly("{0}/{1}: Sent RespondToTradeProposal: {2}", Bot.username, Name, tradeID);
                     }
                     return eventEaten;
                 }
+                return false;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                 return false;
             }
         }
@@ -226,19 +233,20 @@ namespace steam_chat_bot_net.Triggers
         {
             try
             {
-                if (checkUser(userID) && !checkIgnores(userID))
+                if (checkUser(userID) && !checkIgnores(userID, null))
                 {
                     bool eventEaten = respondToTradeSession(userID);
                     if (eventEaten)
                     {
-                        Log.Instance.Silly("{0}/{1}: Opened trade with: {2}", ChatBot.Name, Name, userID);
+                        Log.Instance.Silly("{0}/{1}: Opened trade with: {2}", Bot.username, Name, userID);
                     }
                     return eventEaten;
                 }
+                return false;
             }
             catch (Exception e)
             {
-                Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                 return false;
             }
         }
@@ -254,19 +262,20 @@ namespace steam_chat_bot_net.Triggers
         {
             try
             {
-                if (!checkIgnores(groupID))
+                if (!checkIgnores(groupID, null))
                 {
                     bool eventEaten = respondToAnnouncement(groupID, headline);
                     if (eventEaten)
                     {
-                        Log.Instance.Silly("{0}/{1}: responded to {1}'s announcement: {2}", ChatBot.Name, Name, groupID, headline);
+                        Log.Instance.Silly("{0}/{1}: responded to {1}'s announcement: {2}", Bot.username, Name, groupID, headline);
                     }
                     return eventEaten;
                 }
+                return false;
             }
             catch (Exception e)
             {
-                Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                 return false;
             }
         }
@@ -282,16 +291,16 @@ namespace steam_chat_bot_net.Triggers
         {
             try
             {
-                bool messageSeen = respondToSendMessage(toID, message);
+                bool messageSeen = respondToSentMessage(toID, message);
                 if (messageSeen)
                 {
                     return true;
                 }
                 return messageSeen;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                 return false;
             }
         }
@@ -306,20 +315,20 @@ namespace steam_chat_bot_net.Triggers
         /// <returns></returns>
         public virtual bool OnChatMessage(SteamID roomID, SteamID chatterID, string message, bool haveSentMessage)
         {
-            if(checkUser(chatterID) && checkRoom(roomID) && !checkIgnores(chatterID, roomID))
+            if (checkUser(chatterID) && checkRoom(roomID) && !checkIgnores(chatterID, roomID))
             {
                 try
                 {
                     bool messageSent = respondToChatMessage(roomID, chatterID, message);
                     if (messageSent)
                     {
-                        Log.Instance.Silly("{0}/{1}: Sent RespondToChatMessage - {2} - {3} - {4}", ChatBot.Name, Name, chatterID, roomID, message);
+                        Log.Instance.Silly("{0}/{1}: Sent RespondToChatMessage - {2} - {3} - {4}", Bot.username, Name, chatterID, roomID, message);
                     }
                     return messageSent;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                     return false;
                 }
             }
@@ -335,7 +344,7 @@ namespace steam_chat_bot_net.Triggers
         /// <returns></returns>
         public virtual bool OnEnteredChat(SteamID roomID, SteamID userID, bool haveSentMessage)
         {
-            if (checkUser(chatterID) && checkRoom(roomID) && !checkIgnores(userID, roomID))
+            if (checkUser(userID) && checkRoom(roomID) && !checkIgnores(userID, roomID))
             {
                 try
                 {
@@ -343,7 +352,7 @@ namespace steam_chat_bot_net.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                     return false;
                 }
             }
@@ -368,7 +377,7 @@ namespace steam_chat_bot_net.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                     return false;
                 }
             }
@@ -393,7 +402,7 @@ namespace steam_chat_bot_net.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                     return false;
                 }
             }
@@ -417,7 +426,7 @@ namespace steam_chat_bot_net.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                     return false;
                 }
             }
@@ -434,13 +443,162 @@ namespace steam_chat_bot_net.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(ChatBot.Name, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
                     return false;
                 }
             }
             return false;
         }
+        #endregion
 
+        #region subclass methods
 
+        public virtual bool onLoad()
+        {
+            return true;
+        }
+
+        public virtual bool onLoggedOn()
+        {
+            return true;
+        }
+
+        public virtual bool onLoggedOff()
+        {
+            return true;
+        }
+
+        public virtual bool respondToChatInvite(SteamID roomID, string roomName, SteamID inviterId) {
+            return false;
+        }
+
+        // Returns true if the request is accepted
+        public virtual bool respondToFriendRequest(SteamID userID) {
+            return false;
+        }
+
+        // Return true if a message was sent
+        public virtual bool respondToFriendMessage(SteamID userID, string message) {
+            return false;
+        }
+
+        // Return true if a sent message has been used and shouldn't be seen again.
+        public virtual bool respondToSentMessage(SteamID toID, string message) {
+            return false;
+        }
+
+        // Return true if a message was sent
+        public virtual bool respondToChatMessage(SteamID roomID, SteamID chatterId, string message) {
+            return false;
+        }
+
+        // Return true if the event was eaten
+        public virtual bool respondToEnteredMessage(SteamID roomID, SteamID userID) {
+            return false;
+        }
+
+        // Return true if the event was eaten
+        public virtual bool respondToBan(SteamID roomID, SteamID bannedId, SteamID bannerId) {
+            return false;
+        }
+
+        // Return true if the event was eaten
+        public virtual bool respondToDisconnect(SteamID roomID, SteamID userID) {
+            return false;
+        }
+
+        // Return true if the event was eaten
+        public virtual bool respondToLeftMessage(SteamID roomID, SteamID userID) {
+            return false;
+        }
+
+        // Return true if the event was eaten
+        public virtual bool respondToKick(SteamID roomID, SteamID kickedId, SteamID kickerId) {
+            return false;
+        }
+
+        public virtual bool respondToAnnouncement(SteamID groupID, string headline) {
+            return false;
+        }
+
+        public virtual bool respondToTradeSession(SteamID userID) {
+            return false;
+        }
+
+        public virtual bool respondToTradeProposal(SteamID tradeId, SteamID steamId) {
+            return false;
+        }
+
+        public virtual bool respondToTradeOffer(int number) {
+            return false;
+        }
+        #endregion
+
+        #region helper methods
+
+        protected void SendMessageAfterDelay(SteamID steamID, string message)
+        {
+            try
+            {
+                Log.Instance.Silly("{0}/{1}: Sending message to {2}: {3}", Bot.username, Name, steamID, message);
+                Bot.steamFriends.SendChatRoomMessage(steamID, EChatEntryType.ChatMsg, message);
+            }
+            catch(Exception e)
+            {
+                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+            }
+        }
+
+        protected bool checkIgnores(SteamID toID, SteamID fromID)
+        {
+            if(Options.Ignore != null && Options.Ignore.Count > 0)
+            {
+                for (int i = 0; i < Options.Ignore.Count; i++)
+                {
+                    SteamID ignored = Options.Ignore[i];
+                    if(toID == ignored || fromID == ignored)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return false;
+        }
+
+        protected bool checkRoom(SteamID toID)
+        {
+            if (Options.Room != null && Options.Room.Count > 0)
+            {
+                for (int i = 0; i < Options.Room.Count; i++)
+                {
+                    SteamID room = Options.Room[i];
+                    if(toID == room)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return true;
+        }
+
+        protected bool checkUser(SteamID fromID)
+        {
+            if (Options.User != null && Options.User.Count > 0)
+            {
+                for (int i = 0; i < Options.User.Count; i++)
+                {
+                    SteamID user = Options.User[i];
+                    if(fromID == user)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return false;
+        }
+        #endregion
     }
 }

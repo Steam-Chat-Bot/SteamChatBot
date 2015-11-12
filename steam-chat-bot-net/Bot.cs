@@ -10,22 +10,22 @@ using Newtonsoft.Json;
 
 namespace steam_chat_bot_net
 {
-    class Bot
+    public class Bot
     {
-        static SteamClient steamClient = new SteamClient();
-        static CallbackManager manager = new CallbackManager(steamClient);
-        static SteamUser steamUser = steamClient.GetHandler<SteamUser>();
-        static SteamFriends steamFriends = steamClient.GetHandler<SteamFriends>();
-        static bool isRunning;
-        static string username;
-        static string password;
-        static string authCode;
-        static string twoFactorAuth;
-        static byte[] sentryHash;
-        static string displayName;
-        static string autoJoinFile;
-        static string sentryFile;
-        static string logFile;
+        public static SteamClient steamClient = new SteamClient();
+        public static CallbackManager manager = new CallbackManager(steamClient);
+        public static SteamUser steamUser = steamClient.GetHandler<SteamUser>();
+        public static SteamFriends steamFriends = steamClient.GetHandler<SteamFriends>();
+        public static bool isRunning;
+        public static string username;
+        public static string password;
+        public static string authCode;
+        public static string twoFactorAuth;
+        public static byte[] sentryHash;
+        public static string displayName;
+        public static string autoJoinFile;
+        public static string sentryFile;
+        public static string logFile;
 
         private bool disposed = false;
 

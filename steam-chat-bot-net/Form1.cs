@@ -61,7 +61,7 @@ namespace steam_chat_bot_net
             }
         }
 
-        #region unused
+        #region gui stuff
 
         private void usernameBox_TextChanged(object sender, EventArgs e)
         {
