@@ -5,8 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Security.Cryptography;
+using System.Reflection;
+
 using SteamKit2;
 using Newtonsoft.Json;
+using steam_chat_bot_net.Triggers;
 
 namespace steam_chat_bot_net
 {
@@ -27,19 +30,10 @@ namespace steam_chat_bot_net
         public static string sentryFile;
         public static string logFile;
 
-        //public static List<Triggers.BaseTrigger.Trigger> triggers = new List<Triggers.BaseTrigger.Trigger>();
-
+        IEnumerable<BaseTrigger> triggers = (IEnumerable<BaseTrigger>)Assembly.GetAssembly(typeof(BaseTrigger)).GetTypes().Where(t => t.IsSubclassOf(typeof(BaseTrigger)));
+        
         private bool disposed = false;
 
-        public class UserInfo
-        {
-            public string username { get; set; }
-            public string password { get; set; }
-            public string logFile { get; set; }
-            public string displayName { get; set; }
-            public string autoJoinFile { get; set; }
-            public string sentryFile { get; set; }
-        }
 
         public static UserInfo ReadData()
         {
@@ -94,6 +88,8 @@ namespace steam_chat_bot_net
             isRunning = true;
 
             Connect();
+
+            Console.ReadLine();
 
             while (isRunning)
             {

@@ -7,22 +7,15 @@ using SteamKit2;
 
 namespace steam_chat_bot_net.Triggers
 {
-    public abstract class BaseTrigger
-    { 
-        public class Option
-        {
-            public List<SteamID> Ignore { get; set; }
-            public List<SteamID> User { get; set; }
-            public List<SteamID> Room { get; set; }
-            public string Command { get; set; }
-        }
-            public string Type { get; set; }
-            public string Name { get; set; }
-            public bool RespectsMute { get; set; }
-            public Log Log { get; set; }
-            public Option Options { get; set; }
-            public string UserName { get; set; }
-            public string UserString { get; set; }
+    public class BaseTrigger
+    {
+        /*
+        public string Type { get; set; }
+        public string Name { get; set; }
+        public bool RespectsMute { get; set; }
+        public Log Log { get; set; }
+        public string UserName { get; set; }
+        public string UserString { get; set; }
 
         /// <summary>
         /// If there is an error, log it easily
@@ -599,5 +592,6 @@ namespace steam_chat_bot_net.Triggers
             return false;
         }
         #endregion
+        */
     }
 }

@@ -55,9 +55,8 @@ namespace steam_chat_bot_net
             this.button4 = new System.Windows.Forms.Button();
             this.autoJoinBox = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.label8 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.unactiveTriggers = new System.Windows.Forms.ListBox();
             this.activeTriggers = new System.Windows.Forms.ListBox();
@@ -67,7 +66,6 @@ namespace steam_chat_bot_net
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -326,7 +324,8 @@ namespace steam_chat_bot_net
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.tableLayoutPanel4);
+            this.tabPage2.Controls.Add(this.label10);
+            this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.tableLayoutPanel3);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -336,37 +335,23 @@ namespace steam_chat_bot_net
             this.tabPage2.Text = "Trigger Details";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel4
+            // label10
             // 
-            this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.69737F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.30263F));
-            this.tableLayoutPanel4.Controls.Add(this.label8, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.label10, 1, 0);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(6, 6);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(304, 19);
-            this.tableLayoutPanel4.TabIndex = 2;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(192, 6);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(78, 13);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "Active Triggers";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 0);
+            this.label8.Location = new System.Drawing.Point(28, 6);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(106, 13);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Unactivated Triggers";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(148, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(93, 13);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "Activated Triggers";
+            this.label8.Size = new System.Drawing.Size(86, 13);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "Inactive Triggers";
             // 
             // tableLayoutPanel3
             // 
@@ -375,25 +360,25 @@ namespace steam_chat_bot_net
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.29033F));
             this.tableLayoutPanel3.Controls.Add(this.unactiveTriggers, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.activeTriggers, 1, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(6, 28);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(6, 22);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(304, 387);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(304, 393);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // unactiveTriggers
             // 
-            //this.unactiveTriggers.AllowDrop = true;
+            this.unactiveTriggers.AllowDrop = true;
             this.unactiveTriggers.FormattingEnabled = true;
             this.unactiveTriggers.Items.AddRange(new object[] {
-            "GoogleTrigger"});
+            "IsUpTrigger"});
             this.unactiveTriggers.Location = new System.Drawing.Point(3, 3);
             this.unactiveTriggers.Name = "unactiveTriggers";
-            this.unactiveTriggers.Size = new System.Drawing.Size(142, 381);
+            this.unactiveTriggers.Size = new System.Drawing.Size(142, 368);
             this.unactiveTriggers.TabIndex = 0;
-            //this.unactiveTriggers.DragDrop += new System.Windows.Forms.DragEventHandler(this.unactiveTriggers_DragDrop);
-            //this.unactiveTriggers.DragOver += new System.Windows.Forms.DragEventHandler(this.unactiveTriggers_DragOver);
+            this.unactiveTriggers.DragDrop += new System.Windows.Forms.DragEventHandler(this.unactiveTriggers_DragDrop);
+            this.unactiveTriggers.DragOver += new System.Windows.Forms.DragEventHandler(this.unactiveTriggers_DragOver);
             this.unactiveTriggers.MouseDown += new System.Windows.Forms.MouseEventHandler(this.unactiveTriggers_MouseDown);
             // 
             // activeTriggers
@@ -402,11 +387,11 @@ namespace steam_chat_bot_net
             this.activeTriggers.FormattingEnabled = true;
             this.activeTriggers.Location = new System.Drawing.Point(151, 3);
             this.activeTriggers.Name = "activeTriggers";
-            this.activeTriggers.Size = new System.Drawing.Size(150, 381);
+            this.activeTriggers.Size = new System.Drawing.Size(150, 368);
             this.activeTriggers.TabIndex = 1;
             this.activeTriggers.DragDrop += new System.Windows.Forms.DragEventHandler(this.activeTriggers_DragDrop);
             this.activeTriggers.DragOver += new System.Windows.Forms.DragEventHandler(this.activeTriggers_DragOver);
-            //this.activeTriggers.MouseDown += new System.Windows.Forms.MouseEventHandler(this.activeTriggers_MouseDown);
+            this.activeTriggers.MouseDown += new System.Windows.Forms.MouseEventHandler(this.activeTriggers_MouseDown);
             // 
             // button1
             // 
@@ -435,8 +420,7 @@ namespace steam_chat_bot_net
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel4.PerformLayout();
+            this.tabPage2.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -470,11 +454,10 @@ namespace steam_chat_bot_net
         private System.Windows.Forms.TextBox logBox;
         private System.Windows.Forms.TextBox autoJoinBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ListBox unactiveTriggers;
         private System.Windows.Forms.ListBox activeTriggers;
+        private Label label8;
+        private Label label10;
     }
 }
 
