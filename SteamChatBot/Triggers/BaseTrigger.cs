@@ -1,22 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SteamKit2;
+using SteamChatBot;
 
-namespace steam_chat_bot_net.Triggers
+namespace SteamChatBot.Triggers
 {
     public class BaseTrigger
     {
-        /*
+
         public string Type { get; set; }
         public string Name { get; set; }
-        public bool RespectsMute { get; set; }
-        public Log Log { get; set; }
+        public Bot ChatBot { get; set; }
         public string UserName { get; set; }
         public string UserString { get; set; }
+        public dynamic Options = new DynamicDictionary<string>();
 
+        public BaseTrigger(string type, string name, Bot chatBot, dynamic options)
+        {
+            Type = type;
+            Name = name;
+            ChatBot = chatBot;
+            Options = options;
+
+            Options.Ignore = options.Ignore;
+            Options.Room = options.Room;
+            Options.User = options.User;
+            Options.Command = options.Command;
+        }
         /// <summary>
         /// If there is an error, log it easily
         /// </summary>
@@ -196,7 +205,8 @@ namespace steam_chat_bot_net.Triggers
         /// <returns></returns>
         public virtual bool OnTradeProposed(SteamID tradeID, SteamID userID, bool haveEatenEvent)
         {
-            try {
+            try
+            {
                 if (checkUser(userID) && !checkIgnores(userID, null))
                 {
                     bool eventEaten = respondToTradeProposal(tradeID, userID);
@@ -460,68 +470,82 @@ namespace steam_chat_bot_net.Triggers
             return true;
         }
 
-        public virtual bool respondToChatInvite(SteamID roomID, string roomName, SteamID inviterId) {
+        public virtual bool respondToChatInvite(SteamID roomID, string roomName, SteamID inviterId)
+        {
             return false;
         }
 
         // Returns true if the request is accepted
-        public virtual bool respondToFriendRequest(SteamID userID) {
+        public virtual bool respondToFriendRequest(SteamID userID)
+        {
             return false;
         }
 
         // Return true if a message was sent
-        public virtual bool respondToFriendMessage(SteamID userID, string message) {
+        public virtual bool respondToFriendMessage(SteamID userID, string message)
+        {
             return false;
         }
 
         // Return true if a sent message has been used and shouldn't be seen again.
-        public virtual bool respondToSentMessage(SteamID toID, string message) {
+        public virtual bool respondToSentMessage(SteamID toID, string message)
+        {
             return false;
         }
 
         // Return true if a message was sent
-        public virtual bool respondToChatMessage(SteamID roomID, SteamID chatterId, string message) {
+        public virtual bool respondToChatMessage(SteamID roomID, SteamID chatterId, string message)
+        {
             return false;
         }
 
         // Return true if the event was eaten
-        public virtual bool respondToEnteredMessage(SteamID roomID, SteamID userID) {
+        public virtual bool respondToEnteredMessage(SteamID roomID, SteamID userID)
+        {
             return false;
         }
 
         // Return true if the event was eaten
-        public virtual bool respondToBan(SteamID roomID, SteamID bannedId, SteamID bannerId) {
+        public virtual bool respondToBan(SteamID roomID, SteamID bannedId, SteamID bannerId)
+        {
             return false;
         }
 
         // Return true if the event was eaten
-        public virtual bool respondToDisconnect(SteamID roomID, SteamID userID) {
+        public virtual bool respondToDisconnect(SteamID roomID, SteamID userID)
+        {
             return false;
         }
 
         // Return true if the event was eaten
-        public virtual bool respondToLeftMessage(SteamID roomID, SteamID userID) {
+        public virtual bool respondToLeftMessage(SteamID roomID, SteamID userID)
+        {
             return false;
         }
 
         // Return true if the event was eaten
-        public virtual bool respondToKick(SteamID roomID, SteamID kickedId, SteamID kickerId) {
+        public virtual bool respondToKick(SteamID roomID, SteamID kickedId, SteamID kickerId)
+        {
             return false;
         }
 
-        public virtual bool respondToAnnouncement(SteamID groupID, string headline) {
+        public virtual bool respondToAnnouncement(SteamID groupID, string headline)
+        {
             return false;
         }
 
-        public virtual bool respondToTradeSession(SteamID userID) {
+        public virtual bool respondToTradeSession(SteamID userID)
+        {
             return false;
         }
 
-        public virtual bool respondToTradeProposal(SteamID tradeId, SteamID steamId) {
+        public virtual bool respondToTradeProposal(SteamID tradeId, SteamID steamId)
+        {
             return false;
         }
 
-        public virtual bool respondToTradeOffer(int number) {
+        public virtual bool respondToTradeOffer(int number)
+        {
             return false;
         }
         #endregion
@@ -535,7 +559,7 @@ namespace steam_chat_bot_net.Triggers
                 Log.Instance.Silly("{0}/{1}: Sending message to {2}: {3}", Bot.username, Name, steamID, message);
                 Bot.steamFriends.SendChatRoomMessage(steamID, EChatEntryType.ChatMsg, message);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
             }
@@ -543,12 +567,12 @@ namespace steam_chat_bot_net.Triggers
 
         protected bool checkIgnores(SteamID toID, SteamID fromID)
         {
-            if(Options.Ignore != null && Options.Ignore.Count > 0)
+            if (Options.Ignore != null && Options.Ignore.Count > 0)
             {
                 for (int i = 0; i < Options.Ignore.Count; i++)
                 {
                     SteamID ignored = Options.Ignore[i];
-                    if(toID == ignored || fromID == ignored)
+                    if (toID == ignored || fromID == ignored)
                     {
                         return true;
                     }
@@ -565,7 +589,7 @@ namespace steam_chat_bot_net.Triggers
                 for (int i = 0; i < Options.Room.Count; i++)
                 {
                     SteamID room = Options.Room[i];
-                    if(toID == room)
+                    if (toID == room)
                     {
                         return true;
                     }
@@ -582,7 +606,7 @@ namespace steam_chat_bot_net.Triggers
                 for (int i = 0; i < Options.User.Count; i++)
                 {
                     SteamID user = Options.User[i];
-                    if(fromID == user)
+                    if (fromID == user)
                     {
                         return true;
                     }
@@ -592,6 +616,6 @@ namespace steam_chat_bot_net.Triggers
             return false;
         }
         #endregion
-        */
+
     }
 }

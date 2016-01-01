@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace steam_chat_bot_net
+namespace SteamChatBot
 {
     public class Log : IDisposable
     {
@@ -42,7 +42,7 @@ namespace steam_chat_bot_net
         {
             return instance ?? (instance = new Log(logFile, botName, consoleLogLevel, fileLogLevel));
         }
-        
+
         public enum LogLevel
         {
             Silly,
@@ -71,7 +71,7 @@ namespace steam_chat_bot_net
             this.fileLogLevel = fileLogLevel;
 
             path = Path.Combine("logs", logFile);
-            Directory.CreateDirectory(Path.Combine(System.Windows.Forms.Application.StartupPath, "logs"));
+            Directory.CreateDirectory("./logs");
             _botName = botName;
             OutputLevel = consoleLogLevel;
             FileLogLevel = fileLogLevel;

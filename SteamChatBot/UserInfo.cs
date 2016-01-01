@@ -1,4 +1,4 @@
-﻿namespace steam_chat_bot_net
+﻿namespace SteamChatBot
 {
     public class UserInfo
     {
@@ -8,5 +8,7 @@
         public string displayName { get; set; }
         public string autoJoinFile { get; set; }
         public string sentryFile { get; set; }
+        public string cll { get; set; }
+        public string fll { get; set; }
     }
 }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace steam_chat_bot_net.Properties
+namespace SteamChatBot.Properties
 {
 
 

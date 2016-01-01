@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Security.Cryptography;
 using System.Reflection;
 
 using SteamKit2;
 using Newtonsoft.Json;
-using steam_chat_bot_net.Triggers;
+using SteamChatBot.Triggers;
 
-namespace steam_chat_bot_net
+namespace SteamChatBot
 {
     public class Bot
     {
@@ -26,14 +24,14 @@ namespace steam_chat_bot_net
         public static string twoFactorAuth;
         public static byte[] sentryHash;
         public static string displayName;
-        public static string autoJoinFile;
         public static string sentryFile;
         public static string logFile;
+        public static string FLL;
+        public static string CLL;
 
         IEnumerable<BaseTrigger> triggers = (IEnumerable<BaseTrigger>)Assembly.GetAssembly(typeof(BaseTrigger)).GetTypes().Where(t => t.IsSubclassOf(typeof(BaseTrigger)));
-        
-        private bool disposed = false;
 
+        private bool disposed = false;
 
         public static UserInfo ReadData()
         {
@@ -50,30 +48,33 @@ namespace steam_chat_bot_net
                 password = password,
                 logFile = logFile,
                 displayName = displayName,
-                autoJoinFile = autoJoinFile,
-                sentryFile = sentryFile
+                sentryFile = sentryFile,
+                cll = CLL,
+                fll = FLL
             };
 
             string json = JsonConvert.SerializeObject(info, Formatting.Indented);
             File.WriteAllText("login.json", json);
         }
-        public static void Start(string _username, string _password, string CLL, string FLL, string _logFile, string _displayName, string _autojoinFile, string _sentryFile)
+        public static void Start(string _username, string _password, string cll, string fll, string _logFile, string _displayName, string _sentryFile)
         {
             username = _username;
             logFile = _logFile;
             password = _password;
             displayName = _displayName;
-            autoJoinFile = _autojoinFile;
             sentryFile = _sentryFile;
+            CLL = cll;
+            FLL = fll;
             if (!File.Exists("login.json"))
             {
                 Console.WriteLine("Save steam info to file? y//n");
-                string save = Console.ReadLine();
-                if (save == "y")
+                Console.CursorVisible = false;
+                ConsoleKeyInfo save = Console.ReadKey(true);
+                if (save.Key == ConsoleKey.Y)
                 {
                     WriteData();
                 }
-                else if (save == "n")
+                else if (save.Key == ConsoleKey.N)
                 {
                     Console.WriteLine("Not saving data.");
                 }
@@ -89,8 +90,6 @@ namespace steam_chat_bot_net
 
             Connect();
 
-            Console.ReadLine();
-
             while (isRunning)
             {
                 manager.RunWaitCallbacks(TimeSpan.FromSeconds(1));
@@ -104,7 +103,7 @@ namespace steam_chat_bot_net
         }
         private void Dispose(bool disposing)
         {
-            if(disposed)
+            if (disposed)
             {
                 return;
             }
@@ -159,7 +158,7 @@ namespace steam_chat_bot_net
             Log.Instance.Info("Friend Msg " + callback.EntryType + " " + callback.Sender + ": " + callback.Message);
             //foreach (var trigger in triggers)
             //{
-                //trigger.O
+            //trigger.O
             //}
         }
 
