@@ -73,6 +73,7 @@
     <Compile Include="Bot.cs" />
     <Compile Include="DynamicDictionary.cs" />
     <Compile Include="Triggers\BaseTrigger.cs" />
+    <Compile Include="Triggers\TriggerType.cs" />
     <Compile Include="UserInfo.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

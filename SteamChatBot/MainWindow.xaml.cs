@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +18,18 @@ using System.Windows.Shapes;
 
 using Microsoft.Win32;
 
+using SteamChatBot.Triggers;
+using SteamChatBot;
+using System.Collections;
+
 namespace SteamChatBot
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
+
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -38,6 +46,7 @@ namespace SteamChatBot
         string displayName;
         string fll;
         string cll;
+        List<TriggerType> triggers = new List<TriggerType>();
 
         #region file browse dialogs
 
@@ -71,6 +80,14 @@ namespace SteamChatBot
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
+            if (activeTriggers.Items.Count > 0)
+            {
+                foreach (ListBoxItem trigger in activeTriggers.Items)
+                {
+                    triggers.Add((TriggerType)Enum.Parse(typeof(TriggerType), trigger.Content.ToString()));
+                }
+            }
+
             if(File.Exists("login.json") && usernameBox.Text == "" && passwordBox.Password == "" && sentryFileTextBox.Text == "" && 
                 logFileTextBox.Text == "" && displaynameBox.Text == "" && consoleLLBox.SelectedValue == null && fileLLBox.SelectedValue == null)
             {
@@ -87,7 +104,7 @@ namespace SteamChatBot
                 Log = Log.CreateInstance(logFile, username, (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll, true), (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll, true));
 
                 Log.Instance.Silly("Successfully read login data from file");
-                Bot.Start(username, password, cll, fll, logFile, displayName, sentryFile);
+                Bot.Start(username, password, cll, fll, logFile, displayName, sentryFile, triggers);
             }
             else
             {
@@ -109,7 +126,7 @@ namespace SteamChatBot
                         Bot.Start(usernameBox.Text, passwordBox.Password, (cll == null ? "Silly" : 
                             cll.ToString()), (fll == null ? "Silly" : 
                             fll.ToString()), (logFile == null ? usernameBox.Text + ".log" : logFile), 
-                            displaynameBox.Text, (sentryFile == null ? usernameBox.Text + ".sentry" : sentryFile));
+                            displaynameBox.Text, (sentryFile == null ? usernameBox.Text + ".sentry" : sentryFile), triggers);
                     }
                 }
                 else
@@ -118,5 +135,120 @@ namespace SteamChatBot
                 }
             }
         }
+
+        #region trigger drag-drop
+
+        private ListBoxItem _dragged;
+        
+        private void inactiveTriggers_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if(_dragged != null)
+            {
+                return;
+            }
+
+            UIElement element = inactiveTriggers.InputHitTest(e.GetPosition(inactiveTriggers)) as UIElement;
+
+            while(element != null)
+            {
+                if(element is ListBoxItem)
+                {
+                    _dragged = (ListBoxItem)element;
+                    break;
+                }
+                element = VisualTreeHelper.GetParent(element) as UIElement;
+            }
+        }
+
+        private void activeTriggers_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_dragged != null)
+            {
+                return;
+            }
+
+            UIElement element = activeTriggers.InputHitTest(e.GetPosition(activeTriggers)) as UIElement;
+
+            while (element != null)
+            {
+                if (element is ListBoxItem)
+                {
+                    _dragged = (ListBoxItem)element;
+                    break;
+                }
+                element = VisualTreeHelper.GetParent(element) as UIElement;
+            }
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(_dragged == null)
+            {
+                return;
+            }
+            if(e.LeftButton == MouseButtonState.Released)
+            {
+                _dragged = null;
+                return;
+            }
+
+            DataObject obj = new DataObject(DataFormats.Text, _dragged.ToString());
+            DragDrop.DoDragDrop(_dragged, obj, DragDropEffects.Move);
+        }
+
+        private void activeTriggers_DragEnter(object sender, DragEventArgs e)
+        {
+            if(_dragged == null || e.Data.GetDataPresent(DataFormats.Text, true) == false)
+            {
+                e.Effects = DragDropEffects.None;
+            }
+            else
+            {
+                e.Effects = DragDropEffects.All;
+            }
+        }
+
+        private void activeTriggers_Drop(object sender, DragEventArgs e)
+        {
+            inactiveTriggers.Items.Remove(_dragged);
+            try
+            {
+                activeTriggers.Items.Add(_dragged);
+            }
+            catch(InvalidOperationException)
+            {
+                throw new InvalidOperationException("You cannot drag a trigger to its own box.");
+            }
+                _dragged = null;
+        }
+
+        private void inactiveTriggers_Drop(object sender, DragEventArgs e)
+        {
+            activeTriggers.Items.Remove(_dragged);
+            try
+            {
+                inactiveTriggers.Items.Add(_dragged);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new InvalidOperationException("You cannot drag a trigger to its own box.");
+            }
+            _dragged = null;
+        }
+
+        private void inactiveTriggers_DragEnter(object sender, DragEventArgs e)
+        {
+            if (_dragged == null || e.Data.GetDataPresent(DataFormats.Text, true) == false)
+            {
+                e.Effects = DragDropEffects.None;
+            }
+            else
+            {
+                e.Effects = DragDropEffects.All;
+            }
+        }
+
+        #endregion
+
     }
 }

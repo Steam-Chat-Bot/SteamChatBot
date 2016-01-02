@@ -28,8 +28,7 @@ namespace SteamChatBot
         public static string logFile;
         public static string FLL;
         public static string CLL;
-
-        IEnumerable<BaseTrigger> triggers = (IEnumerable<BaseTrigger>)Assembly.GetAssembly(typeof(BaseTrigger)).GetTypes().Where(t => t.IsSubclassOf(typeof(BaseTrigger)));
+        public static List<TriggerType> triggers;
 
         private bool disposed = false;
 
@@ -56,7 +55,7 @@ namespace SteamChatBot
             string json = JsonConvert.SerializeObject(info, Formatting.Indented);
             File.WriteAllText("login.json", json);
         }
-        public static void Start(string _username, string _password, string cll, string fll, string _logFile, string _displayName, string _sentryFile)
+        public static void Start(string _username, string _password, string cll, string fll, string _logFile, string _displayName, string _sentryFile, List<TriggerType> _triggers)
         {
             username = _username;
             logFile = _logFile;
@@ -65,6 +64,8 @@ namespace SteamChatBot
             sentryFile = _sentryFile;
             CLL = cll;
             FLL = fll;
+            triggers = _triggers;
+
             if (!File.Exists("login.json"))
             {
                 Console.WriteLine("Save steam info to file? y//n");
@@ -101,6 +102,7 @@ namespace SteamChatBot
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
         private void Dispose(bool disposing)
         {
             if (disposed)
@@ -156,10 +158,6 @@ namespace SteamChatBot
         static void OnFriendMsg(SteamFriends.FriendMsgCallback callback)
         {
             Log.Instance.Info("Friend Msg " + callback.EntryType + " " + callback.Sender + ": " + callback.Message);
-            //foreach (var trigger in triggers)
-            //{
-            //trigger.O
-            //}
         }
 
         static void OnChatMsg(SteamFriends.ChatMsgCallback callback)

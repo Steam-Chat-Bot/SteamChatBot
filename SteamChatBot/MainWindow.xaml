@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SteamChatBot"
         mc:Ignorable="d"
-        Title="MainWindow" Height="583" Width="837">
+        Title="MainWindow" Height="583" Width="837" MouseMove="Window_MouseMove">
     <Grid Margin="0,0,0,-21">
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="487" Margin="10,10,0,0" VerticalAlignment="Top" Width="796">
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="487" Margin="10,10,0,0" VerticalAlignment="Top" Width="796" Grid.ColumnSpan="2">
             <TabItem Header="Login Details">
                 <Grid Background="White">
                     <Label x:Name="label" Content="Username" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
@@ -44,10 +44,19 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Trigger Details">
-                <Grid Background="White"/>
+                <Grid Background="White">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="198*"/>
+                        <ColumnDefinition Width="197*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="inactiveTriggers" HorizontalAlignment="Left" Height="439" Margin="10,10,0,0" VerticalAlignment="Top" Width="376" PreviewMouseLeftButtonDown="inactiveTriggers_PreviewMouseLeftButtonDown" Drop="inactiveTriggers_Drop" DragEnter="inactiveTriggers_DragEnter" DragOver="inactiveTriggers_DragEnter" AllowDrop="True">
+                        <ListBoxItem Content="IsUpTrigger"/>
+                    </ListBox>
+                    <ListBox x:Name="activeTriggers" Grid.Column="1" HorizontalAlignment="Left" Height="439" Margin="10,10,0,0" VerticalAlignment="Top" Width="374" PreviewMouseLeftButtonDown="activeTriggers_PreviewMouseLeftButtonDown" Drop="activeTriggers_Drop" AllowDrop="True" DragEnter="activeTriggers_DragEnter" DragOver="activeTriggers_DragEnter"/>
+                </Grid>
             </TabItem>
         </TabControl>
-        <Button x:Name="startButton" Content="Start Bot" HorizontalAlignment="Center" Margin="0,510,0,0" VerticalAlignment="Top" Width="370" Click="startButton_Click"/>
+        <Button x:Name="startButton" Content="Start Bot" HorizontalAlignment="Center" Margin="0,510,0,0" VerticalAlignment="Top" Width="370" Click="startButton_Click" Height="20"/>
 
     </Grid>
 </Window>
