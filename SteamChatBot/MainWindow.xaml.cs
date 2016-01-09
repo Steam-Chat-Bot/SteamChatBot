@@ -105,6 +105,7 @@ namespace SteamChatBot
 
                 Log.Instance.Silly("Successfully read login data from file");
                 Bot.Start(username, password, cll, fll, logFile, displayName, sentryFile, triggers);
+                Close();
             }
             else
             {
@@ -127,6 +128,7 @@ namespace SteamChatBot
                             cll.ToString()), (fll == null ? "Silly" : 
                             fll.ToString()), (logFile == null ? usernameBox.Text + ".log" : logFile), 
                             displaynameBox.Text, (sentryFile == null ? usernameBox.Text + ".sentry" : sentryFile), triggers);
+                        Close();
                     }
                 }
                 else
@@ -250,5 +252,19 @@ namespace SteamChatBot
 
         #endregion
 
+        private void triggerOptionsButton_Click(object sender, RoutedEventArgs e)
+        {
+            TriggerOptionsWindow tow = new TriggerOptionsWindow((ListBoxItem)activeTriggers.Items[activeTriggers.SelectedIndex]);
+            tow.Show();
+        }
+
+        private void activeTriggers_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ListBoxItem item = ItemsControl.ContainerFromElement(activeTriggers, e.OriginalSource as DependencyObject) as ListBoxItem;
+            if(item != null)
+            {
+                triggerOptionsButton.IsEnabled = true;
+            }
+        }
     }
 }

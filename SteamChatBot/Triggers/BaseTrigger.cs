@@ -12,7 +12,7 @@ namespace SteamChatBot.Triggers
         public Bot ChatBot { get; set; }
         public string UserName { get; set; }
         public string UserString { get; set; }
-        public dynamic Options = new DynamicDictionary<string>();
+        public dynamic Options { get; set; }
 
         public BaseTrigger(string type, string name, Bot chatBot, dynamic options)
         {

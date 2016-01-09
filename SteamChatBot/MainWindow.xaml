@@ -12,18 +12,18 @@
                 <Grid Background="White">
                     <Label x:Name="label" Content="Username" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="label1" Content="Password" HorizontalAlignment="Left" Margin="154,10,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="usernameBox" HorizontalAlignment="Left" Height="23" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="usernameBox" HorizontalAlignment="Left" Height="23" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TabIndex="0"/>
                     <Label x:Name="label2" Content="Sentry File" HorizontalAlignment="Left" Margin="346,10,0,0" VerticalAlignment="Top"/>
                     <Button x:Name="sentryBrowseButton" Content="Browse" HorizontalAlignment="Left" Margin="346,39,0,0" VerticalAlignment="Top" Width="75" Click="sentryBrowseButton_Click"/>
                     <Label x:Name="label3" Content="Log File" HorizontalAlignment="Left" Margin="561,10,0,0" VerticalAlignment="Top"/>
                     <Button x:Name="logFileBrowseButton" Content="Browse" HorizontalAlignment="Left" Margin="561,39,0,0" VerticalAlignment="Top" Width="75" Click="logFileBrowseButton_Click"/>
                     <TextBox x:Name="sentryFileTextBox" HorizontalAlignment="Left" Height="23" Margin="346,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200
-                             "/>
-                    <TextBox x:Name="logFileTextBox" HorizontalAlignment="Left" Height="23" Margin="561,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
+                             " TabIndex="2"/>
+                    <TextBox x:Name="logFileTextBox" HorizontalAlignment="Left" Height="23" Margin="561,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" TabIndex="3"/>
                     <Label x:Name="label4" Content="Display Name" HorizontalAlignment="Left" Margin="10,142,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="displaynameBox" HorizontalAlignment="Left" Height="23" Margin="10,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="displaynameBox" HorizontalAlignment="Left" Height="23" Margin="10,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TabIndex="4"/>
                     <Label x:Name="label5" Content="Console Log Level" HorizontalAlignment="Left" Margin="276,142,0,0" VerticalAlignment="Top"/>
-                    <ListBox x:Name="consoleLLBox" HorizontalAlignment="Left" Height="125" Margin="276,173,0,0" VerticalAlignment="Top" Width="135">
+                    <ListBox x:Name="consoleLLBox" HorizontalAlignment="Left" Height="125" Margin="276,173,0,0" VerticalAlignment="Top" Width="135" TabIndex="5">
                         <ListBoxItem Content="Silly"/>
                         <ListBoxItem Content="Debug"/>
                         <ListBoxItem Content="Verbose"/>
@@ -32,7 +32,7 @@
                         <ListBoxItem Content="Error"/>
                     </ListBox>
                     <Label x:Name="label6" Content="File Log Level" HorizontalAlignment="Left" Margin="497,142,0,0" VerticalAlignment="Top"/>
-                    <ListBox x:Name="fileLLBox" HorizontalAlignment="Left" Height="125" Margin="497,173,0,0" VerticalAlignment="Top" Width="135">
+                    <ListBox x:Name="fileLLBox" HorizontalAlignment="Left" Height="125" Margin="497,173,0,0" VerticalAlignment="Top" Width="135" TabIndex="6">
                         <ListBoxItem Content="Silly"/>
                         <ListBoxItem Content="Debug"/>
                         <ListBoxItem Content="Verbose"/>
@@ -40,7 +40,7 @@
                         <ListBoxItem Content="Warn"/>
                         <ListBoxItem Content="Error"/>
                     </ListBox>
-                    <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="154,36,0,0" VerticalAlignment="Top" Width="120" Height="23"/>
+                    <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="154,36,0,0" VerticalAlignment="Top" Width="120" Height="23" TabIndex="1"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Trigger Details">
@@ -49,14 +49,15 @@
                         <ColumnDefinition Width="198*"/>
                         <ColumnDefinition Width="197*"/>
                     </Grid.ColumnDefinitions>
-                    <ListBox x:Name="inactiveTriggers" HorizontalAlignment="Left" Height="439" Margin="10,10,0,0" VerticalAlignment="Top" Width="376" PreviewMouseLeftButtonDown="inactiveTriggers_PreviewMouseLeftButtonDown" Drop="inactiveTriggers_Drop" DragEnter="inactiveTriggers_DragEnter" DragOver="inactiveTriggers_DragEnter" AllowDrop="True">
+                    <ListBox x:Name="inactiveTriggers" HorizontalAlignment="Left" Height="404" Margin="10,10,0,0" VerticalAlignment="Top" Width="376" PreviewMouseLeftButtonDown="inactiveTriggers_PreviewMouseLeftButtonDown" Drop="inactiveTriggers_Drop" DragEnter="inactiveTriggers_DragEnter" DragOver="inactiveTriggers_DragEnter" AllowDrop="True">
                         <ListBoxItem Content="IsUpTrigger"/>
                     </ListBox>
-                    <ListBox x:Name="activeTriggers" Grid.Column="1" HorizontalAlignment="Left" Height="439" Margin="10,10,0,0" VerticalAlignment="Top" Width="374" PreviewMouseLeftButtonDown="activeTriggers_PreviewMouseLeftButtonDown" Drop="activeTriggers_Drop" AllowDrop="True" DragEnter="activeTriggers_DragEnter" DragOver="activeTriggers_DragEnter"/>
+                    <ListBox x:Name="activeTriggers" Grid.Column="1" HorizontalAlignment="Left" Height="404" Margin="10,10,0,0" VerticalAlignment="Top" Width="374" PreviewMouseLeftButtonDown="activeTriggers_PreviewMouseLeftButtonDown" Drop="activeTriggers_Drop" AllowDrop="True" DragEnter="activeTriggers_DragEnter" DragOver="activeTriggers_DragEnter" PreviewMouseDown="activeTriggers_PreviewMouseDown"/>
+                    <Button x:Name="triggerOptionsButton" Grid.ColumnSpan="2" Content="Show Options" HorizontalAlignment="Left" Margin="351,429,0,0" VerticalAlignment="Top" Width="90" Click="triggerOptionsButton_Click" IsEnabled="False"/>
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button x:Name="startButton" Content="Start Bot" HorizontalAlignment="Center" Margin="0,510,0,0" VerticalAlignment="Top" Width="370" Click="startButton_Click" Height="20"/>
+        <Button x:Name="startButton" Content="Start Bot" HorizontalAlignment="Center" Margin="0,510,0,0" VerticalAlignment="Top" Width="370" Click="startButton_Click" Height="20" TabIndex="7"/>
 
     </Grid>
 </Window>
