@@ -21,14 +21,34 @@ namespace SteamChatBot
     /// </summary>
     public partial class TriggerOptionsWindow : Window
     {
+        public TriggerType Type { get; set; }
+        public string Name { get; set; }
+
+
         public TriggerOptionsWindow(ListBoxItem trigger)
         {
             InitializeComponent();
-            string type = trigger.Content.ToString();
-            TriggerType triggerType;
-            Enum.TryParse(type, out triggerType);
-            typeBox.Text = type;
+            Type = (TriggerType)Enum.Parse(typeof(TriggerType), trigger.Content.ToString());
+            typeBox.Text = Type.ToString();
+        }
 
+        private void saveButton_Click(object sender, RoutedEventArgs e)
+        {
+            Bot.triggers.Add(new BaseTrigger(Type, Name));
+            Console.WriteLine(string.Format("Trigger {0}/{1} saved", nameBox.Text, Type));
+            Close();
+        }
+
+        private void nameBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(nameBox.Text == "")
+            {
+                saveButton.IsEnabled = false;
+            }
+            else
+            {
+                saveButton.IsEnabled = true;
+            }
         }
     }
 }

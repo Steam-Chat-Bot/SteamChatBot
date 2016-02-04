@@ -46,7 +46,7 @@ namespace SteamChatBot
         string displayName;
         string fll;
         string cll;
-        List<TriggerType> triggers = new List<TriggerType>();
+        List<BaseTrigger> triggers = new List<BaseTrigger>();
 
         #region file browse dialogs
 
@@ -84,7 +84,7 @@ namespace SteamChatBot
             {
                 foreach (ListBoxItem trigger in activeTriggers.Items)
                 {
-                    triggers.Add((TriggerType)Enum.Parse(typeof(TriggerType), trigger.Content.ToString()));
+                    triggers.Add((BaseTrigger)Enum.Parse(typeof(BaseTrigger), trigger.Content.ToString()));
                 }
             }
 

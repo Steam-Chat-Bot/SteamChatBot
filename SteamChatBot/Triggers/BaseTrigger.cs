@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SteamKit2;
 using SteamChatBot;
 
@@ -6,23 +7,15 @@ namespace SteamChatBot.Triggers
 {
     public class BaseTrigger
     {
-
-        public string Type { get; set; }
+        public TriggerType Type { get; set; }
         public string Name { get; set; }
-        public Bot ChatBot { get; set; }
         public string UserName { get; set; }
         public string UserString { get; set; }
-        public dynamic Options { get; set; }
 
-        public BaseTrigger(string type, string name, Bot chatBot, dynamic options)
+        public BaseTrigger(TriggerType type, string name)
         {
             Type = type;
             Name = name;
-            ChatBot = chatBot;
-            Options = options;
-
-            Options.Command = options.command;
-
         }
         /// <summary>
         /// If there is an error, log it easily
@@ -35,6 +28,7 @@ namespace SteamChatBot.Triggers
         {
             return string.Format("{0}/{1}: Error: {2}", cbn, name, error);
         }
+
         #region overriden methods
         /// <summary>
         /// Return true if trigger loads properly

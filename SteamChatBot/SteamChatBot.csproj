@@ -76,6 +76,8 @@
       <DependentUpon>TriggerOptionsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Triggers\BaseTrigger.cs" />
+    <Compile Include="Triggers\IsUpTrigger.cs" />
+    <Compile Include="Triggers\TriggerFactory.cs" />
     <Compile Include="Triggers\TriggerType.cs" />
     <Compile Include="UserInfo.cs" />
     <Page Include="MainWindow.xaml">
