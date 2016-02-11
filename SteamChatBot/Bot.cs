@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Security.Cryptography;
+using System.Xaml;
 using System.Windows.Controls;
 
 using SteamKit2;
@@ -102,6 +103,7 @@ namespace SteamChatBot
                 if(box.Name == "isUpTriggerBox")
                 {
                     triggers.Add(new IsUpTrigger(TriggerType.IsUpTrigger, "IsUpTriggerTest"));
+                   
                 }
             }
 

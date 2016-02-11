@@ -96,7 +96,7 @@ namespace SteamChatBot
                 Log.Instance.Silly("Successfully read login data from file");
                 AddTriggersToList();
                 Bot.Start(username, password, cll, fll, logFile, displayName, sentryFile);
-                this.Close();
+                this.Hide();
             }
             else
             {
@@ -120,7 +120,7 @@ namespace SteamChatBot
                             cll.ToString()), (fll == null ? "Silly" : 
                             fll.ToString()), (logFile == null ? usernameBox.Text + ".log" : logFile), 
                             displaynameBox.Text, (sentryFile == null ? usernameBox.Text + ".sentry" : sentryFile));
-                        this.Close();
+                        this.Hide();
                     }
                 }
                 else
@@ -132,7 +132,7 @@ namespace SteamChatBot
 
         private void AddTriggersToList()
         {
-            foreach(CheckBox box in triggerCheckList.Items)
+            foreach(CheckBox box in triggerCheckBoxList.Items)
             {
                 Bot.checkBoxes.Add(box);
             }

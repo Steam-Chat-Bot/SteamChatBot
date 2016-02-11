@@ -11,6 +11,8 @@ namespace SteamChatBot.Triggers
 {
     class IsUpTrigger : BaseTrigger
     {
+        public string Command { get; set; }
+
         public IsUpTrigger(TriggerType type, string name) : base(type, name)
         { }
 
@@ -26,7 +28,7 @@ namespace SteamChatBot.Triggers
 
         private bool Respond(SteamID toID, SteamID userID, string message, bool room)
         {
-            string[] query = StripCommand(message, "!isup");
+            string[] query = StripCommand(message, Command);
             if(query != null)
             {
                 HttpWebResponse response;
