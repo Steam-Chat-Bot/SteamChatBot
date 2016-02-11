@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+
+using Newtonsoft.Json;
 using SteamKit2;
 using SteamChatBot;
 
@@ -11,11 +14,19 @@ namespace SteamChatBot.Triggers
         public string Name { get; set; }
         public string UserName { get; set; }
         public string UserString { get; set; }
+        public string Command { get; set; }
 
         public BaseTrigger(TriggerType type, string name)
         {
             Type = type;
             Name = name;
+        }
+
+        public BaseTrigger(TriggerType type, string name, string command)
+        {
+            Type = type;
+            Name = name;
+            Command = command;
         }
         /// <summary>
         /// If there is an error, log it easily
@@ -27,6 +38,26 @@ namespace SteamChatBot.Triggers
         protected string IfError(string cbn, string name, string error)
         {
             return string.Format("{0}/{1}: Error: {2}", cbn, name, error);
+        }
+
+        public void SaveTrigger()
+        {
+            TriggerOptions options = new TriggerOptions
+            {
+                Type = Type,
+                Name = Name,
+                Command = (Command != null ? Command : null)
+            };
+
+            string json = JsonConvert.SerializeObject(options, Formatting.Indented);
+            File.WriteAllText("triggers/" + Type.ToString() + ".json", json);
+        }
+
+        public BaseTrigger ReadTrigger()
+        {
+            string file = File.ReadAllText("triggers/" + Type.ToString() + ".json");
+            BaseTrigger btrigger = JsonConvert.DeserializeObject<BaseTrigger>(file);
+            return btrigger;
         }
 
         #region overriden methods

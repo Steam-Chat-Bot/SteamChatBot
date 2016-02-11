@@ -107,6 +107,11 @@ namespace SteamChatBot
                 }
             }
 
+            foreach(BaseTrigger trigger in triggers)
+            {
+                trigger.SaveTrigger();
+            }
+
             isRunning = true;
 
             Connect();

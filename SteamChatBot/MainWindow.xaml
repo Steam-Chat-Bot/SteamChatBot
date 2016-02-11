@@ -51,10 +51,10 @@
                         <ColumnDefinition Width="373*"/>
                     </Grid.ColumnDefinitions>
                     <ListBox x:Name="triggerCheckBoxList" HorizontalAlignment="Left" Height="479" Margin="10,10,0,-30" VerticalAlignment="Top" Width="770" Grid.ColumnSpan="3">
-                        <CheckBox x:Name="isUpTriggerBox" Content="IsUpTrigger - Determines if a website is online)" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="266"/>
+                        <CheckBox x:Name="isUpTriggerBox" Content="IsUpTrigger - Determines if a website is online" HorizontalAlignment="Left" VerticalAlignment="Top" Height="21" Width="266"/>
                     </ListBox>
-                    <Label x:Name="label7" Content="Command:" Grid.Column="1" Margin="252,8,53,425"/>
-                    <TextBox x:Name="isUpTriggerCommandBox" TextWrapping="Wrap" Text="!isup" Grid.Column="1" Margin="319,12,1,424"/>
+                    <Label x:Name="label7" Content="Command:" Grid.Column="1" Margin="252,8,53,419"/>
+                    <TextBox x:Name="isUpTriggerCommandBox" TextWrapping="Wrap" Text="!isup" Grid.Column="1" Margin="319,12,1,419"/>
                 </Grid>
             </TabItem>
         </TabControl>
