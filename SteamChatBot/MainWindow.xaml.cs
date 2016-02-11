@@ -93,10 +93,11 @@ namespace SteamChatBot
 
                 Log = Log.CreateInstance(logFile, username, (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll, true), (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll, true));
 
+                Close();
+
                 Log.Instance.Silly("Successfully read login data from file");
                 AddTriggersToList();
                 Bot.Start(username, password, cll, fll, logFile, displayName, sentryFile);
-                this.Hide();
             }
             else
             {
@@ -115,12 +116,12 @@ namespace SteamChatBot
                     Log.Instance.Silly("Console started successfully!");
                     if (passwordBox.Password != "" && displaynameBox.Text != "")
                     {
+                        Close();
                         AddTriggersToList();
                         Bot.Start(usernameBox.Text, passwordBox.Password, (cll == null ? "Silly" : 
                             cll.ToString()), (fll == null ? "Silly" : 
                             fll.ToString()), (logFile == null ? usernameBox.Text + ".log" : logFile), 
                             displaynameBox.Text, (sentryFile == null ? usernameBox.Text + ".sentry" : sentryFile));
-                        this.Hide();
                     }
                 }
                 else
