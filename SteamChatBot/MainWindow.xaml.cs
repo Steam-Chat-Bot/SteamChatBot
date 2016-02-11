@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xaml;
 using System.IO;
 using System.Threading.Tasks;
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 using System.Windows;
 using System.Windows.Controls;
@@ -18,9 +20,8 @@ using System.Windows.Shapes;
 
 using Microsoft.Win32;
 
-using SteamChatBot.Triggers;
 using SteamChatBot;
-using System.Collections;
+using SteamChatBot.Triggers;
 
 namespace SteamChatBot
 {
@@ -28,8 +29,6 @@ namespace SteamChatBot
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
-
-
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -46,7 +45,6 @@ namespace SteamChatBot
         string displayName;
         string fll;
         string cll;
-        List<BaseTrigger> triggers = new List<BaseTrigger>();
 
         #region file browse dialogs
 
@@ -80,14 +78,6 @@ namespace SteamChatBot
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            if (activeTriggers.Items.Count > 0)
-            {
-                foreach (ListBoxItem trigger in activeTriggers.Items)
-                {
-                    triggers.Add((BaseTrigger)Enum.Parse(typeof(BaseTrigger), trigger.Content.ToString()));
-                }
-            }
-
             if(File.Exists("login.json") && usernameBox.Text == "" && passwordBox.Password == "" && sentryFileTextBox.Text == "" && 
                 logFileTextBox.Text == "" && displaynameBox.Text == "" && consoleLLBox.SelectedValue == null && fileLLBox.SelectedValue == null)
             {
@@ -104,8 +94,9 @@ namespace SteamChatBot
                 Log = Log.CreateInstance(logFile, username, (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll, true), (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll, true));
 
                 Log.Instance.Silly("Successfully read login data from file");
-                Bot.Start(username, password, cll, fll, logFile, displayName, sentryFile, triggers);
-                Close();
+                AddTriggersToList();
+                Bot.Start(username, password, cll, fll, logFile, displayName, sentryFile);
+                this.Close();
             }
             else
             {
@@ -124,11 +115,12 @@ namespace SteamChatBot
                     Log.Instance.Silly("Console started successfully!");
                     if (passwordBox.Password != "" && displaynameBox.Text != "")
                     {
+                        AddTriggersToList();
                         Bot.Start(usernameBox.Text, passwordBox.Password, (cll == null ? "Silly" : 
                             cll.ToString()), (fll == null ? "Silly" : 
                             fll.ToString()), (logFile == null ? usernameBox.Text + ".log" : logFile), 
-                            displaynameBox.Text, (sentryFile == null ? usernameBox.Text + ".sentry" : sentryFile), triggers);
-                        Close();
+                            displaynameBox.Text, (sentryFile == null ? usernameBox.Text + ".sentry" : sentryFile));
+                        this.Close();
                     }
                 }
                 else
@@ -138,6 +130,15 @@ namespace SteamChatBot
             }
         }
 
+        private void AddTriggersToList()
+        {
+            foreach(CheckBox box in triggerCheckList.Items)
+            {
+                Bot.checkBoxes.Add(box);
+            }
+        }
+
+        /*
         #region trigger drag-drop
 
         private ListBoxItem _dragged;
@@ -251,20 +252,6 @@ namespace SteamChatBot
         }
 
         #endregion
-
-        private void triggerOptionsButton_Click(object sender, RoutedEventArgs e)
-        {
-            TriggerOptionsWindow tow = new TriggerOptionsWindow((ListBoxItem)activeTriggers.Items[activeTriggers.SelectedIndex]);
-            tow.Show();
-        }
-
-        private void activeTriggers_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            ListBoxItem item = ItemsControl.ContainerFromElement(activeTriggers, e.OriginalSource as DependencyObject) as ListBoxItem;
-            if(item != null)
-            {
-                triggerOptionsButton.IsEnabled = true;
-            }
-        }
+        */
     }
 }

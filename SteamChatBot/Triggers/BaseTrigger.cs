@@ -497,17 +497,33 @@ namespace SteamChatBot.Triggers
 
         #region helper methods
 
-        protected void SendMessageAfterDelay(SteamID steamID, string message)
+        protected void SendMessageAfterDelay(SteamID steamID, string message, bool room)
         {
             try
             {
                 Log.Instance.Silly("{0}/{1}: Sending message to {2}: {3}", Bot.username, Name, steamID, message);
-                Bot.steamFriends.SendChatRoomMessage(steamID, EChatEntryType.ChatMsg, message);
+                if(room)
+                {
+                    Bot.steamFriends.SendChatRoomMessage(steamID, EChatEntryType.ChatMsg, message);
+                }
+                else
+                {
+                    Bot.steamFriends.SendChatMessage(steamID, EChatEntryType.ChatMsg, message);
+                }
             }
             catch (Exception e)
             {
                 Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
             }
+        }
+
+        protected string[] StripCommand(string message, string command)
+        {
+            if(message != null && command != null && message.ToLower().IndexOf(command.ToLower()) == 0)
+            {
+                return message.Split(' ');
+            }
+            return null;
         }
 
         /*

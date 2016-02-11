@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Security.Cryptography;
-using System.Reflection;
+using System.Windows.Controls;
 
 using SteamKit2;
 using Newtonsoft.Json;
@@ -28,57 +28,11 @@ namespace SteamChatBot
         public static string logFile;
         public static string FLL;
         public static string CLL;
-        public static List<BaseTrigger> triggers;
-        public static TriggerFactory triggerFactory;
-
+        public static List<BaseTrigger> triggers = new List<BaseTrigger>();
+        public static List<CheckBox> checkBoxes = new List<CheckBox>();
+        public static List<CheckBox> activeCheckBoxes = new List<CheckBox>();
 
         private bool disposed = false;
-
-        private static BaseTrigger AddTrigger(string name, TriggerType type)
-        {
-            if (name == null || type.ToString() == null)
-            {
-                Log.Instance.Error("{0}/ChatBot (unknown trigger): Trigger not defined correctly. Not loading...", name);
-                return null;
-            }
-
-            BaseTrigger trigger = triggerFactory.CreateTrigger(type, name);
-            try
-            {
-                Log.Instance.Debug(username + "/ChatBot: Testing onload for {0} trigger {1}", type, name);
-                if (trigger != null && trigger.OnLoad())
-                {
-                    Log.Instance.Silly(username + "/ChatBot: onload success for {0} trigger {1}", type, name);
-                    triggers.Add(trigger);
-                    return trigger;
-                }
-                else if (trigger != null)
-                {
-                    Log.Instance.Error(username + "/ChatBot: Error loading {0} trigger {1}", type, name);
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                Log.Instance.Error(username + "/ChatBot: Error loading {0} trigger {1}: {2}", type, name, e.StackTrace);
-                return null;
-            }
-            return null;
-        }
-
-        private static bool AddTriggers(List<BaseTrigger> triggers)
-        {
-            bool ok = true;
-            foreach (BaseTrigger trigger in triggers)
-            {
-                ok = ok && (AddTrigger(trigger.Name, trigger.Type) != null);
-                if (!ok)
-                {
-                    Log.Instance.Error(username + "/ChatBot: Trigger not loaded because it or a previous trigger failed to load: {0}", trigger.Name);
-                }
-            }
-            return ok;
-        }
 
         public static UserInfo ReadData()
         {
@@ -103,7 +57,7 @@ namespace SteamChatBot
             string json = JsonConvert.SerializeObject(info, Formatting.Indented);
             File.WriteAllText("login.json", json);
         }
-        public static void Start(string _username, string _password, string cll, string fll, string _logFile, string _displayName, string _sentryFile, List<BaseTrigger> _triggers)
+        public static void Start(string _username, string _password, string cll, string fll, string _logFile, string _displayName, string _sentryFile)
         {
             username = _username;
             logFile = _logFile;
@@ -112,9 +66,6 @@ namespace SteamChatBot
             sentryFile = _sentryFile;
             CLL = cll;
             FLL = fll;
-            triggers = _triggers;
-
-            AddTriggers(triggers);
             
             if (!File.Exists("login.json"))
             {
@@ -135,7 +86,24 @@ namespace SteamChatBot
                     WriteData();
                 }
             }
+            foreach(CheckBox box in checkBoxes)
+            {
+                if(box.IsChecked == true)
+                {
+                    activeCheckBoxes.Add(box);
+                }
+                    
+            }
+
             SubForCB();
+
+            foreach(CheckBox box in activeCheckBoxes)
+            {
+                if(box.Name == "isUpTriggerBox")
+                {
+                    triggers.Add(new IsUpTrigger(TriggerType.IsUpTrigger, "IsUpTriggerTest"));
+                }
+            }
 
             isRunning = true;
 
@@ -208,9 +176,12 @@ namespace SteamChatBot
         static void OnFriendMsg(SteamFriends.FriendMsgCallback callback)
         {
             Log.Instance.Info("Friend Msg " + callback.EntryType + " " + callback.Sender + ": " + callback.Message);
-            foreach(BaseTrigger trigger in triggers)
+            if (callback.EntryType == EChatEntryType.ChatMsg)
             {
-                trigger.OnFriendMessage(callback.Sender, callback.Message, true);
+                foreach (BaseTrigger trigger in triggers)
+                {
+                    trigger.OnFriendMessage(callback.Sender, callback.Message, true);
+                }
             }
         }
 

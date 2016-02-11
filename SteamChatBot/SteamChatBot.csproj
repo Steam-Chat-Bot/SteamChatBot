@@ -52,6 +52,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -71,13 +72,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bot.cs" />
-    <Compile Include="DynamicDictionary.cs" />
-    <Compile Include="TriggerOptionsWindow.xaml.cs">
-      <DependentUpon>TriggerOptionsWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Triggers\BaseTrigger.cs" />
     <Compile Include="Triggers\IsUpTrigger.cs" />
-    <Compile Include="Triggers\TriggerFactory.cs" />
     <Compile Include="Triggers\TriggerType.cs" />
     <Compile Include="UserInfo.cs" />
     <Page Include="MainWindow.xaml">
@@ -93,10 +89,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="TriggerOptionsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
