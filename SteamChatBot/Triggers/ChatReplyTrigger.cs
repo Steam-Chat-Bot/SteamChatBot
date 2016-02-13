@@ -56,7 +56,6 @@ namespace SteamChatBot.Triggers
             {
                 Random rnd = new Random();
                 int index = rnd.Next(0, Responses.Count);
-                Console.WriteLine(index);
                 return Responses[index];
             }
             return "";

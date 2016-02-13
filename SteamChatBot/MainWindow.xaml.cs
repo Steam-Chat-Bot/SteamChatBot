@@ -142,8 +142,24 @@ namespace SteamChatBot
 
         #region dynamic trigger options
 
+        private void MakeAllInvisible()
+        {
+            commandBox.Visibility = Visibility.Hidden;
+            commandLabel.Visibility = Visibility.Hidden;
+            commandDoneButton.Visibility = Visibility.Hidden;
+
+            matchesLabel.Visibility = Visibility.Hidden;
+            matchesBox.Visibility = Visibility.Hidden;
+            matchesDoneButton.Visibility = Visibility.Hidden;
+
+            responsesLabel.Visibility = Visibility.Hidden;
+            responsesBox.Visibility = Visibility.Hidden;
+            responsesDoneButton.Visibility = Visibility.Hidden;
+        }
+
         private void isUpTriggerBox_GotFocus(object sender, RoutedEventArgs e)
         {
+            MakeAllInvisible();
             commandBox.Visibility = Visibility.Visible;
             commandLabel.Visibility = Visibility.Visible;
             commandDoneButton.Visibility = Visibility.Visible;
@@ -171,6 +187,8 @@ namespace SteamChatBot
 
         private void chatReplyTriggerBox_GotFocus(object sender, RoutedEventArgs e)
         {
+            MakeAllInvisible();
+
             matchesLabel.Visibility = Visibility.Visible;
             responsesLabel.Visibility = Visibility.Visible;
             matchesBox.Visibility = Visibility.Visible;
