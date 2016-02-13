@@ -74,8 +74,8 @@
     </ApplicationDefinition>
     <Compile Include="Bot.cs" />
     <Compile Include="Triggers\BaseTrigger.cs" />
+    <Compile Include="Triggers\ChatReplyTrigger.cs" />
     <Compile Include="Triggers\IsUpTrigger.cs" />
-    <Compile Include="Triggers\TriggerOptions.cs" />
     <Compile Include="Triggers\TriggerType.cs" />
     <Compile Include="UserInfo.cs" />
     <Page Include="MainWindow.xaml">

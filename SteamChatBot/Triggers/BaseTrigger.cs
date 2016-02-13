@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-
-using Newtonsoft.Json;
 using SteamKit2;
 using SteamChatBot;
 
@@ -12,9 +9,12 @@ namespace SteamChatBot.Triggers
     {
         public TriggerType Type { get; set; }
         public string Name { get; set; }
+        public string Command { get; set; }
+        public List<string> Matches { get; set; }
+        public List<string> Responses { get; set; }
+
         public string UserName { get; set; }
         public string UserString { get; set; }
-        public string Command { get; set; }
 
         public BaseTrigger(TriggerType type, string name)
         {
@@ -28,6 +28,15 @@ namespace SteamChatBot.Triggers
             Name = name;
             Command = command;
         }
+
+        public BaseTrigger(TriggerType type, string name, List<string> matches, List<string> responses)
+        {
+            Type = type;
+            Name = name;
+            Matches = matches;
+            Responses = responses;
+        }
+
         /// <summary>
         /// If there is an error, log it easily
         /// </summary>
@@ -38,26 +47,6 @@ namespace SteamChatBot.Triggers
         protected string IfError(string cbn, string name, string error)
         {
             return string.Format("{0}/{1}: Error: {2}", cbn, name, error);
-        }
-
-        public void SaveTrigger()
-        {
-            TriggerOptions options = new TriggerOptions
-            {
-                Type = Type,
-                Name = Name,
-                Command = (Command != null ? Command : null)
-            };
-
-            string json = JsonConvert.SerializeObject(options, Formatting.Indented);
-            File.WriteAllText("triggers/" + Type.ToString() + ".json", json);
-        }
-
-        public BaseTrigger ReadTrigger()
-        {
-            string file = File.ReadAllText("triggers/" + Type.ToString() + ".json");
-            BaseTrigger btrigger = JsonConvert.DeserializeObject<BaseTrigger>(file);
-            return btrigger;
         }
 
         #region overriden methods
@@ -533,7 +522,7 @@ namespace SteamChatBot.Triggers
             try
             {
                 Log.Instance.Silly("{0}/{1}: Sending message to {2}: {3}", Bot.username, Name, steamID, message);
-                if(room)
+                if (room)
                 {
                     Bot.steamFriends.SendChatRoomMessage(steamID, EChatEntryType.ChatMsg, message);
                 }
@@ -550,7 +539,7 @@ namespace SteamChatBot.Triggers
 
         protected string[] StripCommand(string message, string command)
         {
-            if(message != null && command != null && message.ToLower().IndexOf(command.ToLower()) == 0)
+            if (message != null && command != null && message.ToLower().IndexOf(command.ToLower()) == 0)
             {
                 return message.Split(' ');
             }

@@ -11,9 +11,7 @@ namespace SteamChatBot.Triggers
 {
     class IsUpTrigger : BaseTrigger
     {
-        public string Command { get; set; }
-
-        public IsUpTrigger(TriggerType type, string name) : base(type, name)
+        public IsUpTrigger(TriggerType type, string name, string command) : base(type, name, command)
         { }
 
         public override bool OnFriendMessage(SteamID userID, string message, bool haveSentMessage)
@@ -29,14 +27,15 @@ namespace SteamChatBot.Triggers
         private bool Respond(SteamID toID, SteamID userID, string message, bool room)
         {
             string[] query = StripCommand(message, Command);
-            if(query != null)
+            if (query != null)
             {
                 HttpWebResponse response;
-                try {
+                try
+                {
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(query[1]);
                     response = (HttpWebResponse)request.GetResponse();
                 }
-                catch(WebException e)
+                catch (WebException e)
                 {
                     response = ((HttpWebResponse)e.Response);
                 }

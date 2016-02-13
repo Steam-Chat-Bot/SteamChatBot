@@ -50,11 +50,19 @@
                         <ColumnDefinition Width="372*"/>
                         <ColumnDefinition Width="373*"/>
                     </Grid.ColumnDefinitions>
-                    <ListBox x:Name="triggerCheckBoxList" HorizontalAlignment="Left" Height="479" Margin="10,10,0,-30" VerticalAlignment="Top" Width="770" Grid.ColumnSpan="3">
-                        <CheckBox x:Name="isUpTriggerBox" Content="IsUpTrigger - Determines if a website is online" HorizontalAlignment="Left" VerticalAlignment="Top" Height="21" Width="266"/>
+                    <ListBox x:Name="triggerCheckBoxList" HorizontalAlignment="Left" Height="479" Margin="10,10,0,-30" VerticalAlignment="Top" Width="508" Grid.ColumnSpan="3">
+                        <CheckBox x:Name="chatReplyTriggerBox" Content="ChatReplyTrigger - Responds to a list of matches (separate with commas, no space)" GotFocus="chatReplyTriggerBox_GotFocus" Width="459"/>
+                        <CheckBox x:Name="isUpTriggerBox" Content="IsUpTrigger - Determines if a website is online)" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="266" GotFocus="isUpTriggerBox_GotFocus"/>
                     </ListBox>
-                    <Label x:Name="label7" Content="Command:" Grid.Column="1" Margin="252,8,53,419"/>
-                    <TextBox x:Name="isUpTriggerCommandBox" TextWrapping="Wrap" Text="!isup" Grid.Column="1" Margin="319,12,1,419"/>
+                    <Label x:Name="commandLabel" Content="Command:" Grid.Column="2" Margin="122,8,184,425" Visibility="Hidden"/>
+                    <TextBox x:Name="commandBox" TextWrapping="Wrap" Grid.Column="2" Margin="189,12,105,424" Visibility="Hidden"/>
+                    <Button x:Name="commandDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="273,12,0,0" VerticalAlignment="Top" Width="90" Height="23" Click="commandDoneButton_Click" Visibility="Hidden"/>
+                    <Label x:Name="matchesLabel" Content="Matches:" Grid.Column="2" HorizontalAlignment="Left" Margin="127,48,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+                    <Label x:Name="responsesLabel" Content="Responses:" Grid.Column="2" HorizontalAlignment="Left" Margin="116,85,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+                    <Button x:Name="matchesDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="273,48,0,0" VerticalAlignment="Top" Width="90" Click="matchesDoneButton_Click" Visibility="Hidden"/>
+                    <Button x:Name="responsesDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="273,88,0,0" VerticalAlignment="Top" Width="90" Click="responsesDoneButton_Click" Visibility="Hidden"/>
+                    <TextBox x:Name="matchesBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="189,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Hidden"/>
+                    <TextBox x:Name="responsesBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="189,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Hidden"/>
                 </Grid>
             </TabItem>
         </TabControl>

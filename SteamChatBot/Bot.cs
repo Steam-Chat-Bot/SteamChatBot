@@ -29,6 +29,11 @@ namespace SteamChatBot
         public static string logFile;
         public static string FLL;
         public static string CLL;
+
+        public static Dictionary<TriggerType, string> commandList = new Dictionary<TriggerType, string>();
+        public static Dictionary<TriggerType, List<string>> matchesList = new Dictionary<TriggerType, List<string>>();
+        public static Dictionary<TriggerType, List<string>> responsesList = new Dictionary<TriggerType, List<string>>();
+
         public static List<BaseTrigger> triggers = new List<BaseTrigger>();
         public static List<CheckBox> checkBoxes = new List<CheckBox>();
         public static List<CheckBox> activeCheckBoxes = new List<CheckBox>();
@@ -67,7 +72,7 @@ namespace SteamChatBot
             sentryFile = _sentryFile;
             CLL = cll;
             FLL = fll;
-            
+
             if (!File.Exists("login.json"))
             {
                 Console.WriteLine("Save steam info to file? y//n");
@@ -87,29 +92,33 @@ namespace SteamChatBot
                     WriteData();
                 }
             }
-            foreach(CheckBox box in checkBoxes)
+            foreach (CheckBox box in checkBoxes)
             {
-                if(box.IsChecked == true)
+                if (box.IsChecked == true)
                 {
                     activeCheckBoxes.Add(box);
                 }
-                    
+
             }
 
             SubForCB();
 
-            foreach(CheckBox box in activeCheckBoxes)
+            foreach (CheckBox box in activeCheckBoxes)
             {
-                if(box.Name == "isUpTriggerBox")
+                if (box.Name == "isUpTriggerBox")
                 {
-                    triggers.Add(new IsUpTrigger(TriggerType.IsUpTrigger, "IsUpTriggerTest"));
-                   
+                    string command;
+                    commandList.TryGetValue(TriggerType.IsUpTrigger, out command);
+                    triggers.Add(new IsUpTrigger(TriggerType.IsUpTrigger, "IsUpTrigger", command));
                 }
-            }
-
-            foreach(BaseTrigger trigger in triggers)
-            {
-                trigger.SaveTrigger();
+                if(box.Name == "chatReplyTriggerBox")
+                {
+                    List<string> matches;
+                    List<string> responses;
+                    matchesList.TryGetValue(TriggerType.ChatReplyTrigger, out matches);
+                    responsesList.TryGetValue(TriggerType.ChatReplyTrigger, out responses);
+                    triggers.Add(new ChatReplyTrigger(TriggerType.ChatReplyTrigger, "ChatReplyTrigger", matches, responses));
+                }
             }
 
             isRunning = true;
