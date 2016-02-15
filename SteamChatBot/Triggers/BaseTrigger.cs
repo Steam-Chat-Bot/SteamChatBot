@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+
 using SteamKit2;
-using SteamChatBot;
+using Newtonsoft.Json;
 
 namespace SteamChatBot.Triggers
 {
@@ -9,9 +11,7 @@ namespace SteamChatBot.Triggers
     {
         public TriggerType Type { get; set; }
         public string Name { get; set; }
-        public string Command { get; set; }
-        public List<string> Matches { get; set; }
-        public List<string> Responses { get; set; }
+        public TriggerOptions Options { get; set; }
 
         public string UserName { get; set; }
         public string UserString { get; set; }
@@ -20,21 +20,14 @@ namespace SteamChatBot.Triggers
         {
             Type = type;
             Name = name;
+            Options = null;
         }
 
-        public BaseTrigger(TriggerType type, string name, string command)
+        public BaseTrigger(TriggerType type, string name, TriggerOptions options)
         {
             Type = type;
             Name = name;
-            Command = command;
-        }
-
-        public BaseTrigger(TriggerType type, string name, List<string> matches, List<string> responses)
-        {
-            Type = type;
-            Name = name;
-            Matches = matches;
-            Responses = responses;
+            Options = options;
         }
 
         /// <summary>
@@ -43,10 +36,74 @@ namespace SteamChatBot.Triggers
         /// <param name="cbn"></param>
         /// <param name="name"></param>
         /// <param name="error"></param>
-        /// <returns></returns>
+        /// <returns>string</returns>
         protected string IfError(string cbn, string name, string error)
         {
             return string.Format("{0}/{1}: Error: {2}", cbn, name, error);
+        }
+
+        /// <summary>
+        /// Save current trigger to file
+        /// </summary>
+        public void SaveTrigger()
+        {
+            if (!Directory.Exists("triggers/"))
+            {
+                Directory.CreateDirectory("triggers/");
+            }
+
+            if (Options != null)
+            {
+                TriggerOptions options = new TriggerOptions
+                {
+                    Delay = Options.Delay,
+                    Probability = Options.Probability,
+                    Timeout = Options.Timeout,
+                    Ignore = Options.Ignore,
+                    User = Options.User,
+                    Rooms = Options.Rooms,
+                    Command = Options.Command,
+                    Matches = Options.Matches,
+                    Responses = Options.Responses
+                };
+                string json = JsonConvert.SerializeObject(options, Formatting.Indented);
+                File.WriteAllText("triggers/" + Name + ".json", json);
+            }
+            else if (Options == null)
+            {
+                TriggerOptions options = new TriggerOptions();
+                string json = JsonConvert.SerializeObject(options, Formatting.Indented);
+                File.WriteAllText("triggers/" + Name + ".json", json);
+            }
+        }
+
+        public static List<BaseTrigger> ReadTriggers()
+        {
+            List<BaseTrigger> temp = new List<BaseTrigger>();
+            IEnumerable<string> files = Directory.EnumerateFiles("triggers/");
+            foreach (string file in files)
+            {
+                string _file = file.Substring(0, file.IndexOf("."));
+                TriggerOptions options = JsonConvert.DeserializeObject<TriggerOptions>(File.ReadAllText(file));
+                TriggerType type = (TriggerType)Enum.Parse(typeof(TriggerType), _file.Substring(_file.IndexOf('/') + 1));
+                if (type == TriggerType.AcceptFriendRequestTrigger)
+                {
+                    temp.Add(new AcceptFriendRequestTrigger(type, _file));
+                }
+                else if (type == TriggerType.ChatReplyTrigger)
+                {
+                    temp.Add(new ChatReplyTrigger(type, _file, options));
+                }
+                else if (type == TriggerType.IsUpTrigger)
+                {
+                    temp.Add(new IsUpTrigger(type, _file, options));
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return temp;
         }
 
         #region overriden methods
@@ -546,8 +603,8 @@ namespace SteamChatBot.Triggers
             return null;
         }
 
-        /*
-        protected bool checkIgnores(SteamID toID, SteamID fromID)
+        
+        protected bool CheckIgnores(SteamID toID, SteamID fromID)
         {
             if (Options.Ignore != null && Options.Ignore.Count > 0)
             {
@@ -564,13 +621,13 @@ namespace SteamChatBot.Triggers
             return false;
         }
 
-        protected bool checkRoom(SteamID toID)
+        protected bool CheckRoom(SteamID toID)
         {
-            if (Options.Room != null && Options.Room.Count > 0)
+            if (Options.Rooms != null && Options.Rooms.Count > 0)
             {
-                for (int i = 0; i < Options.Room.Count; i++)
+                for (int i = 0; i < Options.Rooms.Count; i++)
                 {
-                    SteamID room = Options.Room[i];
+                    SteamID room = Options.Rooms[i];
                     if (toID == room)
                     {
                         return true;
@@ -597,7 +654,6 @@ namespace SteamChatBot.Triggers
             }
             return false;
         }
-        */
 
         #endregion
 

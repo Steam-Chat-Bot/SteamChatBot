@@ -9,15 +9,15 @@ namespace SteamChatBot.Triggers
 {
     class ChatReplyTrigger : BaseTrigger
     {
-        public ChatReplyTrigger(TriggerType type, string name, List<string> matches, List<string> responses) : base(type, name, matches, responses)
+        public ChatReplyTrigger(TriggerType type, string name, TriggerOptions options) : base(type, name, options)
         { }
 
-        public override bool OnFriendMessage(SteamID userID, string message, bool haveSentMessage)
+        public override bool respondToFriendMessage(SteamID userID, string message)
         {
             return Respond(userID, userID, message, false);
         }
 
-        public override bool OnChatMessage(SteamID roomID, SteamID chatterID, string message, bool haveSentMessage)
+        public override bool respondToChatMessage(SteamID roomID, SteamID chatterID, string message)
         {
             return Respond(roomID, chatterID, message, true);
         }
@@ -35,13 +35,13 @@ namespace SteamChatBot.Triggers
 
         private bool CheckMessage(string message)
         {
-            if(Matches == null || Matches.Count == 0)
+            if(Options.Matches == null || Options.Matches.Count == 0)
             {
                 return true;
             }
-            for (int i = 0; i < Matches.Count; i++)
+            for (int i = 0; i < Options.Matches.Count; i++)
             {
-                string match = Matches[i];
+                string match = Options.Matches[i];
                 if(message.ToLower() == match.ToLower())
                 {
                     return true;
@@ -52,11 +52,11 @@ namespace SteamChatBot.Triggers
 
         private string PickResponse()
         {
-            if(Responses != null && Responses.Count > 0)
+            if(Options.Responses != null && Options.Responses.Count > 0)
             {
                 Random rnd = new Random();
-                int index = rnd.Next(0, Responses.Count);
-                return Responses[index];
+                int index = rnd.Next(0, Options.Responses.Count);
+                return Options.Responses[index];
             }
             return "";
         }

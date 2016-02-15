@@ -103,21 +103,45 @@ namespace SteamChatBot
 
             SubForCB();
 
-            foreach (CheckBox box in activeCheckBoxes)
+            if (activeCheckBoxes.Count == 0)
             {
-                if (box.Name == "isUpTriggerBox")
+                Log.Instance.Debug("Reading triggers from triggers folder...");
+                triggers = BaseTrigger.ReadTriggers();
+            }
+            else
+            {
+                foreach (CheckBox box in activeCheckBoxes)
                 {
-                    string command;
-                    commandList.TryGetValue(TriggerType.IsUpTrigger, out command);
-                    triggers.Add(new IsUpTrigger(TriggerType.IsUpTrigger, "IsUpTrigger", command));
+                    if (box.Name == "isUpTriggerBox")
+                    {
+                        string command;
+                        commandList.TryGetValue(TriggerType.IsUpTrigger, out command);
+                        triggers.Add(new IsUpTrigger(TriggerType.IsUpTrigger, "IsUpTrigger", new TriggerOptions { Command = command }));
+                    }
+                    if (box.Name == "chatReplyTriggerBox")
+                    {
+                        List<string> matches;
+                        List<string> responses;
+                        matchesList.TryGetValue(TriggerType.ChatReplyTrigger, out matches);
+                        responsesList.TryGetValue(TriggerType.ChatReplyTrigger, out responses);
+                        TriggerOptions options = new TriggerOptions()
+                        {
+                            Matches = matches,
+                            Responses = responses
+                        };
+
+                        triggers.Add(new ChatReplyTrigger(TriggerType.ChatReplyTrigger, "ChatReplyTrigger", options));
+                    }
+                    if (box.Name == "acceptFriendRequestTrigger")
+                    {
+                        triggers.Add(new AcceptFriendRequestTrigger(TriggerType.AcceptFriendRequestTrigger, "AcceptFriendRequestTrigger"));
+                    }
                 }
-                if(box.Name == "chatReplyTriggerBox")
+                Log.Instance.Verbose("Saving triggers...");
+                foreach (BaseTrigger trigger in triggers)
                 {
-                    List<string> matches;
-                    List<string> responses;
-                    matchesList.TryGetValue(TriggerType.ChatReplyTrigger, out matches);
-                    responsesList.TryGetValue(TriggerType.ChatReplyTrigger, out responses);
-                    triggers.Add(new ChatReplyTrigger(TriggerType.ChatReplyTrigger, "ChatReplyTrigger", matches, responses));
+                    trigger.SaveTrigger();
+                    Log.Instance.Silly("Trigger {0} saved", trigger.Name);
                 }
             }
 
@@ -173,10 +197,12 @@ namespace SteamChatBot
         {
             manager.Subscribe<SteamClient.ConnectedCallback>(OnConnected);
             manager.Subscribe<SteamClient.DisconnectedCallback>(OnDisconnected);
+
             manager.Subscribe<SteamUser.LoggedOnCallback>(OnLoggedOn);
             manager.Subscribe<SteamUser.LoggedOffCallback>(OnLoggedOff);
             manager.Subscribe<SteamUser.UpdateMachineAuthCallback>(OnUpdateMachineAuth);
             manager.Subscribe<SteamUser.AccountInfoCallback>(OnAccountInfo);
+
             manager.Subscribe<SteamFriends.ChatMsgCallback>(OnChatMsg);
             manager.Subscribe<SteamFriends.FriendMsgCallback>(OnFriendMsg);
             Log.Instance.Silly("Callback managers subscribed");
@@ -204,6 +230,13 @@ namespace SteamChatBot
         static void OnChatMsg(SteamFriends.ChatMsgCallback callback)
         {
             Log.Instance.Info("Chat Msg " + callback.ChatMsgType + " " + callback.ChatRoomID + ": " + callback.Message);
+            if(callback.ChatMsgType == EChatEntryType.ChatMsg)
+            {
+                foreach (BaseTrigger trigger in triggers)
+                {
+                    trigger.OnChatMessage(callback.ChatRoomID, callback.ChatterID, callback.Message, true);
+                }
+            }
         }
 
         static void OnConnected(SteamClient.ConnectedCallback callback)
@@ -278,6 +311,17 @@ namespace SteamChatBot
                 Log.Instance.Warn("EResult for logon: " + callback.Result + "/" + callback.ExtendedResult);
             }
         }
+
+        /*
+        static void OnFriendAdded(SteamFriends.FriendAddedCallback callback)
+        {
+            Log.Instance.Debug("{0} proposed friend add.", callback.SteamID);
+            foreach (BaseTrigger trigger in triggers)
+            {
+                trigger.OnFriendRequest(callback.SteamID);
+            }
+        }
+        */
 
         static void OnUpdateMachineAuth(SteamUser.UpdateMachineAuthCallback callback)
         {

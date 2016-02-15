@@ -51,6 +51,7 @@
                         <ColumnDefinition Width="373*"/>
                     </Grid.ColumnDefinitions>
                     <ListBox x:Name="triggerCheckBoxList" HorizontalAlignment="Left" Height="479" Margin="10,10,0,-30" VerticalAlignment="Top" Width="508" Grid.ColumnSpan="3">
+                        <CheckBox x:Name="acceptFriendRequestTrigger" Content="AcceptFriendRequestTrigger - Accepts all friend requests"/>
                         <CheckBox x:Name="chatReplyTriggerBox" Content="ChatReplyTrigger - Responds to a list of matches (separate with commas, no space)" GotFocus="chatReplyTriggerBox_GotFocus" Width="459"/>
                         <CheckBox x:Name="isUpTriggerBox" Content="IsUpTrigger - Determines if a website is online)" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="266" GotFocus="isUpTriggerBox_GotFocus"/>
                     </ListBox>
