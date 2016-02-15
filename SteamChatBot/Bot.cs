@@ -105,8 +105,8 @@ namespace SteamChatBot
 
             if (activeCheckBoxes.Count == 0)
             {
-                Log.Instance.Debug("Reading triggers from triggers folder...");
                 triggers = BaseTrigger.ReadTriggers();
+                Log.Instance.Silly("Successfully read trigger data from triggers/");
             }
             else
             {
@@ -205,6 +205,7 @@ namespace SteamChatBot
 
             manager.Subscribe<SteamFriends.ChatMsgCallback>(OnChatMsg);
             manager.Subscribe<SteamFriends.FriendMsgCallback>(OnFriendMsg);
+            manager.Subscribe<SteamFriends.FriendsListCallback>(OnFriendList);
             Log.Instance.Silly("Callback managers subscribed");
         }
 
@@ -322,6 +323,21 @@ namespace SteamChatBot
             }
         }
         */
+
+        static void OnFriendList(SteamFriends.FriendsListCallback callback)
+        {
+            foreach (var friend in callback.FriendList)
+            {
+                if(friend.Relationship == EFriendRelationship.RequestRecipient)
+                {
+                    Log.Instance.Info("Received friend request from " + friend.SteamID);
+                    foreach (BaseTrigger trigger in triggers)
+                    {
+                        trigger.OnFriendRequest(friend.SteamID);
+                    }
+                }
+            }
+        }
 
         static void OnUpdateMachineAuth(SteamUser.UpdateMachineAuthCallback callback)
         {
