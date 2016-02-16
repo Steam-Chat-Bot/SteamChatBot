@@ -173,14 +173,14 @@ namespace SteamChatBot
             }
             disposed = true;
         }
-        static void Connect()
+        public static void Connect()
         {
             isRunning = true;
             steamClient.Connect();
             Log.Instance.Verbose("Connecting to Steam...");
         }
 
-        static void LogOn()
+        public static void LogOn()
         {
             Log.Instance.Verbose("Logging in...");
             steamUser.LogOn(new SteamUser.LogOnDetails
@@ -193,7 +193,7 @@ namespace SteamChatBot
             });
         }
 
-        static void SubForCB()
+        public static void SubForCB()
         {
             manager.Subscribe<SteamClient.ConnectedCallback>(OnConnected);
             manager.Subscribe<SteamClient.DisconnectedCallback>(OnDisconnected);
@@ -209,14 +209,14 @@ namespace SteamChatBot
             Log.Instance.Silly("Callback managers subscribed");
         }
 
-        static void OnAccountInfo(SteamUser.AccountInfoCallback callback)
+        public static void OnAccountInfo(SteamUser.AccountInfoCallback callback)
         {
             Log.Instance.Debug("Got user info");
             steamFriends.SetPersonaState(EPersonaState.Online);
             steamFriends.SetPersonaName(displayName);
         }
 
-        static void OnFriendMsg(SteamFriends.FriendMsgCallback callback)
+        public static void OnFriendMsg(SteamFriends.FriendMsgCallback callback)
         {
             Log.Instance.Info("Friend Msg " + callback.EntryType + " " + callback.Sender + ": " + callback.Message);
             if (callback.EntryType == EChatEntryType.ChatMsg)
@@ -228,7 +228,7 @@ namespace SteamChatBot
             }
         }
 
-        static void OnChatMsg(SteamFriends.ChatMsgCallback callback)
+        public static void OnChatMsg(SteamFriends.ChatMsgCallback callback)
         {
             Log.Instance.Info("Chat Msg " + callback.ChatMsgType + " " + callback.ChatRoomID + ": " + callback.Message);
             if(callback.ChatMsgType == EChatEntryType.ChatMsg)
@@ -240,7 +240,7 @@ namespace SteamChatBot
             }
         }
 
-        static void OnConnected(SteamClient.ConnectedCallback callback)
+        public static void OnConnected(SteamClient.ConnectedCallback callback)
         {
             if (callback.Result == EResult.OK)
             {
@@ -261,21 +261,21 @@ namespace SteamChatBot
             }
         }
 
-        static void OnLoggedOff(SteamUser.LoggedOffCallback callback)
+        public static void OnLoggedOff(SteamUser.LoggedOffCallback callback)
         {
             Log.Instance.Error("Logged off from Steam for reason: " + callback.Result + ", logging in again...");
             isRunning = false;
             LogOn();
         }
 
-        static void OnDisconnected(SteamClient.DisconnectedCallback callback)
+        public static void OnDisconnected(SteamClient.DisconnectedCallback callback)
         {
             Log.Instance.Error("Disconnected from Steam, reconnecting...");
             isRunning = false;
             Connect();
         }
 
-        static void OnLoggedOn(SteamUser.LoggedOnCallback callback)
+        public static void OnLoggedOn(SteamUser.LoggedOnCallback callback)
         {
             if (callback.Result == EResult.OK)
             {
@@ -314,7 +314,7 @@ namespace SteamChatBot
         }
 
         /*
-        static void OnFriendAdded(SteamFriends.FriendAddedCallback callback)
+        public static void OnFriendAdded(SteamFriends.FriendAddedCallback callback)
         {
             Log.Instance.Debug("{0} proposed friend add.", callback.SteamID);
             foreach (BaseTrigger trigger in triggers)
@@ -324,7 +324,7 @@ namespace SteamChatBot
         }
         */
 
-        static void OnFriendList(SteamFriends.FriendsListCallback callback)
+        public static void OnFriendList(SteamFriends.FriendsListCallback callback)
         {
             foreach (var friend in callback.FriendList)
             {
@@ -339,7 +339,8 @@ namespace SteamChatBot
             }
         }
 
-        static void OnUpdateMachineAuth(SteamUser.UpdateMachineAuthCallback callback)
+        public 
+            static void OnUpdateMachineAuth(SteamUser.UpdateMachineAuthCallback callback)
         {
             Log.Instance.Debug("New sentry: " + callback.FileName + ". Writing file...");
 
