@@ -36,6 +36,11 @@ namespace SteamChatBot
             InitializeComponent();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            MakeAllInvisible();
+        }
+
         Log Log;
         string logFile;
         string sentryFile;
@@ -155,6 +160,14 @@ namespace SteamChatBot
             responsesLabel.Visibility = Visibility.Hidden;
             responsesBox.Visibility = Visibility.Hidden;
             responsesDoneButton.Visibility = Visibility.Hidden;
+
+            timeoutLabel.Visibility = Visibility.Hidden;
+            timeoutBox.Visibility = Visibility.Hidden;
+            timeoutDoneButton.Visibility = Visibility.Hidden;
+
+            delayLabel.Visibility = Visibility.Hidden;
+            delayBox.Visibility = Visibility.Hidden;
+            delayDoneButton.Visibility = Visibility.Hidden;
         }
 
         private void isUpTriggerBox_GotFocus(object sender, RoutedEventArgs e)
@@ -163,7 +176,17 @@ namespace SteamChatBot
             commandBox.Visibility = Visibility.Visible;
             commandLabel.Visibility = Visibility.Visible;
             commandDoneButton.Visibility = Visibility.Visible;
+
+            timeoutLabel.Visibility = Visibility.Visible;
+            timeoutBox.Visibility = Visibility.Visible;
+            timeoutDoneButton.Visibility = Visibility.Visible;
+
+            delayLabel.Visibility = Visibility.Visible;
+            delayBox.Visibility = Visibility.Visible;
+            delayDoneButton.Visibility = Visibility.Visible;
+
             selectedElement = TriggerType.IsUpTrigger;
+
         }
 
         private void commandDoneButton_Click(object sender, RoutedEventArgs e)
@@ -192,9 +215,18 @@ namespace SteamChatBot
             matchesLabel.Visibility = Visibility.Visible;
             responsesLabel.Visibility = Visibility.Visible;
             matchesBox.Visibility = Visibility.Visible;
+
             responsesBox.Visibility = Visibility.Visible;
             matchesDoneButton.Visibility = Visibility.Visible;
             responsesDoneButton.Visibility = Visibility.Visible;
+
+            timeoutLabel.Visibility = Visibility.Visible;
+            timeoutBox.Visibility = Visibility.Visible;
+            timeoutDoneButton.Visibility = Visibility.Visible;
+
+            delayLabel.Visibility = Visibility.Visible;
+            delayBox.Visibility = Visibility.Visible;
+            delayDoneButton.Visibility = Visibility.Visible;
             selectedElement = TriggerType.ChatReplyTrigger;
         }
 
@@ -245,6 +277,44 @@ namespace SteamChatBot
                 responsesLabel.Visibility = Visibility.Hidden;
                 responsesBox.Visibility = Visibility.Hidden;
                 responsesDoneButton.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void delayDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(Bot.delays.ContainsKey(selectedElement))
+            {
+                MessageBox.Show("You already have a delay for this trigger type.", "Error");
+                delayLabel.Visibility = Visibility.Hidden;
+                delayBox.Visibility = Visibility.Hidden;
+                delayDoneButton.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                Bot.delays.Add(selectedElement, Convert.ToInt32(delayBox.Text));
+                MessageBox.Show("Trigger delay added successfully.", "Success");
+                delayLabel.Visibility = Visibility.Hidden;
+                delayBox.Visibility = Visibility.Hidden;
+                delayDoneButton.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void timeoutDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Bot.timeouts.ContainsKey(selectedElement))
+            {
+                MessageBox.Show("You already have a timeout for this trigger type.", "Error");
+                timeoutLabel.Visibility = Visibility.Hidden;
+                timeoutBox.Visibility = Visibility.Hidden;
+                timeoutDoneButton.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                Bot.timeouts.Add(selectedElement, Convert.ToInt32(timeoutBox.Text));
+                MessageBox.Show("Trigger timeout added successfully.", "Success");
+                timeoutLabel.Visibility = Visibility.Hidden;
+                timeoutBox.Visibility = Visibility.Hidden;
+                timeoutDoneButton.Visibility = Visibility.Hidden;
             }
         }
 
