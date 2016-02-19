@@ -169,11 +169,11 @@ namespace SteamChatBot
             delayBox.IsEnabled = false;
             delayDoneButton.IsEnabled = false;
 
-            /*
+            
             probLabel.IsEnabled = false;
             probBox.IsEnabled = false;
             probDoneButton.IsEnabled = false;
-            */
+            
 
         }
 
@@ -192,11 +192,11 @@ namespace SteamChatBot
             delayBox.IsEnabled = true;
             delayDoneButton.IsEnabled = true;
 
-            /*
+            
             probLabel.IsEnabled = true;
             probBox.IsEnabled = true;
             probDoneButton.IsEnabled = true;
-            */
+            
 
             selectedElement = TriggerType.IsUpTrigger;
 
@@ -241,11 +241,11 @@ namespace SteamChatBot
             delayBox.IsEnabled = true;
             delayDoneButton.IsEnabled = true;
 
-            /*
+            
             probLabel.IsEnabled = true;
             probBox.IsEnabled = true;
             probDoneButton.IsEnabled = true;
-            */
+            
 
             selectedElement = TriggerType.ChatReplyTrigger;
         }
@@ -338,7 +338,7 @@ namespace SteamChatBot
             }
         }
 
-        /*
+        
         private void probDoneButton_Click(object sender, RoutedEventArgs e)
         {
             if(Bot.probs.ContainsKey(selectedElement))
@@ -360,7 +360,7 @@ namespace SteamChatBot
                 }
             }
         }
-        */
+        
 
         private void acceptFriendRequestTrigger_GotFocus(object sender, RoutedEventArgs e)
         {

@@ -230,7 +230,7 @@ namespace SteamChatBot.Triggers
         /// <returns></returns>
         public virtual bool OnFriendMessage(SteamID userID, string message, bool haveSentMessage)
         {
-            if (ReplyEnabled && CheckUser(userID) && !CheckIgnores(userID, null))
+            if (ReplyEnabled && RandomRoll() && CheckUser(userID) && !CheckIgnores(userID, null))
             {
                 try
                 {
@@ -392,7 +392,7 @@ namespace SteamChatBot.Triggers
         /// <returns></returns>
         public virtual bool OnChatMessage(SteamID roomID, SteamID chatterID, string message, bool haveSentMessage)
         {
-            if (ReplyEnabled && CheckUser(chatterID) && CheckRoom(roomID) && CheckIgnores(chatterID, roomID))
+            if (ReplyEnabled && RandomRoll() && CheckUser(chatterID) && CheckRoom(roomID) && CheckIgnores(chatterID, roomID))
             {
                 try
                 {
@@ -422,7 +422,7 @@ namespace SteamChatBot.Triggers
         /// <returns></returns>
         public virtual bool OnEnteredChat(SteamID roomID, SteamID userID, bool haveSentMessage)
         {
-            if (ReplyEnabled && CheckRoom(roomID) && CheckUser(userID) && CheckIgnores(userID, roomID))
+            if (ReplyEnabled && RandomRoll() && CheckRoom(roomID) && CheckUser(userID) && CheckIgnores(userID, roomID))
             {
                 try
                 {
@@ -452,7 +452,7 @@ namespace SteamChatBot.Triggers
         /// <returns></returns>
         public virtual bool OnKickedChat(SteamID roomID, SteamID kickedID, SteamID kickerID, bool haveSentMessage)
         {
-            if (ReplyEnabled && CheckRoom(roomID)) {
+            if (ReplyEnabled && RandomRoll() && CheckRoom(roomID)) {
                 try
                 {
                     bool messageSent = respondToKick(roomID, kickedID, kickerID);
@@ -481,7 +481,7 @@ namespace SteamChatBot.Triggers
         /// <returns></returns>
         public virtual bool OnBannedChat(SteamID roomID, SteamID bannedID, SteamID bannerID, bool haveSentMessage)
         {
-            if (ReplyEnabled && CheckRoom(roomID))
+            if (ReplyEnabled && RandomRoll() && CheckRoom(roomID))
             {
                 try
                 {
@@ -509,7 +509,7 @@ namespace SteamChatBot.Triggers
         /// <returns></returns>
         public virtual bool OnDisconnected(SteamID roomID, SteamID userID, bool haveSentMessage)
         {
-            if (ReplyEnabled && CheckRoom(roomID) && CheckUser(userID) && !CheckIgnores(userID, roomID))
+            if (ReplyEnabled && RandomRoll() && CheckRoom(roomID) && CheckUser(userID) && !CheckIgnores(userID, roomID))
             {
                 try
                 {
@@ -531,7 +531,7 @@ namespace SteamChatBot.Triggers
 
         public virtual bool OnLeftChat(SteamID roomID, SteamID userID)
         {
-            if (ReplyEnabled && CheckRoom(roomID) && CheckUser(userID) && !CheckIgnores(roomID, userID))
+            if (ReplyEnabled && RandomRoll() && CheckRoom(roomID) && CheckUser(userID) && !CheckIgnores(roomID, userID))
             {
                 try
                 {
@@ -748,7 +748,6 @@ namespace SteamChatBot.Triggers
             return true;
         }
 
-        /*
         protected bool RandomRoll()
         {
             if(Options.Probability != null || Options.Probability != 0)
@@ -761,7 +760,6 @@ namespace SteamChatBot.Triggers
             }
             return true;
         }
-        */
 
         protected void DisableForTimeout()
         {

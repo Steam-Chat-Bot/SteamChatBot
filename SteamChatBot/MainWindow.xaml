@@ -70,6 +70,9 @@
                     <Label x:Name="timeoutLabel" Content="Timeout (ms):" Grid.Column="2" HorizontalAlignment="Left" Margin="100,90,0,0" VerticalAlignment="Top" Visibility="Visible"/>
                     <Button x:Name="timeoutDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,90,0,0" VerticalAlignment="Top" Width="90" Click="timeoutDoneButton_Click" Visibility="Visible"/>
                     <TextBox x:Name="timeoutBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="187,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
+                    <Label x:Name="probLabel" Content="Probability (%):" Grid.Column="2" HorizontalAlignment="Left" Margin="92,205,0,0" VerticalAlignment="Top" Visibility="Visible"/>
+                    <Button x:Name="probDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,208,0,0" VerticalAlignment="Top" Width="90" Click="probDoneButton_Click" Visibility="Visible"/>
+                    <TextBox x:Name="probBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="187,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
                 </Grid>
             </TabItem>
         </TabControl>

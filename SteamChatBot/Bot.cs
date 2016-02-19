@@ -37,7 +37,7 @@ namespace SteamChatBot
         public static Dictionary<TriggerType, List<string>> responsesList = new Dictionary<TriggerType, List<string>>();
         public static Dictionary<TriggerType, int> delays = new Dictionary<TriggerType, int>();
         public static Dictionary<TriggerType, int> timeouts = new Dictionary<TriggerType, int>();
-        //public static Dictionary<TriggerType, int> probs = new Dictionary<TriggerType, int>();
+        public static Dictionary<TriggerType, int> probs = new Dictionary<TriggerType, int>();
         
         #endregion
 
@@ -124,17 +124,17 @@ namespace SteamChatBot
                         string command;
                         int timeout;
                         int delay;
-                        //int probability;
+                        int probability;
                         delays.TryGetValue(TriggerType.IsUpTrigger, out delay);
                         timeouts.TryGetValue(TriggerType.IsUpTrigger, out timeout);
                         commandList.TryGetValue(TriggerType.IsUpTrigger, out command);
-                        //probs.TryGetValue(TriggerType.IsUpTrigger, out probability);
+                        probs.TryGetValue(TriggerType.IsUpTrigger, out probability);
                         TriggerOptions options = new TriggerOptions
                         {
                             Command = command,
                             Delay = delay,
-                            Timeout = timeout
-                            //Probability = probability != 0 ? probability / 100 : 1
+                            Timeout = timeout,
+                            Probability = probability != 0 ? probability / 100 : 1
                         };
                         triggers.Add(new IsUpTrigger(TriggerType.IsUpTrigger, "IsUpTrigger", options));
                     }
@@ -144,19 +144,19 @@ namespace SteamChatBot
                         List<string> responses;
                         int timeout;
                         int delay;
-                        //int probability;
+                        int probability;
                         delays.TryGetValue(TriggerType.ChatReplyTrigger, out delay);
                         timeouts.TryGetValue(TriggerType.ChatReplyTrigger, out timeout);
                         matchesList.TryGetValue(TriggerType.ChatReplyTrigger, out matches);
                         responsesList.TryGetValue(TriggerType.ChatReplyTrigger, out responses);
-                        //probs.TryGetValue(TriggerType.ChatReplyTrigger, out probability);
+                        probs.TryGetValue(TriggerType.ChatReplyTrigger, out probability);
                         TriggerOptions options = new TriggerOptions()
                         {
                             Delay = delay,
                             Timeout = timeout,
                             Matches = matches,
-                            Responses = responses
-                            //Probability = probability != 0 ? probability / 100 : 1
+                            Responses = responses,
+                            Probability = probability != 0 ? probability / 100 : 1
                         };
 
                         triggers.Add(new ChatReplyTrigger(TriggerType.ChatReplyTrigger, "ChatReplyTrigger", options));
