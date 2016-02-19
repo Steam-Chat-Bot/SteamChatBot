@@ -38,7 +38,7 @@ namespace SteamChatBot
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            MakeAllInvisible();
+            DisableAll();
         }
 
         Log Log;
@@ -147,43 +147,56 @@ namespace SteamChatBot
 
         #region dynamic trigger options
 
-        private void MakeAllInvisible()
+        private void DisableAll()
         {
-            commandBox.Visibility = Visibility.Hidden;
-            commandLabel.Visibility = Visibility.Hidden;
-            commandDoneButton.Visibility = Visibility.Hidden;
+            commandBox.IsEnabled = false;
+            commandLabel.IsEnabled = false;
+            commandDoneButton.IsEnabled = false;
 
-            matchesLabel.Visibility = Visibility.Hidden;
-            matchesBox.Visibility = Visibility.Hidden;
-            matchesDoneButton.Visibility = Visibility.Hidden;
+            matchesLabel.IsEnabled = false;
+            matchesBox.IsEnabled = false;
+            matchesDoneButton.IsEnabled = false;
 
-            responsesLabel.Visibility = Visibility.Hidden;
-            responsesBox.Visibility = Visibility.Hidden;
-            responsesDoneButton.Visibility = Visibility.Hidden;
+            responsesLabel.IsEnabled = false;
+            responsesBox.IsEnabled = false;
+            responsesDoneButton.IsEnabled = false;
 
-            timeoutLabel.Visibility = Visibility.Hidden;
-            timeoutBox.Visibility = Visibility.Hidden;
-            timeoutDoneButton.Visibility = Visibility.Hidden;
+            timeoutLabel.IsEnabled = false;
+            timeoutBox.IsEnabled = false;
+            timeoutDoneButton.IsEnabled = false;
 
-            delayLabel.Visibility = Visibility.Hidden;
-            delayBox.Visibility = Visibility.Hidden;
-            delayDoneButton.Visibility = Visibility.Hidden;
+            delayLabel.IsEnabled = false;
+            delayBox.IsEnabled = false;
+            delayDoneButton.IsEnabled = false;
+
+            /*
+            probLabel.IsEnabled = false;
+            probBox.IsEnabled = false;
+            probDoneButton.IsEnabled = false;
+            */
+
         }
 
         private void isUpTriggerBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            MakeAllInvisible();
-            commandBox.Visibility = Visibility.Visible;
-            commandLabel.Visibility = Visibility.Visible;
-            commandDoneButton.Visibility = Visibility.Visible;
+            DisableAll();
+            commandBox.IsEnabled = true;
+            commandLabel.IsEnabled = true;
+            commandDoneButton.IsEnabled = true;
 
-            timeoutLabel.Visibility = Visibility.Visible;
-            timeoutBox.Visibility = Visibility.Visible;
-            timeoutDoneButton.Visibility = Visibility.Visible;
+            timeoutLabel.IsEnabled = true;
+            timeoutBox.IsEnabled = true;
+            timeoutDoneButton.IsEnabled = true;
 
-            delayLabel.Visibility = Visibility.Visible;
-            delayBox.Visibility = Visibility.Visible;
-            delayDoneButton.Visibility = Visibility.Visible;
+            delayLabel.IsEnabled = true;
+            delayBox.IsEnabled = true;
+            delayDoneButton.IsEnabled = true;
+
+            /*
+            probLabel.IsEnabled = true;
+            probBox.IsEnabled = true;
+            probDoneButton.IsEnabled = true;
+            */
 
             selectedElement = TriggerType.IsUpTrigger;
 
@@ -194,39 +207,46 @@ namespace SteamChatBot
             if (Bot.commandList.ContainsKey(TriggerType.IsUpTrigger))
             {
                 MessageBox.Show("You already have a command for this trigger type.", "Error");
-                commandBox.Visibility = Visibility.Hidden;
-                commandLabel.Visibility = Visibility.Hidden;
-                commandDoneButton.Visibility = Visibility.Hidden;
+                commandBox.IsEnabled = false;
+                commandLabel.IsEnabled = false;
+                commandDoneButton.IsEnabled = false;
             }
             else
             {
                 Bot.commandList.Add(selectedElement, commandBox.Text);
                 MessageBox.Show("Trigger command added successfully.", "Success");
-                commandBox.Visibility = Visibility.Hidden;
-                commandLabel.Visibility = Visibility.Hidden;
-                commandDoneButton.Visibility = Visibility.Hidden;
+                commandBox.IsEnabled = false;
+                commandLabel.IsEnabled = false;
+                commandDoneButton.IsEnabled = false;
             }
         }
 
         private void chatReplyTriggerBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            MakeAllInvisible();
+            DisableAll();
 
-            matchesLabel.Visibility = Visibility.Visible;
-            responsesLabel.Visibility = Visibility.Visible;
-            matchesBox.Visibility = Visibility.Visible;
+            matchesLabel.IsEnabled = true;
+            matchesBox.IsEnabled = true;
+            matchesDoneButton.IsEnabled = true;
 
-            responsesBox.Visibility = Visibility.Visible;
-            matchesDoneButton.Visibility = Visibility.Visible;
-            responsesDoneButton.Visibility = Visibility.Visible;
+            responsesLabel.IsEnabled = true;
+            responsesBox.IsEnabled = true;
+            responsesDoneButton.IsEnabled = true;
 
-            timeoutLabel.Visibility = Visibility.Visible;
-            timeoutBox.Visibility = Visibility.Visible;
-            timeoutDoneButton.Visibility = Visibility.Visible;
+            timeoutLabel.IsEnabled = true;
+            timeoutBox.IsEnabled = true;
+            timeoutDoneButton.IsEnabled = true;
 
-            delayLabel.Visibility = Visibility.Visible;
-            delayBox.Visibility = Visibility.Visible;
-            delayDoneButton.Visibility = Visibility.Visible;
+            delayLabel.IsEnabled = true;
+            delayBox.IsEnabled = true;
+            delayDoneButton.IsEnabled = true;
+
+            /*
+            probLabel.IsEnabled = true;
+            probBox.IsEnabled = true;
+            probDoneButton.IsEnabled = true;
+            */
+
             selectedElement = TriggerType.ChatReplyTrigger;
         }
 
@@ -235,9 +255,9 @@ namespace SteamChatBot
             if(Bot.matchesList.ContainsKey(TriggerType.ChatReplyTrigger))
             {
                 MessageBox.Show("You already have matches for this trigger type.", "Error");
-                matchesLabel.Visibility = Visibility.Hidden;
-                matchesBox.Visibility = Visibility.Hidden;
-                matchesDoneButton.Visibility = Visibility.Hidden;
+                matchesLabel.IsEnabled = false;
+                matchesBox.IsEnabled = false;
+                matchesDoneButton.IsEnabled = false;
             }
             else
             {
@@ -249,9 +269,9 @@ namespace SteamChatBot
                 }
                 Bot.matchesList.Add(TriggerType.ChatReplyTrigger, _matches);
                 MessageBox.Show("Trigger matches added successfully", "Success");
-                matchesLabel.Visibility = Visibility.Hidden;
-                matchesBox.Visibility = Visibility.Hidden;
-                matchesDoneButton.Visibility = Visibility.Hidden;
+                matchesLabel.IsEnabled = false;
+                matchesBox.IsEnabled = false;
+                matchesDoneButton.IsEnabled = false;
             }
         }
 
@@ -260,9 +280,9 @@ namespace SteamChatBot
             if (Bot.responsesList.ContainsKey(TriggerType.ChatReplyTrigger))
             {
                 MessageBox.Show("You already have responses for this trigger type.", "Error");
-                responsesLabel.Visibility = Visibility.Hidden;
-                responsesBox.Visibility = Visibility.Hidden;
-                responsesDoneButton.Visibility = Visibility.Hidden;
+                responsesLabel.IsEnabled = false;
+                responsesBox.IsEnabled = false;
+                responsesDoneButton.IsEnabled = false;
             }
             else
             {
@@ -274,9 +294,9 @@ namespace SteamChatBot
                 }
                 Bot.responsesList.Add(TriggerType.ChatReplyTrigger, _responses);
                 MessageBox.Show("Trigger responses added successfully", "Success");
-                responsesLabel.Visibility = Visibility.Hidden;
-                responsesBox.Visibility = Visibility.Hidden;
-                responsesDoneButton.Visibility = Visibility.Hidden;
+                responsesLabel.IsEnabled = false;
+                responsesBox.IsEnabled = false;
+                responsesDoneButton.IsEnabled = false;
             }
         }
 
@@ -285,17 +305,17 @@ namespace SteamChatBot
             if(Bot.delays.ContainsKey(selectedElement))
             {
                 MessageBox.Show("You already have a delay for this trigger type.", "Error");
-                delayLabel.Visibility = Visibility.Hidden;
-                delayBox.Visibility = Visibility.Hidden;
-                delayDoneButton.Visibility = Visibility.Hidden;
+                delayLabel.IsEnabled = false;
+                delayBox.IsEnabled = false;
+                delayDoneButton.IsEnabled = false;
             }
             else
             {
                 Bot.delays.Add(selectedElement, Convert.ToInt32(delayBox.Text));
                 MessageBox.Show("Trigger delay added successfully.", "Success");
-                delayLabel.Visibility = Visibility.Hidden;
-                delayBox.Visibility = Visibility.Hidden;
-                delayDoneButton.Visibility = Visibility.Hidden;
+                delayLabel.IsEnabled = false;
+                delayBox.IsEnabled = false;
+                delayDoneButton.IsEnabled = false;
             }
         }
 
@@ -304,18 +324,49 @@ namespace SteamChatBot
             if (Bot.timeouts.ContainsKey(selectedElement))
             {
                 MessageBox.Show("You already have a timeout for this trigger type.", "Error");
-                timeoutLabel.Visibility = Visibility.Hidden;
-                timeoutBox.Visibility = Visibility.Hidden;
-                timeoutDoneButton.Visibility = Visibility.Hidden;
+                timeoutLabel.IsEnabled = true;
+                timeoutBox.IsEnabled = true;
+                timeoutDoneButton.IsEnabled = true;
             }
             else
             {
                 Bot.timeouts.Add(selectedElement, Convert.ToInt32(timeoutBox.Text));
                 MessageBox.Show("Trigger timeout added successfully.", "Success");
-                timeoutLabel.Visibility = Visibility.Hidden;
-                timeoutBox.Visibility = Visibility.Hidden;
-                timeoutDoneButton.Visibility = Visibility.Hidden;
+                timeoutLabel.IsEnabled = true;
+                timeoutBox.IsEnabled = true;
+                timeoutDoneButton.IsEnabled = true;
             }
+        }
+
+        /*
+        private void probDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(Bot.probs.ContainsKey(selectedElement))
+            {
+                MessageBox.Show("You already have a probability for this trigger type.", "Error");
+                probLabel.IsEnabled = false;
+                probBox.IsEnabled = false;
+                probDoneButton.IsEnabled = false;
+            }
+            else
+            {
+                if (probBox.Text != "")
+                {
+                    Bot.probs.Add(selectedElement, Convert.ToInt32(probBox.Text));
+                    MessageBox.Show("Trigger probability added successfully.", "Success");
+                    probLabel.IsEnabled = false;
+                    probBox.IsEnabled = false;
+                    probDoneButton.IsEnabled = false;
+                }
+            }
+        }
+        */
+
+        private void acceptFriendRequestTrigger_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            selectedElement = TriggerType.AcceptFriendRequestTrigger;
         }
 
         #endregion

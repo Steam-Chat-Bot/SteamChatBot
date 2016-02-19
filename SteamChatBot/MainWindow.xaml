@@ -50,9 +50,9 @@
                         <ColumnDefinition Width="372*"/>
                         <ColumnDefinition Width="373*"/>
                     </Grid.ColumnDefinitions>
-                    <ListBox x:Name="triggerCheckBoxList" HorizontalAlignment="Left" Height="479" Margin="10,10,0,-34" VerticalAlignment="Top" Width="500" Grid.ColumnSpan="3">
-                        <CheckBox x:Name="acceptFriendRequestTrigger" Content="AcceptFriendRequestTrigger - Accepts all friend requests"/>
-                        <CheckBox x:Name="chatReplyTriggerBox" Content="ChatReplyTrigger - Responds to a list of matches (separate with commas, no space)" GotFocus="chatReplyTriggerBox_GotFocus" Width="459"/>
+                    <ListBox x:Name="triggerCheckBoxList" HorizontalAlignment="Left" Height="479" Margin="10,10,0,-30" VerticalAlignment="Top" Width="494" Grid.ColumnSpan="3">
+                        <CheckBox x:Name="acceptFriendRequestTrigger" Content="AcceptFriendRequestTrigger - Accepts all friend requests" GotFocus="acceptFriendRequestTrigger_GotFocus"/>
+                        <CheckBox x:Name="chatReplyTriggerBox" Content="ChatReplyTrigger - Responds to a list of matches" GotFocus="chatReplyTriggerBox_GotFocus" Width="459"/>
                         <CheckBox x:Name="isUpTriggerBox" Content="IsUpTrigger - Determines if a website is online)" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="266" GotFocus="isUpTriggerBox_GotFocus"/>
                     </ListBox>
                     <Label x:Name="commandLabel" Content="Command:" Grid.Column="2" Margin="122,8,184,420" Visibility="Visible"/>

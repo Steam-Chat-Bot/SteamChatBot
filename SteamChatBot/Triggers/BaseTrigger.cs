@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 
 using SteamKit2;
 using Newtonsoft.Json;
@@ -14,7 +16,7 @@ namespace SteamChatBot.Triggers
         public string Name { get; set; }
         public TriggerOptions Options { get; set; }
 
-        public bool ReplyEnabled { get; set; }
+        public bool ReplyEnabled = true;
         public string UserName { get; set; }
         public string UserString { get; set; }
 
@@ -228,7 +230,7 @@ namespace SteamChatBot.Triggers
         /// <returns></returns>
         public virtual bool OnFriendMessage(SteamID userID, string message, bool haveSentMessage)
         {
-            if (ReplyEnabled && RandomRoll() && CheckUser(userID) && !CheckIgnores(userID, null))
+            if (ReplyEnabled && CheckUser(userID) && !CheckIgnores(userID, null))
             {
                 try
                 {
@@ -390,7 +392,7 @@ namespace SteamChatBot.Triggers
         /// <returns></returns>
         public virtual bool OnChatMessage(SteamID roomID, SteamID chatterID, string message, bool haveSentMessage)
         {
-            if (ReplyEnabled && RandomRoll() && CheckUser(chatterID) && CheckRoom(roomID) && CheckIgnores(chatterID, roomID))
+            if (ReplyEnabled && CheckUser(chatterID) && CheckRoom(roomID) && CheckIgnores(chatterID, roomID))
             {
                 try
                 {
@@ -420,7 +422,7 @@ namespace SteamChatBot.Triggers
         /// <returns></returns>
         public virtual bool OnEnteredChat(SteamID roomID, SteamID userID, bool haveSentMessage)
         {
-            if (ReplyEnabled && RandomRoll() && CheckRoom(roomID) && CheckUser(userID) && CheckIgnores(userID, roomID))
+            if (ReplyEnabled && CheckRoom(roomID) && CheckUser(userID) && CheckIgnores(userID, roomID))
             {
                 try
                 {
@@ -450,7 +452,7 @@ namespace SteamChatBot.Triggers
         /// <returns></returns>
         public virtual bool OnKickedChat(SteamID roomID, SteamID kickedID, SteamID kickerID, bool haveSentMessage)
         {
-            if (ReplyEnabled && RandomRoll() && CheckRoom(roomID)) {
+            if (ReplyEnabled && CheckRoom(roomID)) {
                 try
                 {
                     bool messageSent = respondToKick(roomID, kickedID, kickerID);
@@ -479,7 +481,7 @@ namespace SteamChatBot.Triggers
         /// <returns></returns>
         public virtual bool OnBannedChat(SteamID roomID, SteamID bannedID, SteamID bannerID, bool haveSentMessage)
         {
-            if (ReplyEnabled && RandomRoll() && CheckRoom(roomID))
+            if (ReplyEnabled && CheckRoom(roomID))
             {
                 try
                 {
@@ -507,7 +509,7 @@ namespace SteamChatBot.Triggers
         /// <returns></returns>
         public virtual bool OnDisconnected(SteamID roomID, SteamID userID, bool haveSentMessage)
         {
-            if (ReplyEnabled && RandomRoll() && CheckRoom(roomID) && CheckUser(userID) && !CheckIgnores(userID, roomID))
+            if (ReplyEnabled && CheckRoom(roomID) && CheckUser(userID) && !CheckIgnores(userID, roomID))
             {
                 try
                 {
@@ -529,7 +531,7 @@ namespace SteamChatBot.Triggers
 
         public virtual bool OnLeftChat(SteamID roomID, SteamID userID)
         {
-            if (ReplyEnabled && RandomRoll() && CheckRoom(roomID) && CheckUser(userID) && !CheckIgnores(roomID, userID))
+            if (ReplyEnabled && CheckRoom(roomID) && CheckUser(userID) && !CheckIgnores(roomID, userID))
             {
                 try
                 {
@@ -658,12 +660,12 @@ namespace SteamChatBot.Triggers
         /// <param name="room"></param>
         protected void SendMessageAfterDelay(SteamID steamID, string message, bool room)
         {
-            if(Options.Delay != null)
+            if (Options.Delay != 0 || Options.Delay != null)
             {
-                Thread.Sleep(Options.Delay.Value);
                 Log.Instance.Silly("{0}/{1}: Sending delayed message to {2}: {3}", Bot.username, Name, steamID, message);
+                Thread.Sleep(Options.Delay.Value);
                 if (room)
-                {
+                {   
                     Bot.steamFriends.SendChatRoomMessage(steamID, EChatEntryType.ChatMsg, message);
                 }
                 else
@@ -743,12 +745,13 @@ namespace SteamChatBot.Triggers
                 }
                 return false;
             }
-            return false;
+            return true;
         }
 
+        /*
         protected bool RandomRoll()
         {
-            if(Options.Probability != null)
+            if(Options.Probability != null || Options.Probability != 0)
             {
                 double rng = new Random().Next(0, 1);
                 if(rng > Options.Probability)
@@ -758,10 +761,11 @@ namespace SteamChatBot.Triggers
             }
             return true;
         }
+        */
 
         protected void DisableForTimeout()
         {
-            if(Options.Timeout != null)
+            if(Options.Timeout != 0 || Options.Timeout != null)
             {
                 ReplyEnabled = false;
                 Log.Instance.Silly("{0}/{1}: Setting timeout ({2} ms)", Bot.username, Name, Options.Timeout);
