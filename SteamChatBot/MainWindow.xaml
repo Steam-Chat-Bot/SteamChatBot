@@ -52,6 +52,7 @@
                     </Grid.ColumnDefinitions>
                     <ListBox x:Name="triggerCheckBoxList" HorizontalAlignment="Left" Height="479" Margin="10,10,0,-30" VerticalAlignment="Top" Width="494" Grid.ColumnSpan="3">
                         <CheckBox x:Name="acceptFriendRequestTrigger" Content="AcceptFriendRequestTrigger - Accepts all friend requests" GotFocus="acceptFriendRequestTrigger_GotFocus"/>
+                        <CheckBox x:Name="autojoinChatTriggerBox" Content="AutojoinChatTrigger - Autojoins chat room(s)" GotFocus="autojoinChatTriggerBox_GotFocus"/>
                         <CheckBox x:Name="chatReplyTriggerBox" Content="ChatReplyTrigger - Responds to a list of matches" GotFocus="chatReplyTriggerBox_GotFocus" Width="459"/>
                         <CheckBox x:Name="isUpTriggerBox" Content="IsUpTrigger - Determines if a website is online)" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="266" GotFocus="isUpTriggerBox_GotFocus"/>
                     </ListBox>
@@ -73,6 +74,15 @@
                     <Label x:Name="probLabel" Content="Probability (%):" Grid.Column="2" HorizontalAlignment="Left" Margin="92,205,0,0" VerticalAlignment="Top" Visibility="Visible"/>
                     <Button x:Name="probDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,208,0,0" VerticalAlignment="Top" Width="90" Click="probDoneButton_Click" Visibility="Visible"/>
                     <TextBox x:Name="probBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="187,205,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
+                    <Label x:Name="roomsLabel" Content="Rooms:" Grid.Column="2" HorizontalAlignment="Left" Margin="133,247,0,0" VerticalAlignment="Top" Visibility="Visible"/>
+                    <Button x:Name="roomsDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,250,0,0" VerticalAlignment="Top" Width="90" Click="roomsDoneButton_Click" Visibility="Visible"/>
+                    <TextBox x:Name="roomsBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="187,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
+                    <Label x:Name="usersLabel" Content="Users:" Grid.Column="2" HorizontalAlignment="Left" Margin="146,289,0,0" VerticalAlignment="Top" Visibility="Visible"/>
+                    <Button x:Name="usersDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,289,0,0" VerticalAlignment="Top" Width="90" Click="usersDoneButton_Click" Visibility="Visible"/>
+                    <TextBox x:Name="usersBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="187,286,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
+                    <Label x:Name="ignoresLabel" Content="Ignores:" Grid.Column="2" HorizontalAlignment="Left" Margin="130,326,0,0" VerticalAlignment="Top" Visibility="Visible"/>
+                    <Button x:Name="ignoresDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,329,0,0" VerticalAlignment="Top" Width="90" Click="ignoresDoneButton_Click" Visibility="Visible"/>
+                    <TextBox x:Name="ignoresBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="187,326,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
                 </Grid>
             </TabItem>
         </TabControl>

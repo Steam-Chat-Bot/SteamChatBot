@@ -14,10 +14,17 @@ namespace SteamChatBot
 {
     public class Bot
     {
+        #region steam instances
+
         public static SteamClient steamClient = new SteamClient();
         public static CallbackManager manager = new CallbackManager(steamClient);
         public static SteamUser steamUser = steamClient.GetHandler<SteamUser>();
         public static SteamFriends steamFriends = steamClient.GetHandler<SteamFriends>();
+
+        #endregion
+
+        #region public static login variables
+
         public static bool isRunning;
         public static string username;
         public static string password;
@@ -30,6 +37,8 @@ namespace SteamChatBot
         public static string FLL;
         public static string CLL;
 
+        #endregion
+
         #region trigger options
 
         public static Dictionary<TriggerType, string> commandList = new Dictionary<TriggerType, string>();
@@ -38,7 +47,10 @@ namespace SteamChatBot
         public static Dictionary<TriggerType, int> delays = new Dictionary<TriggerType, int>();
         public static Dictionary<TriggerType, int> timeouts = new Dictionary<TriggerType, int>();
         public static Dictionary<TriggerType, int> probs = new Dictionary<TriggerType, int>();
-        
+        public static Dictionary<TriggerType, List<SteamID>> rooms = new Dictionary<TriggerType, List<SteamID>>();
+        public static Dictionary<TriggerType, List<SteamID>> users = new Dictionary<TriggerType, List<SteamID>>();
+        public static Dictionary<TriggerType, List<SteamID>> ignores = new Dictionary<TriggerType, List<SteamID>>();
+
         #endregion
 
         public static List<BaseTrigger> triggers = new List<BaseTrigger>();
@@ -46,6 +58,8 @@ namespace SteamChatBot
         public static List<CheckBox> activeCheckBoxes = new List<CheckBox>();
 
         private bool disposed = false;
+
+        #region login data read/write
 
         public static UserInfo ReadData()
         {
@@ -70,6 +84,9 @@ namespace SteamChatBot
             string json = JsonConvert.SerializeObject(info, Formatting.Indented);
             File.WriteAllText("login.json", json);
         }
+
+        #endregion
+
         public static void Start(string _username, string _password, string cll, string fll, string _logFile, string _displayName, string _sentryFile)
         {
             username = _username;
@@ -165,6 +182,17 @@ namespace SteamChatBot
                     {
                         triggers.Add(new AcceptFriendRequestTrigger(TriggerType.AcceptFriendRequestTrigger, "AcceptFriendRequestTrigger"));
                     }
+
+                    if(box.Name == "autojoinChatTriggerBox")
+                    {
+                        List<SteamID> _rooms = new List<SteamID>();
+                        rooms.TryGetValue(TriggerType.AutojoinChatTrigger, out _rooms);
+                        TriggerOptions options = new TriggerOptions()
+                        {
+                            Rooms = _rooms
+                        };
+                        triggers.Add(new AutojoinChatTrigger(TriggerType.AutojoinChatTrigger, "AutojoinChatTrigger", options));
+                    }
                 }
                 Log.Instance.Verbose("Saving triggers...");
                 foreach (BaseTrigger trigger in triggers)
@@ -202,6 +230,9 @@ namespace SteamChatBot
             }
             disposed = true;
         }
+
+        #region steam methods
+
         public static void Connect()
         {
             isRunning = true;
@@ -221,6 +252,10 @@ namespace SteamChatBot
                 SentryFileHash = sentryHash
             });
         }
+
+        #endregion
+
+        #region steam callback manager
 
         public static void SubForCB()
         {
@@ -309,12 +344,16 @@ namespace SteamChatBot
             if (callback.Result == EResult.OK)
             {
                 Log.Instance.Info("Logged in!");
+                foreach (BaseTrigger trigger in triggers)
+                {
+                    trigger.OnLoggedOn();
+                }
             }
             else if (callback.Result == EResult.AccountLogonDenied || callback.Result == EResult.AccountLoginDeniedNeedTwoFactor)
             {
                 if (callback.Result == EResult.AccountLoginDeniedNeedTwoFactor)
                 {
-                    Console.WriteLine("Two factor code: ");
+                    Console.WriteLine("Two factor code (sent via sms): ");
                     string _tfc = Console.ReadLine();
                     twoFactorAuth = _tfc;
                 }
@@ -368,8 +407,7 @@ namespace SteamChatBot
             }
         }
 
-        public 
-            static void OnUpdateMachineAuth(SteamUser.UpdateMachineAuthCallback callback)
+        public static void OnUpdateMachineAuth(SteamUser.UpdateMachineAuthCallback callback)
         {
             Log.Instance.Debug("New sentry: " + callback.FileName + ". Writing file...");
 
@@ -402,5 +440,8 @@ namespace SteamChatBot
 
             Log.Instance.Verbose("Sent sentry response!");
         }
+
+        #endregion
+
     }
 }

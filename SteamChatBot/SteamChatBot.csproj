@@ -74,6 +74,7 @@
     </ApplicationDefinition>
     <Compile Include="Bot.cs" />
     <Compile Include="Triggers\AcceptFriendRequestTrigger.cs" />
+    <Compile Include="Triggers\AutojoinChatTrigger.cs" />
     <Compile Include="Triggers\BaseTrigger.cs" />
     <Compile Include="Triggers\ChatReplyTrigger.cs" />
     <Compile Include="Triggers\IsUpTrigger.cs" />

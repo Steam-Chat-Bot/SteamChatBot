@@ -3,6 +3,7 @@
     public enum TriggerType
     {
         AcceptFriendRequestTrigger,
+        AutojoinChatTrigger,
         ChatReplyTrigger,
         IsUpTrigger
     }

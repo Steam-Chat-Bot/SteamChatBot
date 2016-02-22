@@ -26,7 +26,7 @@ namespace SteamChatBot.Triggers
         {
             Type = type;
             Name = name;
-            Options = null;
+            Options = new TriggerOptions();
         }
 
         public BaseTrigger(TriggerType type, string name, TriggerOptions options)
@@ -107,6 +107,10 @@ namespace SteamChatBot.Triggers
                 else if (type == TriggerType.IsUpTrigger)
                 {
                     temp.Add(new IsUpTrigger(type, _file, options));
+                }
+                else if(type == TriggerType.AutojoinChatTrigger)
+                {
+                    temp.Add(new AutojoinChatTrigger(type, _file, options));
                 }
                 else
                 {
@@ -392,7 +396,7 @@ namespace SteamChatBot.Triggers
         /// <returns></returns>
         public virtual bool OnChatMessage(SteamID roomID, SteamID chatterID, string message, bool haveSentMessage)
         {
-            if (ReplyEnabled && RandomRoll() && CheckUser(chatterID) && CheckRoom(roomID) && CheckIgnores(chatterID, roomID))
+            if (ReplyEnabled && RandomRoll() && CheckUser(chatterID) && CheckRoom(roomID) && !CheckIgnores(chatterID, roomID))
             {
                 try
                 {

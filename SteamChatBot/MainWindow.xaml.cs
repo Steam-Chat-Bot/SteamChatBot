@@ -22,6 +22,7 @@ using Microsoft.Win32;
 
 using SteamChatBot;
 using SteamChatBot.Triggers;
+using SteamKit2;
 
 namespace SteamChatBot
 {
@@ -173,7 +174,19 @@ namespace SteamChatBot
             probLabel.IsEnabled = false;
             probBox.IsEnabled = false;
             probDoneButton.IsEnabled = false;
-            
+
+            roomsLabel.IsEnabled = false;
+            roomsBox.IsEnabled = false;
+            roomsDoneButton.IsEnabled = false;
+
+            usersLabel.IsEnabled = false;
+            usersBox.IsEnabled = false;
+            usersDoneButton.IsEnabled = false;
+
+            ignoresLabel.IsEnabled = false;
+            ignoresBox.IsEnabled = false;
+            ignoresDoneButton.IsEnabled = false;
+
 
         }
 
@@ -241,11 +254,9 @@ namespace SteamChatBot
             delayBox.IsEnabled = true;
             delayDoneButton.IsEnabled = true;
 
-            
             probLabel.IsEnabled = true;
             probBox.IsEnabled = true;
             probDoneButton.IsEnabled = true;
-            
 
             selectedElement = TriggerType.ChatReplyTrigger;
         }
@@ -367,6 +378,95 @@ namespace SteamChatBot
             DisableAll();
 
             selectedElement = TriggerType.AcceptFriendRequestTrigger;
+        }
+
+        private void autojoinChatTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.AutojoinChatTrigger;
+        }
+
+        private void roomsDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(Bot.rooms.ContainsKey(selectedElement))
+            {
+                MessageBox.Show("You already have a list of rooms for this trigger type.", "Error");
+                roomsLabel.IsEnabled = false;
+                roomsBox.IsEnabled = false;
+                roomsDoneButton.IsEnabled = false;
+            }
+            else
+            {
+                string[] rooms = roomsBox.Text.Split(',');
+                List<SteamID> _rooms = new List<SteamID>();
+                foreach (string room in rooms)
+                {
+                    _rooms.Add(new SteamID(Convert.ToUInt64(room)));
+                }
+                Bot.rooms.Add(selectedElement, _rooms);
+
+                MessageBox.Show("Trigger rooms added successfully.", "Success");
+                roomsLabel.IsEnabled = false;
+                roomsBox.IsEnabled = false;
+                roomsDoneButton.IsEnabled = false;
+            }
+        }
+
+        private void usersDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(Bot.users.ContainsKey(selectedElement))
+            {
+                MessageBox.Show("You already have a list of users for this trigger type.", "Error");
+                usersLabel.IsEnabled = false;
+                usersBox.IsEnabled = false;
+                usersDoneButton.IsEnabled = false;
+            }
+            else
+            {
+                string[] users = usersBox.Text.Split(',');
+                List<SteamID> _users = new List<SteamID>();
+                foreach (string user in users)
+                {
+                    _users.Add(new SteamID(Convert.ToUInt64(user)));
+                }
+                Bot.users.Add(selectedElement, _users);
+
+                MessageBox.Show("Trigger users added successfully.", "Success");
+                usersLabel.IsEnabled = false;
+                usersBox.IsEnabled = false;
+                usersDoneButton.IsEnabled = false;
+            }
+        }
+
+        private void ignoresDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Bot.ignores.ContainsKey(selectedElement))
+            {
+                MessageBox.Show("You already have a list of ignores for this trigger type.", "Error");
+                ignoresLabel.IsEnabled = false;
+                ignoresBox.IsEnabled = false;
+                ignoresDoneButton.IsEnabled = false;
+            }
+            else
+            {
+                string[] ignores = ignoresBox.Text.Split(',');
+                List<SteamID> _ignores = new List<SteamID>();
+                foreach (string ignore in ignores)
+                {
+                    _ignores.Add(new SteamID(Convert.ToUInt64(ignore)));
+                }
+                Bot.ignores.Add(selectedElement, _ignores);
+
+                MessageBox.Show("Trigger ignores added successfully.", "Success");
+                ignoresLabel.IsEnabled = false;
+                ignoresBox.IsEnabled = false;
+                ignoresDoneButton.IsEnabled = false;
+            }
         }
 
         #endregion
