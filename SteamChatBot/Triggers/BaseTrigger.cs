@@ -74,7 +74,8 @@ namespace SteamChatBot.Triggers
                     Rooms = Options.Rooms,
                     Command = Options.Command,
                     Matches = Options.Matches,
-                    Responses = Options.Responses
+                    Responses = Options.Responses,
+                    ApiKey = Options.ApiKey
                 };
                 string json = JsonConvert.SerializeObject(options, Formatting.Indented);
                 File.WriteAllText("triggers/" + Name + ".json", json);

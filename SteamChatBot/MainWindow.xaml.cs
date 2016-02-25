@@ -187,7 +187,9 @@ namespace SteamChatBot
             ignoresBox.IsEnabled = false;
             ignoresDoneButton.IsEnabled = false;
 
-
+            apiLabel.IsEnabled = false;
+            apiBox.IsEnabled = false;
+            apiDoneButton.IsEnabled = false;
         }
 
         private void isUpTriggerBox_GotFocus(object sender, RoutedEventArgs e)
@@ -466,6 +468,25 @@ namespace SteamChatBot
                 ignoresLabel.IsEnabled = false;
                 ignoresBox.IsEnabled = false;
                 ignoresDoneButton.IsEnabled = false;
+            }
+        }
+
+        private void apiDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(Bot.apiKeys.ContainsKey(selectedElement))
+            {
+                MessageBox.Show("You already have a list of ignores for this trigger type.", "Error");
+                apiLabel.IsEnabled = false;
+                apiBox.IsEnabled = false;
+                apiDoneButton.IsEnabled = false;
+            }
+            else
+            {
+                Bot.apiKeys.Add(selectedElement, apiBox.Text);
+                MessageBox.Show("Trigger api key added successfully.", "Success");
+                apiLabel.IsEnabled = false;
+                apiBox.IsEnabled = false;
+                apiDoneButton.IsEnabled = false;
             }
         }
 

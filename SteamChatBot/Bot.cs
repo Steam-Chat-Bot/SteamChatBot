@@ -50,6 +50,7 @@ namespace SteamChatBot
         public static Dictionary<TriggerType, List<SteamID>> rooms = new Dictionary<TriggerType, List<SteamID>>();
         public static Dictionary<TriggerType, List<SteamID>> users = new Dictionary<TriggerType, List<SteamID>>();
         public static Dictionary<TriggerType, List<SteamID>> ignores = new Dictionary<TriggerType, List<SteamID>>();
+        public static Dictionary<TriggerType, string> apiKeys = new Dictionary<TriggerType, string>();
 
         #endregion
 

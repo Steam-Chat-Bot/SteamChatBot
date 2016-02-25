@@ -15,5 +15,6 @@ namespace SteamChatBot.Triggers
         public string Command { get; set; }
         public List<string> Matches { get; set; }
         public List<string> Responses { get; set; }
+        public string ApiKey { get; set; }
     }
 }

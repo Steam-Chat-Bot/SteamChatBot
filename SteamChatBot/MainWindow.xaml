@@ -83,6 +83,9 @@
                     <Label x:Name="ignoresLabel" Content="Ignores:" Grid.Column="2" HorizontalAlignment="Left" Margin="130,326,0,0" VerticalAlignment="Top" Visibility="Visible"/>
                     <Button x:Name="ignoresDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,329,0,0" VerticalAlignment="Top" Width="90" Click="ignoresDoneButton_Click" Visibility="Visible"/>
                     <TextBox x:Name="ignoresBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="187,326,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
+                    <Label x:Name="apiLabel" Content="Ignores:" Grid.Column="2" HorizontalAlignment="Left" Margin="130,365,0,0" VerticalAlignment="Top" Visibility="Visible"/>
+                    <Button x:Name="apiDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,368,0,0" VerticalAlignment="Top" Width="90" Click="apiDoneButton_Click" Visibility="Visible"/>
+                    <TextBox x:Name="apiBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="187,365,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
                 </Grid>
             </TabItem>
         </TabControl>
