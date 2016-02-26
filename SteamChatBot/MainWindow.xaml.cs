@@ -225,6 +225,7 @@ namespace SteamChatBot
                 commandBox.IsEnabled = false;
                 commandLabel.IsEnabled = false;
                 commandDoneButton.IsEnabled = false;
+                commandBox.Text = "";
             }
             else
             {
@@ -233,6 +234,7 @@ namespace SteamChatBot
                 commandBox.IsEnabled = false;
                 commandLabel.IsEnabled = false;
                 commandDoneButton.IsEnabled = false;
+                commandBox.Text = "";
             }
         }
 
@@ -271,6 +273,7 @@ namespace SteamChatBot
                 matchesLabel.IsEnabled = false;
                 matchesBox.IsEnabled = false;
                 matchesDoneButton.IsEnabled = false;
+                matchesBox.Text = "";
             }
             else
             {
@@ -285,6 +288,7 @@ namespace SteamChatBot
                 matchesLabel.IsEnabled = false;
                 matchesBox.IsEnabled = false;
                 matchesDoneButton.IsEnabled = false;
+                matchesBox.Text = "";
             }
         }
 
@@ -296,6 +300,7 @@ namespace SteamChatBot
                 responsesLabel.IsEnabled = false;
                 responsesBox.IsEnabled = false;
                 responsesDoneButton.IsEnabled = false;
+                responsesBox.Text = "";
             }
             else
             {
@@ -310,6 +315,7 @@ namespace SteamChatBot
                 responsesLabel.IsEnabled = false;
                 responsesBox.IsEnabled = false;
                 responsesDoneButton.IsEnabled = false;
+                responsesBox.Text = "";
             }
         }
 
@@ -321,6 +327,7 @@ namespace SteamChatBot
                 delayLabel.IsEnabled = false;
                 delayBox.IsEnabled = false;
                 delayDoneButton.IsEnabled = false;
+                delayBox.Text = "";
             }
             else
             {
@@ -329,6 +336,7 @@ namespace SteamChatBot
                 delayLabel.IsEnabled = false;
                 delayBox.IsEnabled = false;
                 delayDoneButton.IsEnabled = false;
+                delayBox.Text = "";
             }
         }
 
@@ -340,6 +348,7 @@ namespace SteamChatBot
                 timeoutLabel.IsEnabled = true;
                 timeoutBox.IsEnabled = true;
                 timeoutDoneButton.IsEnabled = true;
+                timeoutBox.Text = "";
             }
             else
             {
@@ -348,6 +357,7 @@ namespace SteamChatBot
                 timeoutLabel.IsEnabled = true;
                 timeoutBox.IsEnabled = true;
                 timeoutDoneButton.IsEnabled = true;
+                timeoutBox.Text = "";
             }
         }
 
@@ -360,6 +370,7 @@ namespace SteamChatBot
                 probLabel.IsEnabled = false;
                 probBox.IsEnabled = false;
                 probDoneButton.IsEnabled = false;
+                probBox.Text = "";
             }
             else
             {
@@ -370,6 +381,7 @@ namespace SteamChatBot
                     probLabel.IsEnabled = false;
                     probBox.IsEnabled = false;
                     probDoneButton.IsEnabled = false;
+                    probBox.Text = "";
                 }
             }
         }
@@ -393,6 +405,28 @@ namespace SteamChatBot
             selectedElement = TriggerType.AutojoinChatTrigger;
         }
 
+        private void kickTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            commandBox.IsEnabled = true;
+            commandLabel.IsEnabled = true;
+            commandDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.KickTrigger;
+        }
+
+        private void banTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            commandBox.IsEnabled = true;
+            commandLabel.IsEnabled = true;
+            commandDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.BanTrigger;
+        }
+
         private void roomsDoneButton_Click(object sender, RoutedEventArgs e)
         {
             if(Bot.rooms.ContainsKey(selectedElement))
@@ -401,6 +435,7 @@ namespace SteamChatBot
                 roomsLabel.IsEnabled = false;
                 roomsBox.IsEnabled = false;
                 roomsDoneButton.IsEnabled = false;
+                roomsBox.Text = "";
             }
             else
             {
@@ -416,6 +451,7 @@ namespace SteamChatBot
                 roomsLabel.IsEnabled = false;
                 roomsBox.IsEnabled = false;
                 roomsDoneButton.IsEnabled = false;
+                roomsBox.Text = "";
             }
         }
 
@@ -427,6 +463,7 @@ namespace SteamChatBot
                 usersLabel.IsEnabled = false;
                 usersBox.IsEnabled = false;
                 usersDoneButton.IsEnabled = false;
+                usersBox.Text = "";
             }
             else
             {
@@ -442,6 +479,7 @@ namespace SteamChatBot
                 usersLabel.IsEnabled = false;
                 usersBox.IsEnabled = false;
                 usersDoneButton.IsEnabled = false;
+                usersBox.Text = "";
             }
         }
 
@@ -453,6 +491,7 @@ namespace SteamChatBot
                 ignoresLabel.IsEnabled = false;
                 ignoresBox.IsEnabled = false;
                 ignoresDoneButton.IsEnabled = false;
+                ignoresBox.Text = "";
             }
             else
             {
@@ -468,6 +507,7 @@ namespace SteamChatBot
                 ignoresLabel.IsEnabled = false;
                 ignoresBox.IsEnabled = false;
                 ignoresDoneButton.IsEnabled = false;
+                ignoresBox.Text = "";
             }
         }
 
@@ -479,6 +519,7 @@ namespace SteamChatBot
                 apiLabel.IsEnabled = false;
                 apiBox.IsEnabled = false;
                 apiDoneButton.IsEnabled = false;
+                apiBox.Text = "";
             }
             else
             {
@@ -487,6 +528,7 @@ namespace SteamChatBot
                 apiLabel.IsEnabled = false;
                 apiBox.IsEnabled = false;
                 apiDoneButton.IsEnabled = false;
+                apiBox.Text = "";
             }
         }
 

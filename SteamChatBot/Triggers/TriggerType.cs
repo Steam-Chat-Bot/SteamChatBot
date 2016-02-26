@@ -4,7 +4,9 @@
     {
         AcceptFriendRequestTrigger,
         AutojoinChatTrigger,
+        BanTrigger,
         ChatReplyTrigger,
-        IsUpTrigger
+        IsUpTrigger,
+        KickTrigger
     }
 }

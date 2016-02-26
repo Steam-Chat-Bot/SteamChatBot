@@ -94,7 +94,9 @@ namespace SteamChatBot.Triggers
             IEnumerable<string> files = Directory.EnumerateFiles("triggers/");
             foreach (string file in files)
             {
-                string _file = file.Substring(0, file.IndexOf("."));
+                int start = file.IndexOf("/") + 1;
+                int end = file.IndexOf(".", start);
+                string _file = file.Substring(start, end - start);
                 TriggerOptions options = JsonConvert.DeserializeObject<TriggerOptions>(File.ReadAllText(file));
                 TriggerType type = (TriggerType)Enum.Parse(typeof(TriggerType), _file.Substring(_file.IndexOf('/') + 1));
                 if (type == TriggerType.AcceptFriendRequestTrigger)
@@ -112,6 +114,14 @@ namespace SteamChatBot.Triggers
                 else if(type == TriggerType.AutojoinChatTrigger)
                 {
                     temp.Add(new AutojoinChatTrigger(type, _file, options));
+                }
+                else if(type == TriggerType.BanTrigger)
+                {
+                    temp.Add(new BanTrigger(type, _file, options));
+                }
+                else if(type == TriggerType.KickTrigger)
+                {
+                    temp.Add(new KickTrigger(type, _file, options));
                 }
                 else
                 {
@@ -768,7 +778,7 @@ namespace SteamChatBot.Triggers
 
         protected void DisableForTimeout()
         {
-            if(Options.Timeout != 0 || Options.Timeout != null)
+            if(Options.Timeout != null)
             {
                 ReplyEnabled = false;
                 Log.Instance.Silly("{0}/{1}: Setting timeout ({2} ms)", Bot.username, Name, Options.Timeout);

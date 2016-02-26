@@ -128,79 +128,110 @@ namespace SteamChatBot
 
             SubForCB();
 
-            if (activeCheckBoxes.Count == 0)
+            if (Directory.Exists("triggers/") && Directory.GetFiles("triggers/").Length > 0)
             {
                 triggers = BaseTrigger.ReadTriggers();
                 Log.Instance.Silly("Successfully read trigger data from triggers/");
             }
-            else
+            foreach (CheckBox box in activeCheckBoxes)
             {
-                foreach (CheckBox box in activeCheckBoxes)
+                if (box.Name == "isUpTriggerBox")
                 {
-                    if (box.Name == "isUpTriggerBox")
+                    string command;
+                    int timeout;
+                    int delay;
+                    int probability;
+                    delays.TryGetValue(TriggerType.IsUpTrigger, out delay);
+                    timeouts.TryGetValue(TriggerType.IsUpTrigger, out timeout);
+                    commandList.TryGetValue(TriggerType.IsUpTrigger, out command);
+                    probs.TryGetValue(TriggerType.IsUpTrigger, out probability);
+                    TriggerOptions options = new TriggerOptions
                     {
-                        string command;
-                        int timeout;
-                        int delay;
-                        int probability;
-                        delays.TryGetValue(TriggerType.IsUpTrigger, out delay);
-                        timeouts.TryGetValue(TriggerType.IsUpTrigger, out timeout);
-                        commandList.TryGetValue(TriggerType.IsUpTrigger, out command);
-                        probs.TryGetValue(TriggerType.IsUpTrigger, out probability);
-                        TriggerOptions options = new TriggerOptions
-                        {
-                            Command = command,
-                            Delay = delay,
-                            Timeout = timeout,
-                            Probability = probability != 0 ? probability / 100 : 1
-                        };
-                        triggers.Add(new IsUpTrigger(TriggerType.IsUpTrigger, "IsUpTrigger", options));
-                    }
-                    if (box.Name == "chatReplyTriggerBox")
-                    {
-                        List<string> matches;
-                        List<string> responses;
-                        int timeout;
-                        int delay;
-                        int probability;
-                        delays.TryGetValue(TriggerType.ChatReplyTrigger, out delay);
-                        timeouts.TryGetValue(TriggerType.ChatReplyTrigger, out timeout);
-                        matchesList.TryGetValue(TriggerType.ChatReplyTrigger, out matches);
-                        responsesList.TryGetValue(TriggerType.ChatReplyTrigger, out responses);
-                        probs.TryGetValue(TriggerType.ChatReplyTrigger, out probability);
-                        TriggerOptions options = new TriggerOptions()
-                        {
-                            Delay = delay,
-                            Timeout = timeout,
-                            Matches = matches,
-                            Responses = responses,
-                            Probability = probability != 0 ? probability / 100 : 1
-                        };
-
-                        triggers.Add(new ChatReplyTrigger(TriggerType.ChatReplyTrigger, "ChatReplyTrigger", options));
-                    }
-                    if (box.Name == "acceptFriendRequestTrigger")
-                    {
-                        triggers.Add(new AcceptFriendRequestTrigger(TriggerType.AcceptFriendRequestTrigger, "AcceptFriendRequestTrigger"));
-                    }
-
-                    if(box.Name == "autojoinChatTriggerBox")
-                    {
-                        List<SteamID> _rooms = new List<SteamID>();
-                        rooms.TryGetValue(TriggerType.AutojoinChatTrigger, out _rooms);
-                        TriggerOptions options = new TriggerOptions()
-                        {
-                            Rooms = _rooms
-                        };
-                        triggers.Add(new AutojoinChatTrigger(TriggerType.AutojoinChatTrigger, "AutojoinChatTrigger", options));
-                    }
+                        Command = command,
+                        Delay = delay,
+                        Timeout = timeout,
+                        Probability = probability != 0 ? probability / 100 : 1
+                    };
+                    var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.IsUpTrigger);
+                    triggers.Remove(removed);
+                    triggers.Add(new IsUpTrigger(TriggerType.IsUpTrigger, "IsUpTrigger", options));
                 }
-                Log.Instance.Verbose("Saving triggers...");
-                foreach (BaseTrigger trigger in triggers)
+                if (box.Name == "chatReplyTriggerBox")
                 {
-                    trigger.SaveTrigger();
-                    Log.Instance.Silly("Trigger {0} saved", trigger.Name);
+                    List<string> matches;
+                    List<string> responses;
+                    int timeout;
+                    int delay;
+                    int probability;
+                    delays.TryGetValue(TriggerType.ChatReplyTrigger, out delay);
+                    timeouts.TryGetValue(TriggerType.ChatReplyTrigger, out timeout);
+                    matchesList.TryGetValue(TriggerType.ChatReplyTrigger, out matches);
+                    responsesList.TryGetValue(TriggerType.ChatReplyTrigger, out responses);
+                    probs.TryGetValue(TriggerType.ChatReplyTrigger, out probability);
+                    TriggerOptions options = new TriggerOptions()
+                    {
+                        Delay = delay,
+                        Timeout = timeout,
+                        Matches = matches,
+                        Responses = responses,
+                        Probability = probability != 0 ? probability / 100 : 1
+                    };
+                    var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.ChatReplyTrigger);
+                    triggers.Remove(removed);
+
+                    triggers.Add(new ChatReplyTrigger(TriggerType.ChatReplyTrigger, "ChatReplyTrigger", options));
                 }
+                if (box.Name == "acceptFriendRequestTrigger")
+                {
+                    var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.AcceptFriendRequestTrigger);
+                    triggers.Remove(removed);
+                    triggers.Add(new AcceptFriendRequestTrigger(TriggerType.AcceptFriendRequestTrigger, "AcceptFriendRequestTrigger"));
+                }
+
+                if (box.Name == "autojoinChatTriggerBox")
+                {
+                    List<SteamID> _rooms = new List<SteamID>();
+                    rooms.TryGetValue(TriggerType.AutojoinChatTrigger, out _rooms);
+                    TriggerOptions options = new TriggerOptions()
+                    {
+                        Rooms = _rooms
+                    };
+                    var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.AutojoinChatTrigger);
+                    triggers.Remove(removed);
+                    triggers.Add(new AutojoinChatTrigger(TriggerType.AutojoinChatTrigger, "AutojoinChatTrigger", options));
+                }
+
+                if (box.Name == "banTriggerBox")
+                {
+                    string command;
+                    commandList.TryGetValue(TriggerType.BanTrigger, out command);
+                    TriggerOptions options = new TriggerOptions()
+                    {
+                        Command = command
+                    };
+                    var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.BanTrigger);
+                    triggers.Remove(removed);
+                    triggers.Add(new BanTrigger(TriggerType.BanTrigger, "BanTrigger", options));
+                }
+
+                if (box.Name == "kickTriggerBox")
+                {
+                    string command;
+                    commandList.TryGetValue(TriggerType.KickTrigger, out command);
+                    TriggerOptions options = new TriggerOptions()
+                    {
+                        Command = command
+                    };
+                    var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.KickTrigger);
+                    triggers.Remove(removed);
+                    triggers.Add(new KickTrigger(TriggerType.KickTrigger, "KickTrigger", options));
+                }
+            }
+            Log.Instance.Verbose("Saving triggers...");
+            foreach (BaseTrigger trigger in triggers)
+            {
+                trigger.SaveTrigger();
+                Log.Instance.Silly("Trigger {0} saved", trigger.Name);
             }
 
             isRunning = true;
