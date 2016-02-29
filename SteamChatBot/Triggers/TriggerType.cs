@@ -2,11 +2,13 @@
 {
     public enum TriggerType
     {
+        AcceptChatInviteTrigger,
         AcceptFriendRequestTrigger,
         AutojoinChatTrigger,
         BanTrigger,
         ChatReplyTrigger,
         IsUpTrigger,
-        KickTrigger
+        KickTrigger,
+        LeaveChatTrigger
     }
 }

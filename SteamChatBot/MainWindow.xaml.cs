@@ -532,6 +532,28 @@ namespace SteamChatBot
             }
         }
 
+        private void acceptChatInviteTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            roomsBox.IsEnabled = true;
+            roomsLabel.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.AcceptChatInviteTrigger;
+        }
+
+        private void leaveChatTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            commandBox.IsEnabled = true;
+            commandLabel.IsEnabled = true;
+            commandDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.LeaveChatTrigger;
+        }
+
         #endregion
 
         /*

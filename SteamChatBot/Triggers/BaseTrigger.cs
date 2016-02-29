@@ -123,6 +123,14 @@ namespace SteamChatBot.Triggers
                 {
                     temp.Add(new KickTrigger(type, _file, options));
                 }
+                else if(type == TriggerType.AcceptChatInviteTrigger)
+                {
+                    temp.Add(new AcceptChatInviteTrigger(type, _file, options));
+                }
+                else if(type == TriggerType.LeaveChatTrigger)
+                {
+                    temp.Add(new LeaveChatTrigger(type, _file, options));
+                }
                 else
                 {
                     return null;
@@ -215,6 +223,7 @@ namespace SteamChatBot.Triggers
                     return false;
                 }
             }
+            Console.WriteLine(CheckUser(inviterID) + " " + CheckRoom(roomID) + " " + !CheckIgnores(roomID, inviterID));
             return false;
         }
 
@@ -731,7 +740,11 @@ namespace SteamChatBot.Triggers
 
         protected bool CheckRoom(SteamID toID)
         {
-            if (Options.Rooms != null && Options.Rooms.Count > 0)
+            if (Options.Rooms == null)
+            {
+                return true;
+            }
+            else
             {
                 for (int i = 0; i < Options.Rooms.Count; i++)
                 {
@@ -740,10 +753,13 @@ namespace SteamChatBot.Triggers
                     {
                         return true;
                     }
+                    else
+                    {
+                        return false;
+                    }
                 }
-                return false;
+                return true;
             }
-            return true;
         }
 
         protected bool CheckUser(SteamID fromID)

@@ -226,6 +226,32 @@ namespace SteamChatBot
                     triggers.Remove(removed);
                     triggers.Add(new KickTrigger(TriggerType.KickTrigger, "KickTrigger", options));
                 }
+
+                if(box.Name == "acceptChatInviteTriggerBox")
+                {
+                    List<SteamID> rooms_;
+                    rooms.TryGetValue(TriggerType.AcceptChatInviteTrigger, out rooms_);
+                    TriggerOptions options = new TriggerOptions()
+                    {
+                        Rooms = rooms_
+                    };
+                    var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.AcceptChatInviteTrigger);
+                    triggers.Remove(removed);
+                    triggers.Add(new AcceptChatInviteTrigger(TriggerType.AcceptChatInviteTrigger, "AcceptChatInviteTrigger", options));
+                }
+
+                if(box.Name == "leaveChatTriggerBox")
+                {
+                    string command;
+                    commandList.TryGetValue(TriggerType.LeaveChatTrigger, out command);
+                    TriggerOptions options = new TriggerOptions()
+                    {
+                        Command = command
+                    };
+                    var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.LeaveChatTrigger);
+                    triggers.Remove(removed);
+                    triggers.Add(new LeaveChatTrigger(TriggerType.LeaveChatTrigger, "LeaveChatTrigger", options));
+                }
             }
             Log.Instance.Verbose("Saving triggers...");
             foreach (BaseTrigger trigger in triggers)
@@ -302,6 +328,7 @@ namespace SteamChatBot
             manager.Subscribe<SteamFriends.ChatMsgCallback>(OnChatMsg);
             manager.Subscribe<SteamFriends.FriendMsgCallback>(OnFriendMsg);
             manager.Subscribe<SteamFriends.FriendsListCallback>(OnFriendList);
+            manager.Subscribe<SteamFriends.ChatInviteCallback>(OnChatInvite);
             Log.Instance.Silly("Callback managers subscribed");
         }
 
@@ -439,6 +466,14 @@ namespace SteamChatBot
             }
         }
 
+        public static void OnChatInvite(SteamFriends.ChatInviteCallback callback)
+        {
+            Log.Instance.Verbose("Received invite from {0} to chat {1}/{2}", callback.PatronID, callback.ChatRoomID, callback.ChatRoomName);
+            foreach (BaseTrigger trigger in triggers)
+            {
+                trigger.OnChatInvite(SteamIDHelper.ToClanID(callback.ChatRoomID), callback.ChatRoomName, callback.PatronID);
+            }
+        }
         public static void OnUpdateMachineAuth(SteamUser.UpdateMachineAuthCallback callback)
         {
             Log.Instance.Debug("New sentry: " + callback.FileName + ". Writing file...");

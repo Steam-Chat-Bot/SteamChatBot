@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("SteamChatBot")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Steam-Chat-Bot")]
 [assembly: AssemblyProduct("SteamChatBot")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SteamChatBot"
         mc:Ignorable="d"
-        Title="Steam Chat Bot" Height="583" Width="837" Loaded="Window_Loaded">
+        Title="Steam Chat Bot" Height="583" Width="837" Loaded="Window_Loaded" Icon="scb.ico">
     <Grid Margin="0,0,0,-21">
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="487" Margin="10,10,0,0" VerticalAlignment="Top" Width="796">
             <TabItem Header="Login Details">
@@ -51,12 +51,14 @@
                         <ColumnDefinition Width="373*"/>
                     </Grid.ColumnDefinitions>
                     <ListBox x:Name="triggerCheckBoxList" HorizontalAlignment="Left" Height="479" Margin="10,10,0,-30" VerticalAlignment="Top" Width="494" Grid.ColumnSpan="3">
+                        <CheckBox x:Name="acceptChatInviteTriggerBox" Content="AcceptChatInviteTrigger - Accepts chat invites from all (blank rooms) or specific rooms" Width="484" GotFocus="acceptChatInviteTriggerBox_GotFocus"/>
                         <CheckBox x:Name="acceptFriendRequestTrigger" Content="AcceptFriendRequestTrigger - Accepts all friend requests" GotFocus="acceptFriendRequestTrigger_GotFocus"/>
                         <CheckBox x:Name="autojoinChatTriggerBox" Content="AutojoinChatTrigger - Autojoins chat room(s)" GotFocus="autojoinChatTriggerBox_GotFocus"/>
                         <CheckBox x:Name="banTriggerBox" Content="BanTrigger - Bans a SteamID from chat" GotFocus="banTriggerBox_GotFocus"/>
                         <CheckBox x:Name="chatReplyTriggerBox" Content="ChatReplyTrigger - Responds to a list of matches" GotFocus="chatReplyTriggerBox_GotFocus" Width="459"/>
                         <CheckBox x:Name="isUpTriggerBox" Content="IsUpTrigger - Determines if a website is online)" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="266" GotFocus="isUpTriggerBox_GotFocus"/>
                         <CheckBox x:Name="kickTriggerBox" Content="KickTrigger - Kicks a SteamID from chat" GotFocus="kickTriggerBox_GotFocus"/>
+                        <CheckBox x:Name="leaveChatTriggerBox" Content="LeaveChatTrigger - Commands the bot to leave chat" GotFocus="leaveChatTriggerBox_GotFocus"/>
                     </ListBox>
                     <Label x:Name="commandLabel" Content="Command:" Grid.Column="2" Margin="122,8,184,420" Visibility="Visible"/>
                     <TextBox x:Name="commandBox" TextWrapping="Wrap" Grid.Column="2" Margin="189,12,105,424" Visibility="Visible"/>
