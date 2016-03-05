@@ -98,6 +98,7 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -121,18 +122,26 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bot.cs" />
-    <Compile Include="SteamIDHelper.cs" />
+    <Compile Include="Triggers\BanCheckTrigger.cs" />
+    <Compile Include="Triggers\LockChatTrigger.cs" />
+    <Compile Include="SteamHelper.cs" />
     <Compile Include="Triggers\AcceptChatInviteTrigger.cs" />
     <Compile Include="Triggers\AcceptFriendRequestTrigger.cs" />
     <Compile Include="Triggers\AutojoinChatTrigger.cs" />
     <Compile Include="Triggers\BanTrigger.cs" />
     <Compile Include="Triggers\BaseTrigger.cs" />
     <Compile Include="Triggers\ChatReplyTrigger.cs" />
+    <Compile Include="Triggers\DoormatTrigger.cs" />
     <Compile Include="Triggers\IsUpTrigger.cs" />
     <Compile Include="Triggers\KickTrigger.cs" />
     <Compile Include="Triggers\LeaveChatTrigger.cs" />
+    <Compile Include="Triggers\LinkNameTrigger.cs" />
+    <Compile Include="Triggers\ModerateTrigger.cs" />
     <Compile Include="Triggers\TriggerOptions.cs" />
     <Compile Include="Triggers\TriggerType.cs" />
+    <Compile Include="Triggers\UnbanTrigger.cs" />
+    <Compile Include="Triggers\UnlockChatTrigger.cs" />
+    <Compile Include="Triggers\UnmoderateTrigger.cs" />
     <Compile Include="UserInfo.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

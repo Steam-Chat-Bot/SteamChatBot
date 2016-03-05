@@ -170,7 +170,6 @@ namespace SteamChatBot
             delayBox.IsEnabled = false;
             delayDoneButton.IsEnabled = false;
 
-            
             probLabel.IsEnabled = false;
             probBox.IsEnabled = false;
             probDoneButton.IsEnabled = false;
@@ -207,35 +206,25 @@ namespace SteamChatBot
             delayBox.IsEnabled = true;
             delayDoneButton.IsEnabled = true;
 
-            
             probLabel.IsEnabled = true;
             probBox.IsEnabled = true;
             probDoneButton.IsEnabled = true;
-            
+
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
+
 
             selectedElement = TriggerType.IsUpTrigger;
 
-        }
-
-        private void commandDoneButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Bot.commandList.ContainsKey(TriggerType.IsUpTrigger))
-            {
-                MessageBox.Show("You already have a command for this trigger type.", "Error");
-                commandBox.IsEnabled = false;
-                commandLabel.IsEnabled = false;
-                commandDoneButton.IsEnabled = false;
-                commandBox.Text = "";
-            }
-            else
-            {
-                Bot.commandList.Add(selectedElement, commandBox.Text);
-                MessageBox.Show("Trigger command added successfully.", "Success");
-                commandBox.IsEnabled = false;
-                commandLabel.IsEnabled = false;
-                commandDoneButton.IsEnabled = false;
-                commandBox.Text = "";
-            }
         }
 
         private void chatReplyTriggerBox_GotFocus(object sender, RoutedEventArgs e)
@@ -262,134 +251,32 @@ namespace SteamChatBot
             probBox.IsEnabled = true;
             probDoneButton.IsEnabled = true;
 
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
+
             selectedElement = TriggerType.ChatReplyTrigger;
         }
-
-        private void matchesDoneButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(Bot.matchesList.ContainsKey(TriggerType.ChatReplyTrigger))
-            {
-                MessageBox.Show("You already have matches for this trigger type.", "Error");
-                matchesLabel.IsEnabled = false;
-                matchesBox.IsEnabled = false;
-                matchesDoneButton.IsEnabled = false;
-                matchesBox.Text = "";
-            }
-            else
-            {
-                string[] matches = matchesBox.Text.Split(',');
-                List<string> _matches = new List<string>();
-                foreach(string match in matches)
-                {
-                    _matches.Add(match);
-                }
-                Bot.matchesList.Add(TriggerType.ChatReplyTrigger, _matches);
-                MessageBox.Show("Trigger matches added successfully", "Success");
-                matchesLabel.IsEnabled = false;
-                matchesBox.IsEnabled = false;
-                matchesDoneButton.IsEnabled = false;
-                matchesBox.Text = "";
-            }
-        }
-
-        private void responsesDoneButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Bot.responsesList.ContainsKey(TriggerType.ChatReplyTrigger))
-            {
-                MessageBox.Show("You already have responses for this trigger type.", "Error");
-                responsesLabel.IsEnabled = false;
-                responsesBox.IsEnabled = false;
-                responsesDoneButton.IsEnabled = false;
-                responsesBox.Text = "";
-            }
-            else
-            {
-                string[] responses = responsesBox.Text.Split(',');
-                List<string> _responses = new List<string>();
-                foreach (string response in responses)
-                {
-                    _responses.Add(response);
-                }
-                Bot.responsesList.Add(TriggerType.ChatReplyTrigger, _responses);
-                MessageBox.Show("Trigger responses added successfully", "Success");
-                responsesLabel.IsEnabled = false;
-                responsesBox.IsEnabled = false;
-                responsesDoneButton.IsEnabled = false;
-                responsesBox.Text = "";
-            }
-        }
-
-        private void delayDoneButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(Bot.delays.ContainsKey(selectedElement))
-            {
-                MessageBox.Show("You already have a delay for this trigger type.", "Error");
-                delayLabel.IsEnabled = false;
-                delayBox.IsEnabled = false;
-                delayDoneButton.IsEnabled = false;
-                delayBox.Text = "";
-            }
-            else
-            {
-                Bot.delays.Add(selectedElement, Convert.ToInt32(delayBox.Text));
-                MessageBox.Show("Trigger delay added successfully.", "Success");
-                delayLabel.IsEnabled = false;
-                delayBox.IsEnabled = false;
-                delayDoneButton.IsEnabled = false;
-                delayBox.Text = "";
-            }
-        }
-
-        private void timeoutDoneButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Bot.timeouts.ContainsKey(selectedElement))
-            {
-                MessageBox.Show("You already have a timeout for this trigger type.", "Error");
-                timeoutLabel.IsEnabled = true;
-                timeoutBox.IsEnabled = true;
-                timeoutDoneButton.IsEnabled = true;
-                timeoutBox.Text = "";
-            }
-            else
-            {
-                Bot.timeouts.Add(selectedElement, Convert.ToInt32(timeoutBox.Text));
-                MessageBox.Show("Trigger timeout added successfully.", "Success");
-                timeoutLabel.IsEnabled = true;
-                timeoutBox.IsEnabled = true;
-                timeoutDoneButton.IsEnabled = true;
-                timeoutBox.Text = "";
-            }
-        }
-
-        
-        private void probDoneButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(Bot.probs.ContainsKey(selectedElement))
-            {
-                MessageBox.Show("You already have a probability for this trigger type.", "Error");
-                probLabel.IsEnabled = false;
-                probBox.IsEnabled = false;
-                probDoneButton.IsEnabled = false;
-                probBox.Text = "";
-            }
-            else
-            {
-                if (probBox.Text != "")
-                {
-                    Bot.probs.Add(selectedElement, Convert.ToInt32(probBox.Text));
-                    MessageBox.Show("Trigger probability added successfully.", "Success");
-                    probLabel.IsEnabled = false;
-                    probBox.IsEnabled = false;
-                    probDoneButton.IsEnabled = false;
-                    probBox.Text = "";
-                }
-            }
-        }
-        
 
         private void acceptFriendRequestTrigger_GotFocus(object sender, RoutedEventArgs e)
         {
             DisableAll();
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
 
             selectedElement = TriggerType.AcceptFriendRequestTrigger;
         }
@@ -413,6 +300,29 @@ namespace SteamChatBot
             commandLabel.IsEnabled = true;
             commandDoneButton.IsEnabled = true;
 
+            timeoutLabel.IsEnabled = true;
+            timeoutBox.IsEnabled = true;
+            timeoutDoneButton.IsEnabled = true;
+
+            delayLabel.IsEnabled = true;
+            delayBox.IsEnabled = true;
+            delayDoneButton.IsEnabled = true;
+
+            probLabel.IsEnabled = true;
+            probBox.IsEnabled = true;
+            probDoneButton.IsEnabled = true;
+
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
             selectedElement = TriggerType.KickTrigger;
         }
 
@@ -424,12 +334,404 @@ namespace SteamChatBot
             commandLabel.IsEnabled = true;
             commandDoneButton.IsEnabled = true;
 
+            timeoutLabel.IsEnabled = true;
+            timeoutBox.IsEnabled = true;
+            timeoutDoneButton.IsEnabled = true;
+
+            delayLabel.IsEnabled = true;
+            delayBox.IsEnabled = true;
+            delayDoneButton.IsEnabled = true;
+
+            probLabel.IsEnabled = true;
+            probBox.IsEnabled = true;
+            probDoneButton.IsEnabled = true;
+
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
+
             selectedElement = TriggerType.BanTrigger;
+        }
+
+        private void acceptChatInviteTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            timeoutLabel.IsEnabled = true;
+            timeoutBox.IsEnabled = true;
+            timeoutDoneButton.IsEnabled = true;
+
+            delayLabel.IsEnabled = true;
+            delayBox.IsEnabled = true;
+            delayDoneButton.IsEnabled = true;
+
+            probLabel.IsEnabled = true;
+            probBox.IsEnabled = true;
+            probDoneButton.IsEnabled = true;
+
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.AcceptChatInviteTrigger;
+        }
+
+        private void leaveChatTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            commandBox.IsEnabled = true;
+            commandLabel.IsEnabled = true;
+            commandDoneButton.IsEnabled = true;
+
+            timeoutLabel.IsEnabled = true;
+            timeoutBox.IsEnabled = true;
+            timeoutDoneButton.IsEnabled = true;
+
+            delayLabel.IsEnabled = true;
+            delayBox.IsEnabled = true;
+            delayDoneButton.IsEnabled = true;
+
+            probLabel.IsEnabled = true;
+            probBox.IsEnabled = true;
+            probDoneButton.IsEnabled = true;
+
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.LeaveChatTrigger;
+        }
+
+        private void linkNameTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            timeoutLabel.IsEnabled = true;
+            timeoutBox.IsEnabled = true;
+            timeoutDoneButton.IsEnabled = true;
+
+            delayLabel.IsEnabled = true;
+            delayBox.IsEnabled = true;
+            delayDoneButton.IsEnabled = true;
+
+            probLabel.IsEnabled = true;
+            probBox.IsEnabled = true;
+            probDoneButton.IsEnabled = true;
+
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.LinkNameTrigger;
+        }
+
+        private void doormatTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            timeoutLabel.IsEnabled = true;
+            timeoutBox.IsEnabled = true;
+            timeoutDoneButton.IsEnabled = true;
+
+            delayLabel.IsEnabled = true;
+            delayBox.IsEnabled = true;
+            delayDoneButton.IsEnabled = true;
+
+            probLabel.IsEnabled = true;
+            probBox.IsEnabled = true;
+            probDoneButton.IsEnabled = true;
+
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.DoormatTrigger;
+        }
+
+        private void lockChatTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            commandBox.IsEnabled = true;
+            commandLabel.IsEnabled = true;
+            commandDoneButton.IsEnabled = true;
+
+            timeoutLabel.IsEnabled = true;
+            timeoutBox.IsEnabled = true;
+            timeoutDoneButton.IsEnabled = true;
+
+            delayLabel.IsEnabled = true;
+            delayBox.IsEnabled = true;
+            delayDoneButton.IsEnabled = true;
+
+            probLabel.IsEnabled = true;
+            probBox.IsEnabled = true;
+            probDoneButton.IsEnabled = true;
+
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.LockChatTrigger;
+        }
+
+        private void unlockChatTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            commandBox.IsEnabled = true;
+            commandLabel.IsEnabled = true;
+            commandDoneButton.IsEnabled = true;
+
+            timeoutLabel.IsEnabled = true;
+            timeoutBox.IsEnabled = true;
+            timeoutDoneButton.IsEnabled = true;
+
+            delayLabel.IsEnabled = true;
+            delayBox.IsEnabled = true;
+            delayDoneButton.IsEnabled = true;
+
+            probLabel.IsEnabled = true;
+            probBox.IsEnabled = true;
+            probDoneButton.IsEnabled = true;
+
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.UnlockChatTrigger;
+        }
+
+        private void unmoderateTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            commandBox.IsEnabled = true;
+            commandLabel.IsEnabled = true;
+            commandDoneButton.IsEnabled = true;
+
+            timeoutLabel.IsEnabled = true;
+            timeoutBox.IsEnabled = true;
+            timeoutDoneButton.IsEnabled = true;
+
+            delayLabel.IsEnabled = true;
+            delayBox.IsEnabled = true;
+            delayDoneButton.IsEnabled = true;
+
+            probLabel.IsEnabled = true;
+            probBox.IsEnabled = true;
+            probDoneButton.IsEnabled = true;
+
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.UnmoderateChatTrigger;
+        }
+
+        private void moderateTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            commandBox.IsEnabled = true;
+            commandLabel.IsEnabled = true;
+            commandDoneButton.IsEnabled = true;
+
+            timeoutLabel.IsEnabled = true;
+            timeoutBox.IsEnabled = true;
+            timeoutDoneButton.IsEnabled = true;
+
+            delayLabel.IsEnabled = true;
+            delayBox.IsEnabled = true;
+            delayDoneButton.IsEnabled = true;
+
+            probLabel.IsEnabled = true;
+            probBox.IsEnabled = true;
+            probDoneButton.IsEnabled = true;
+
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.ModerateChatTrigger;
+        }
+
+        private void unbanTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            commandBox.IsEnabled = true;
+            commandLabel.IsEnabled = true;
+            commandDoneButton.IsEnabled = true;
+
+            timeoutLabel.IsEnabled = true;
+            timeoutBox.IsEnabled = true;
+            timeoutDoneButton.IsEnabled = true;
+
+            delayLabel.IsEnabled = true;
+            delayBox.IsEnabled = true;
+            delayDoneButton.IsEnabled = true;
+
+            probLabel.IsEnabled = true;
+            probBox.IsEnabled = true;
+            probDoneButton.IsEnabled = true;
+
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.UnbanTrigger;
+
+        }
+
+        private void banCheckTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            commandBox.IsEnabled = true;
+            commandLabel.IsEnabled = true;
+            commandDoneButton.IsEnabled = true;
+
+            timeoutLabel.IsEnabled = true;
+            timeoutBox.IsEnabled = true;
+            timeoutDoneButton.IsEnabled = true;
+
+            delayLabel.IsEnabled = true;
+            delayBox.IsEnabled = true;
+            delayDoneButton.IsEnabled = true;
+
+            probLabel.IsEnabled = true;
+            probBox.IsEnabled = true;
+            probDoneButton.IsEnabled = true;
+
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
+
+            apiLabel.IsEnabled = true;
+            apiBox.IsEnabled = true;
+            apiDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.BanCheckTrigger;
+        }
+
+        #endregion
+
+        #region button label box after-button click
+
+        private void commandDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Bot.commandList.ContainsKey(TriggerType.IsUpTrigger))
+            {
+                MessageBox.Show("You already have a command for this trigger type.", "Error");
+                commandBox.IsEnabled = false;
+                commandLabel.IsEnabled = false;
+                commandDoneButton.IsEnabled = false;
+                commandBox.Text = "";
+            }
+            else
+            {
+                Bot.commandList.Add(selectedElement, commandBox.Text);
+                MessageBox.Show("Trigger command added successfully.", "Success");
+                commandBox.IsEnabled = false;
+                commandLabel.IsEnabled = false;
+                commandDoneButton.IsEnabled = false;
+                commandBox.Text = "";
+            }
         }
 
         private void roomsDoneButton_Click(object sender, RoutedEventArgs e)
         {
-            if(Bot.rooms.ContainsKey(selectedElement))
+            if (Bot.rooms.ContainsKey(selectedElement))
             {
                 MessageBox.Show("You already have a list of rooms for this trigger type.", "Error");
                 roomsLabel.IsEnabled = false;
@@ -439,15 +741,22 @@ namespace SteamChatBot
             }
             else
             {
-                string[] rooms = roomsBox.Text.Split(',');
-                List<SteamID> _rooms = new List<SteamID>();
-                foreach (string room in rooms)
+                if (roomsBox.Text != "")
                 {
-                    _rooms.Add(new SteamID(Convert.ToUInt64(room)));
-                }
-                Bot.rooms.Add(selectedElement, _rooms);
+                    string[] rooms = roomsBox.Text.Split(',');
+                    List<SteamID> _rooms = new List<SteamID>();
+                    foreach (string room in rooms)
+                    {
+                        _rooms.Add(new SteamID(Convert.ToUInt64(room)));
+                    }
+                    Bot.rooms.Add(selectedElement, _rooms);
 
-                MessageBox.Show("Trigger rooms added successfully.", "Success");
+                    MessageBox.Show("Trigger rooms added successfully.", "Success");
+                }
+                else
+                {
+                    MessageBox.Show("You did not enter a room ID.", "Error");
+                }
                 roomsLabel.IsEnabled = false;
                 roomsBox.IsEnabled = false;
                 roomsDoneButton.IsEnabled = false;
@@ -457,7 +766,7 @@ namespace SteamChatBot
 
         private void usersDoneButton_Click(object sender, RoutedEventArgs e)
         {
-            if(Bot.users.ContainsKey(selectedElement))
+            if (Bot.users.ContainsKey(selectedElement))
             {
                 MessageBox.Show("You already have a list of users for this trigger type.", "Error");
                 usersLabel.IsEnabled = false;
@@ -513,9 +822,9 @@ namespace SteamChatBot
 
         private void apiDoneButton_Click(object sender, RoutedEventArgs e)
         {
-            if(Bot.apiKeys.ContainsKey(selectedElement))
+            if (Bot.apiKeys.ContainsKey(selectedElement))
             {
-                MessageBox.Show("You already have a list of ignores for this trigger type.", "Error");
+                MessageBox.Show("You already have an API key for this trigger type.", "Error");
                 apiLabel.IsEnabled = false;
                 apiBox.IsEnabled = false;
                 apiDoneButton.IsEnabled = false;
@@ -524,7 +833,7 @@ namespace SteamChatBot
             else
             {
                 Bot.apiKeys.Add(selectedElement, apiBox.Text);
-                MessageBox.Show("Trigger api key added successfully.", "Success");
+                MessageBox.Show("Trigger API key added successfully.", "Success");
                 apiLabel.IsEnabled = false;
                 apiBox.IsEnabled = false;
                 apiDoneButton.IsEnabled = false;
@@ -532,144 +841,128 @@ namespace SteamChatBot
             }
         }
 
-        private void acceptChatInviteTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        private void matchesDoneButton_Click(object sender, RoutedEventArgs e)
         {
-            DisableAll();
-
-            roomsBox.IsEnabled = true;
-            roomsLabel.IsEnabled = true;
-            roomsDoneButton.IsEnabled = true;
-
-            selectedElement = TriggerType.AcceptChatInviteTrigger;
+            if (Bot.matchesList.ContainsKey(TriggerType.ChatReplyTrigger))
+            {
+                MessageBox.Show("You already have matches for this trigger type.", "Error");
+                matchesLabel.IsEnabled = false;
+                matchesBox.IsEnabled = false;
+                matchesDoneButton.IsEnabled = false;
+                matchesBox.Text = "";
+            }
+            else
+            {
+                string[] matches = matchesBox.Text.Split(',');
+                List<string> _matches = new List<string>();
+                foreach (string match in matches)
+                {
+                    _matches.Add(match);
+                }
+                Bot.matchesList.Add(TriggerType.ChatReplyTrigger, _matches);
+                MessageBox.Show("Trigger matches added successfully", "Success");
+                matchesLabel.IsEnabled = false;
+                matchesBox.IsEnabled = false;
+                matchesDoneButton.IsEnabled = false;
+                matchesBox.Text = "";
+            }
         }
 
-        private void leaveChatTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        private void responsesDoneButton_Click(object sender, RoutedEventArgs e)
         {
-            DisableAll();
+            if (Bot.responsesList.ContainsKey(TriggerType.ChatReplyTrigger))
+            {
+                MessageBox.Show("You already have responses for this trigger type.", "Error");
+                responsesLabel.IsEnabled = false;
+                responsesBox.IsEnabled = false;
+                responsesDoneButton.IsEnabled = false;
+                responsesBox.Text = "";
+            }
+            else
+            {
+                string[] responses = responsesBox.Text.Split(',');
+                List<string> _responses = new List<string>();
+                foreach (string response in responses)
+                {
+                    _responses.Add(response);
+                }
+                Bot.responsesList.Add(TriggerType.ChatReplyTrigger, _responses);
+                MessageBox.Show("Trigger responses added successfully", "Success");
+                responsesLabel.IsEnabled = false;
+                responsesBox.IsEnabled = false;
+                responsesDoneButton.IsEnabled = false;
+                responsesBox.Text = "";
+            }
+        }
 
-            commandBox.IsEnabled = true;
-            commandLabel.IsEnabled = true;
-            commandDoneButton.IsEnabled = true;
+        private void delayDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Bot.delays.ContainsKey(selectedElement))
+            {
+                MessageBox.Show("You already have a delay for this trigger type.", "Error");
+                delayLabel.IsEnabled = false;
+                delayBox.IsEnabled = false;
+                delayDoneButton.IsEnabled = false;
+                delayBox.Text = "";
+            }
+            else
+            {
+                Bot.delays.Add(selectedElement, Convert.ToInt32(delayBox.Text));
+                MessageBox.Show("Trigger delay added successfully.", "Success");
+                delayLabel.IsEnabled = false;
+                delayBox.IsEnabled = false;
+                delayDoneButton.IsEnabled = false;
+                delayBox.Text = "";
+            }
+        }
 
-            selectedElement = TriggerType.LeaveChatTrigger;
+        private void timeoutDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Bot.timeouts.ContainsKey(selectedElement))
+            {
+                MessageBox.Show("You already have a timeout for this trigger type.", "Error");
+                timeoutLabel.IsEnabled = true;
+                timeoutBox.IsEnabled = true;
+                timeoutDoneButton.IsEnabled = true;
+                timeoutBox.Text = "";
+            }
+            else
+            {
+                Bot.timeouts.Add(selectedElement, Convert.ToInt32(timeoutBox.Text));
+                MessageBox.Show("Trigger timeout added successfully.", "Success");
+                timeoutLabel.IsEnabled = true;
+                timeoutBox.IsEnabled = true;
+                timeoutDoneButton.IsEnabled = true;
+                timeoutBox.Text = "";
+            }
+        }
+
+
+        private void probDoneButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Bot.probs.ContainsKey(selectedElement))
+            {
+                MessageBox.Show("You already have a probability for this trigger type.", "Error");
+                probLabel.IsEnabled = false;
+                probBox.IsEnabled = false;
+                probDoneButton.IsEnabled = false;
+                probBox.Text = "";
+            }
+            else
+            {
+                if (probBox.Text != "")
+                {
+                    Bot.probs.Add(selectedElement, Convert.ToInt32(probBox.Text));
+                    MessageBox.Show("Trigger probability added successfully.", "Success");
+                    probLabel.IsEnabled = false;
+                    probBox.IsEnabled = false;
+                    probDoneButton.IsEnabled = false;
+                    probBox.Text = "";
+                }
+            }
         }
 
         #endregion
 
-        /*
-        #region trigger drag-drop
-
-        private ListBoxItem _dragged;
-        
-        private void inactiveTriggers_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if(_dragged != null)
-            {
-                return;
-            }
-
-            UIElement element = inactiveTriggers.InputHitTest(e.GetPosition(inactiveTriggers)) as UIElement;
-
-            while(element != null)
-            {
-                if(element is ListBoxItem)
-                {
-                    _dragged = (ListBoxItem)element;
-                    break;
-                }
-                element = VisualTreeHelper.GetParent(element) as UIElement;
-            }
-        }
-
-        private void activeTriggers_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (_dragged != null)
-            {
-                return;
-            }
-
-            UIElement element = activeTriggers.InputHitTest(e.GetPosition(activeTriggers)) as UIElement;
-
-            while (element != null)
-            {
-                if (element is ListBoxItem)
-                {
-                    _dragged = (ListBoxItem)element;
-                    break;
-                }
-                element = VisualTreeHelper.GetParent(element) as UIElement;
-            }
-        }
-
-        private void Window_MouseMove(object sender, MouseEventArgs e)
-        {
-            if(_dragged == null)
-            {
-                return;
-            }
-            if(e.LeftButton == MouseButtonState.Released)
-            {
-                _dragged = null;
-                return;
-            }
-
-            DataObject obj = new DataObject(DataFormats.Text, _dragged.ToString());
-            DragDrop.DoDragDrop(_dragged, obj, DragDropEffects.Move);
-        }
-
-        private void activeTriggers_DragEnter(object sender, DragEventArgs e)
-        {
-            if(_dragged == null || e.Data.GetDataPresent(DataFormats.Text, true) == false)
-            {
-                e.Effects = DragDropEffects.None;
-            }
-            else
-            {
-                e.Effects = DragDropEffects.All;
-            }
-        }
-
-        private void activeTriggers_Drop(object sender, DragEventArgs e)
-        {
-            inactiveTriggers.Items.Remove(_dragged);
-            try
-            {
-                activeTriggers.Items.Add(_dragged);
-            }
-            catch(InvalidOperationException)
-            {
-                throw new InvalidOperationException("You cannot drag a trigger to its own box.");
-            }
-                _dragged = null;
-        }
-
-        private void inactiveTriggers_Drop(object sender, DragEventArgs e)
-        {
-            activeTriggers.Items.Remove(_dragged);
-            try
-            {
-                inactiveTriggers.Items.Add(_dragged);
-            }
-            catch (InvalidOperationException)
-            {
-                throw new InvalidOperationException("You cannot drag a trigger to its own box.");
-            }
-            _dragged = null;
-        }
-
-        private void inactiveTriggers_DragEnter(object sender, DragEventArgs e)
-        {
-            if (_dragged == null || e.Data.GetDataPresent(DataFormats.Text, true) == false)
-            {
-                e.Effects = DragDropEffects.None;
-            }
-            else
-            {
-                e.Effects = DragDropEffects.All;
-            }
-        }
-
-        #endregion
-        */
     }
 }

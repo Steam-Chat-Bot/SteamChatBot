@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 using SteamKit2;
 using Newtonsoft.Json;
@@ -17,8 +18,6 @@ namespace SteamChatBot.Triggers
         public TriggerOptions Options { get; set; }
 
         public bool ReplyEnabled = true;
-        public string UserName { get; set; }
-        public string UserString { get; set; }
 
         #region constructors
 
@@ -99,41 +98,60 @@ namespace SteamChatBot.Triggers
                 string _file = file.Substring(start, end - start);
                 TriggerOptions options = JsonConvert.DeserializeObject<TriggerOptions>(File.ReadAllText(file));
                 TriggerType type = (TriggerType)Enum.Parse(typeof(TriggerType), _file.Substring(_file.IndexOf('/') + 1));
-                if (type == TriggerType.AcceptFriendRequestTrigger)
+                switch (type)
                 {
-                    temp.Add(new AcceptFriendRequestTrigger(type, _file));
-                }
-                else if (type == TriggerType.ChatReplyTrigger)
-                {
-                    temp.Add(new ChatReplyTrigger(type, _file, options));
-                }
-                else if (type == TriggerType.IsUpTrigger)
-                {
-                    temp.Add(new IsUpTrigger(type, _file, options));
-                }
-                else if(type == TriggerType.AutojoinChatTrigger)
-                {
-                    temp.Add(new AutojoinChatTrigger(type, _file, options));
-                }
-                else if(type == TriggerType.BanTrigger)
-                {
-                    temp.Add(new BanTrigger(type, _file, options));
-                }
-                else if(type == TriggerType.KickTrigger)
-                {
-                    temp.Add(new KickTrigger(type, _file, options));
-                }
-                else if(type == TriggerType.AcceptChatInviteTrigger)
-                {
-                    temp.Add(new AcceptChatInviteTrigger(type, _file, options));
-                }
-                else if(type == TriggerType.LeaveChatTrigger)
-                {
-                    temp.Add(new LeaveChatTrigger(type, _file, options));
-                }
-                else
-                {
-                    return null;
+                    case TriggerType.AcceptChatInviteTrigger:
+                        temp.Add(new AcceptChatInviteTrigger(type, _file, options));
+                        break;
+                    case TriggerType.AcceptFriendRequestTrigger:
+                        temp.Add(new AcceptFriendRequestTrigger(type, _file));
+                        break;
+                    case TriggerType.AutojoinChatTrigger:
+                        temp.Add(new AutojoinChatTrigger(type, _file, options));
+                        break;
+                    case TriggerType.BanCheckTrigger:
+                        temp.Add(new BanCheckTrigger(type, _file, options));
+                        break;
+                    case TriggerType.BanTrigger:
+                        temp.Add(new BanTrigger(type, _file, options));
+                        break;
+                    case TriggerType.ChatReplyTrigger:
+                        temp.Add(new ChatReplyTrigger(type, _file, options));
+                        break;
+                    case TriggerType.DoormatTrigger:
+                        temp.Add(new DoormatTrigger(type, _file, options));
+                        break;
+                    case TriggerType.IsUpTrigger:
+                        temp.Add(new IsUpTrigger(type, _file, options));
+                        break;
+                    case TriggerType.KickTrigger:
+                        temp.Add(new KickTrigger(type, _file, options));
+                        break;
+                    case TriggerType.LeaveChatTrigger:
+                        temp.Add(new LeaveChatTrigger(type, _file, options));
+                        break;
+                    case TriggerType.LinkNameTrigger:
+                        temp.Add(new LinkNameTrigger(type, _file, options));
+                        break;
+                    case TriggerType.LockChatTrigger:
+                        temp.Add(new LockChatTrigger(type, _file, options));
+                        break;
+                    case TriggerType.ModerateChatTrigger:
+                        temp.Add(new ModerateChatTrigger(type, _file, options));
+                        break;
+                    case TriggerType.SteamrepTrigger:
+                        break;
+                    case TriggerType.UnbanTrigger:
+                        temp.Add(new UnbanTrigger(type, _file, options));
+                        break;
+                    case TriggerType.UnlockChatTrigger:
+                        temp.Add(new UnlockChatTrigger(type, _file, options));
+                        break;
+                    case TriggerType.UnmoderateChatTrigger:
+                        temp.Add(new UnmoderateChatTrigger(type, _file, options));
+                        break;
+                    default:
+                        break;
                 }
             }
             return temp;
@@ -446,7 +464,7 @@ namespace SteamChatBot.Triggers
         /// <returns></returns>
         public virtual bool OnEnteredChat(SteamID roomID, SteamID userID, bool haveSentMessage)
         {
-            if (ReplyEnabled && RandomRoll() && CheckRoom(roomID) && CheckUser(userID) && CheckIgnores(userID, roomID))
+            if (ReplyEnabled && RandomRoll() && CheckRoom(roomID) && CheckUser(userID) && !CheckIgnores(userID, roomID))
             {
                 try
                 {
@@ -684,20 +702,7 @@ namespace SteamChatBot.Triggers
         /// <param name="room"></param>
         protected void SendMessageAfterDelay(SteamID steamID, string message, bool room)
         {
-            if (Options.Delay != 0 || Options.Delay != null)
-            {
-                Log.Instance.Silly("{0}/{1}: Sending delayed message to {2}: {3}", Bot.username, Name, steamID, message);
-                Thread.Sleep(Options.Delay.Value);
-                if (room)
-                {   
-                    Bot.steamFriends.SendChatRoomMessage(steamID, EChatEntryType.ChatMsg, message);
-                }
-                else
-                {
-                    Bot.steamFriends.SendChatMessage(steamID, EChatEntryType.ChatMsg, message);
-                }
-            }
-            else
+            if (Options.Delay == null)
             {
                 Log.Instance.Silly("{0}/{1}: Sending non delayed message to {2}: {3}", Bot.username, Name, steamID, message);
                 if (room)
@@ -708,6 +713,25 @@ namespace SteamChatBot.Triggers
                 {
                     Bot.steamFriends.SendChatMessage(steamID, EChatEntryType.ChatMsg, message);
                 }
+            }
+            else
+            {
+                Log.Instance.Silly("{0}/{1}: Sending delayed message to {2}: {3}", Bot.username, Name, steamID, message);
+                System.Timers.Timer timer = new System.Timers.Timer(Options.Delay.Value / 1000);
+
+                timer.Elapsed += (sender, e) => TimerElapsed_Message(sender, e, steamID, message, room);
+            }
+        }
+
+        private void TimerElapsed_Message(object sender, System.Timers.ElapsedEventArgs e, SteamID steamID, string message, bool room)
+        {
+            if (room)
+            {
+                Bot.steamFriends.SendChatRoomMessage(steamID, EChatEntryType.ChatMsg, message);
+            }
+            else
+            {
+                Bot.steamFriends.SendChatMessage(steamID, EChatEntryType.ChatMsg, message);
             }
         }
 
@@ -753,10 +777,6 @@ namespace SteamChatBot.Triggers
                     {
                         return true;
                     }
-                    else
-                    {
-                        return false;
-                    }
                 }
                 return true;
             }
@@ -798,10 +818,15 @@ namespace SteamChatBot.Triggers
             {
                 ReplyEnabled = false;
                 Log.Instance.Silly("{0}/{1}: Setting timeout ({2} ms)", Bot.username, Name, Options.Timeout);
-                Thread.Sleep(Options.Timeout.Value);
-                Log.Instance.Silly("{0}/{1}: Timeout expired", Bot.username, Name);
-                ReplyEnabled = true;
+                System.Timers.Timer timer = new System.Timers.Timer(Options.Timeout.Value);
+                timer.Elapsed += (sender, e) => AfterTimer_Timeout(sender, e);
             }
+        }
+
+        private void AfterTimer_Timeout(object sender, ElapsedEventArgs e)
+        {
+            Log.Instance.Silly("{0}/{1}: Timeout expired", Bot.username, Name);
+            ReplyEnabled = true;
         }
         #endregion
 

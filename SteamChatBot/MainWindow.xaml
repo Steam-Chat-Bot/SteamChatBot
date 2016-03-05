@@ -52,13 +52,21 @@
                     </Grid.ColumnDefinitions>
                     <ListBox x:Name="triggerCheckBoxList" HorizontalAlignment="Left" Height="479" Margin="10,10,0,-30" VerticalAlignment="Top" Width="494" Grid.ColumnSpan="3">
                         <CheckBox x:Name="acceptChatInviteTriggerBox" Content="AcceptChatInviteTrigger - Accepts chat invites from all (blank rooms) or specific rooms" Width="484" GotFocus="acceptChatInviteTriggerBox_GotFocus"/>
-                        <CheckBox x:Name="acceptFriendRequestTrigger" Content="AcceptFriendRequestTrigger - Accepts all friend requests" GotFocus="acceptFriendRequestTrigger_GotFocus"/>
+                        <CheckBox x:Name="acceptFriendRequestTriggerBox" Content="AcceptFriendRequestTrigger - Accepts all friend requests" GotFocus="acceptFriendRequestTrigger_GotFocus"/>
                         <CheckBox x:Name="autojoinChatTriggerBox" Content="AutojoinChatTrigger - Autojoins chat room(s)" GotFocus="autojoinChatTriggerBox_GotFocus"/>
-                        <CheckBox x:Name="banTriggerBox" Content="BanTrigger - Bans a SteamID from chat" GotFocus="banTriggerBox_GotFocus"/>
+                        <CheckBox x:Name="banTriggerBox" Content="BanTrigger - Bans a user from the chat" GotFocus="banTriggerBox_GotFocus"/>
+                        <CheckBox x:Name="banCheckTriggerBox" Content="BanCheckTrigger - Checks SteamCommunity for bans" GotFocus="banCheckTriggerBox_GotFocus"/>
                         <CheckBox x:Name="chatReplyTriggerBox" Content="ChatReplyTrigger - Responds to a list of matches" GotFocus="chatReplyTriggerBox_GotFocus" Width="459"/>
+                        <CheckBox x:Name="doormatTriggerBox" Content="DoormatTrigger - Greets a user as they enter chat" GotFocus="doormatTriggerBox_GotFocus"/>
                         <CheckBox x:Name="isUpTriggerBox" Content="IsUpTrigger - Determines if a website is online)" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="266" GotFocus="isUpTriggerBox_GotFocus"/>
                         <CheckBox x:Name="kickTriggerBox" Content="KickTrigger - Kicks a SteamID from chat" GotFocus="kickTriggerBox_GotFocus"/>
                         <CheckBox x:Name="leaveChatTriggerBox" Content="LeaveChatTrigger - Commands the bot to leave chat" GotFocus="leaveChatTriggerBox_GotFocus"/>
+                        <CheckBox x:Name="linkNameTriggerBox" Content="LinkNameTrigger - Replies to a message containing a link with the title" GotFocus="linkNameTriggerBox_GotFocus"/>
+                        <CheckBox x:Name="lockChatTriggerBox" Content="LockChatTrigger - Locks a chat room" GotFocus="lockChatTriggerBox_GotFocus"/>
+                        <CheckBox x:Name="moderateChatTriggerBox" Content="ModerateChatTrigger - Moderates a chat room" GotFocus="moderateTriggerBox_GotFocus"/>
+                        <CheckBox x:Name="unbanTriggerBox" Content="UnbanTrigger - Unbans a user from the chat" GotFocus="unbanTriggerBox_GotFocus"/>
+                        <CheckBox x:Name="unlockChatTriggerBox" Content="UnlockChatTrigger - Unlocks a chat room" GotFocus="unlockChatTriggerBox_GotFocus"/>
+                        <CheckBox x:Name="unmoderateChatTriggerBox" Content="UnmoderateChatTrigger - Unmoderates a chat room" GotFocus="unmoderateTriggerBox_GotFocus"/>
                     </ListBox>
                     <Label x:Name="commandLabel" Content="Command:" Grid.Column="2" Margin="122,8,184,420" Visibility="Visible"/>
                     <TextBox x:Name="commandBox" TextWrapping="Wrap" Grid.Column="2" Margin="189,12,105,424" Visibility="Visible"/>
@@ -87,7 +95,7 @@
                     <Label x:Name="ignoresLabel" Content="Ignores:" Grid.Column="2" HorizontalAlignment="Left" Margin="130,326,0,0" VerticalAlignment="Top" Visibility="Visible"/>
                     <Button x:Name="ignoresDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,329,0,0" VerticalAlignment="Top" Width="90" Click="ignoresDoneButton_Click" Visibility="Visible"/>
                     <TextBox x:Name="ignoresBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="187,326,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
-                    <Label x:Name="apiLabel" Content="Ignores:" Grid.Column="2" HorizontalAlignment="Left" Margin="130,365,0,0" VerticalAlignment="Top" Visibility="Visible"/>
+                    <Label x:Name="apiLabel" Content="API Key:" Grid.Column="2" HorizontalAlignment="Left" Margin="130,365,0,0" VerticalAlignment="Top" Visibility="Visible"/>
                     <Button x:Name="apiDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,368,0,0" VerticalAlignment="Top" Width="90" Click="apiDoneButton_Click" Visibility="Visible"/>
                     <TextBox x:Name="apiBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="187,365,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
                 </Grid>

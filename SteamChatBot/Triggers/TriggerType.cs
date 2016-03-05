@@ -5,10 +5,19 @@
         AcceptChatInviteTrigger,
         AcceptFriendRequestTrigger,
         AutojoinChatTrigger,
+        BanCheckTrigger,
         BanTrigger,
         ChatReplyTrigger,
+        DoormatTrigger,
         IsUpTrigger,
         KickTrigger,
-        LeaveChatTrigger
+        LeaveChatTrigger,
+        LinkNameTrigger,
+        LockChatTrigger,
+        ModerateChatTrigger,
+        SteamrepTrigger,
+        UnbanTrigger,
+        UnlockChatTrigger,
+        UnmoderateChatTrigger
     }
 }
