@@ -139,8 +139,6 @@ namespace SteamChatBot.Triggers
                     case TriggerType.ModerateChatTrigger:
                         temp.Add(new ModerateChatTrigger(type, _file, options));
                         break;
-                    case TriggerType.SteamrepTrigger:
-                        break;
                     case TriggerType.UnbanTrigger:
                         temp.Add(new UnbanTrigger(type, _file, options));
                         break;

@@ -15,7 +15,6 @@
         LinkNameTrigger,
         LockChatTrigger,
         ModerateChatTrigger,
-        SteamrepTrigger,
         UnbanTrigger,
         UnlockChatTrigger,
         UnmoderateChatTrigger

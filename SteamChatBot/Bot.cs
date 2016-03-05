@@ -37,7 +37,7 @@ namespace SteamChatBot
         public static string logFile;
         public static string FLL;
         public static string CLL;
-        public static List<SteamID> friends;
+
         #endregion
 
         #region trigger options
@@ -58,12 +58,7 @@ namespace SteamChatBot
         public static List<BaseTrigger> triggers = new List<BaseTrigger>();
         public static List<CheckBox> checkBoxes = new List<CheckBox>();
         public static List<CheckBox> activeCheckBoxes = new List<CheckBox>();
-
-        public string GetUserName(SteamID steamID)
-        {
-            return "";
-        }
-
+        
         private bool disposed = false;
 
         #region login data read/write
@@ -123,6 +118,7 @@ namespace SteamChatBot
                     WriteData();
                 }
             }
+
             foreach (CheckBox box in checkBoxes)
             {
                 if (box.IsChecked == true)
@@ -145,21 +141,7 @@ namespace SteamChatBot
                 {
                     case "isUpTriggerBox":
                         {
-                            string command;
-                            int timeout;
-                            int delay;
-                            int probability;
-                            delays.TryGetValue(TriggerType.IsUpTrigger, out delay);
-                            timeouts.TryGetValue(TriggerType.IsUpTrigger, out timeout);
-                            commandList.TryGetValue(TriggerType.IsUpTrigger, out command);
-                            probs.TryGetValue(TriggerType.IsUpTrigger, out probability);
-                            TriggerOptions options = new TriggerOptions
-                            {
-                                Command = command,
-                                Delay = delay,
-                                Timeout = timeout,
-                                Probability = probability != 0 ? probability / 100 : 1
-                            };
+                            TriggerOptions options = GetTriggerOptions(TriggerType.IsUpTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.IsUpTrigger);
                             triggers.Remove(removed);
                             triggers.Add(new IsUpTrigger(TriggerType.IsUpTrigger, "IsUpTrigger", options));
@@ -167,32 +149,15 @@ namespace SteamChatBot
                         break;
                     case "chatReplyTriggerBox":
                         {
-                            List<string> matches;
-                            List<string> responses;
-                            int timeout;
-                            int delay;
-                            int probability;
-                            delays.TryGetValue(TriggerType.ChatReplyTrigger, out delay);
-                            timeouts.TryGetValue(TriggerType.ChatReplyTrigger, out timeout);
-                            matchesList.TryGetValue(TriggerType.ChatReplyTrigger, out matches);
-                            responsesList.TryGetValue(TriggerType.ChatReplyTrigger, out responses);
-                            probs.TryGetValue(TriggerType.ChatReplyTrigger, out probability);
-                            TriggerOptions options = new TriggerOptions()
-                            {
-                                Delay = delay,
-                                Timeout = timeout,
-                                Matches = matches,
-                                Responses = responses,
-                                Probability = probability != 0 ? probability / 100 : 1
-                            };
+                            TriggerOptions options = GetTriggerOptions(TriggerType.ChatReplyTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.ChatReplyTrigger);
                             triggers.Remove(removed);
-
                             triggers.Add(new ChatReplyTrigger(TriggerType.ChatReplyTrigger, "ChatReplyTrigger", options));
                         }
                         break;
                     case "acceptFriendRequestTriggerBox":
                         {
+                            TriggerOptions options = GetTriggerOptions(TriggerType.AcceptFriendRequestTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.AcceptFriendRequestTrigger);
                             triggers.Remove(removed);
                             triggers.Add(new AcceptFriendRequestTrigger(TriggerType.AcceptFriendRequestTrigger, "AcceptFriendRequestTrigger"));
@@ -200,12 +165,7 @@ namespace SteamChatBot
                         break;
                     case "autojoinChatTriggerBox":
                         {
-                            List<SteamID> _rooms = new List<SteamID>();
-                            rooms.TryGetValue(TriggerType.AutojoinChatTrigger, out _rooms);
-                            TriggerOptions options = new TriggerOptions()
-                            {
-                                Rooms = _rooms
-                            };
+                            TriggerOptions options = GetTriggerOptions(TriggerType.AutojoinChatTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.AutojoinChatTrigger);
                             triggers.Remove(removed);
                             triggers.Add(new AutojoinChatTrigger(TriggerType.AutojoinChatTrigger, "AutojoinChatTrigger", options));
@@ -213,12 +173,7 @@ namespace SteamChatBot
                         break;
                     case "banTriggerBox":
                         {
-                            string command;
-                            commandList.TryGetValue(TriggerType.BanTrigger, out command);
-                            TriggerOptions options = new TriggerOptions()
-                            {
-                                Command = command
-                            };
+                            TriggerOptions options = GetTriggerOptions(TriggerType.BanTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.BanTrigger);
                             triggers.Remove(removed);
                             triggers.Add(new BanTrigger(TriggerType.BanTrigger, "BanTrigger", options));
@@ -226,12 +181,7 @@ namespace SteamChatBot
                         break;
                     case "kickTriggerBox":
                         {
-                            string command;
-                            commandList.TryGetValue(TriggerType.KickTrigger, out command);
-                            TriggerOptions options = new TriggerOptions()
-                            {
-                                Command = command
-                            };
+                            TriggerOptions options = GetTriggerOptions(TriggerType.KickTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.KickTrigger);
                             triggers.Remove(removed);
                             triggers.Add(new KickTrigger(TriggerType.KickTrigger, "KickTrigger", options));
@@ -239,12 +189,7 @@ namespace SteamChatBot
                         break;
                     case "acceptChatInviteTriggerBox":
                         {
-                            List<SteamID> rooms_;
-                            rooms.TryGetValue(TriggerType.AcceptChatInviteTrigger, out rooms_);
-                            TriggerOptions options = new TriggerOptions()
-                            {
-                                Rooms = rooms_
-                            };
+                            TriggerOptions options = GetTriggerOptions(TriggerType.AcceptChatInviteTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.AcceptChatInviteTrigger);
                             triggers.Remove(removed);
                             triggers.Add(new AcceptChatInviteTrigger(TriggerType.AcceptChatInviteTrigger, "AcceptChatInviteTrigger", options));
@@ -252,12 +197,7 @@ namespace SteamChatBot
                         break;
                     case "leaveChatTriggerBox":
                         {
-                            string command;
-                            commandList.TryGetValue(TriggerType.LeaveChatTrigger, out command);
-                            TriggerOptions options = new TriggerOptions()
-                            {
-                                Command = command
-                            };
+                            TriggerOptions options = GetTriggerOptions(TriggerType.LeaveChatTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.LeaveChatTrigger);
                             triggers.Remove(removed);
                             triggers.Add(new LeaveChatTrigger(TriggerType.LeaveChatTrigger, "LeaveChatTrigger", options));
@@ -265,7 +205,7 @@ namespace SteamChatBot
                         break;
                     case "linkNameTriggerBox":
                         {
-                            TriggerOptions options = new TriggerOptions();
+                            TriggerOptions options = GetTriggerOptions(TriggerType.LinkNameTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.LinkNameTrigger);
                             triggers.Remove(removed);
                             triggers.Add(new LinkNameTrigger(TriggerType.LinkNameTrigger, "LinkNameTrigger", options));
@@ -273,7 +213,7 @@ namespace SteamChatBot
                         break;
                     case "doormatTriggerBox":
                         {
-                            TriggerOptions options = new TriggerOptions();
+                            TriggerOptions options = GetTriggerOptions(TriggerType.DoormatTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.DoormatTrigger);
                             triggers.Remove(removed);
                             triggers.Add(new DoormatTrigger(TriggerType.DoormatTrigger, "DoormatTrigger", options));
@@ -281,12 +221,7 @@ namespace SteamChatBot
                         break;
                     case "lockChatTriggerBox":
                         {
-                            string command;
-                            commandList.TryGetValue(TriggerType.LockChatTrigger, out command);
-                            TriggerOptions options = new TriggerOptions()
-                            {
-                                Command = command
-                            };
+                            TriggerOptions options = GetTriggerOptions(TriggerType.LockChatTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.LockChatTrigger);
                             triggers.Remove(removed);
                             triggers.Add(new LockChatTrigger(TriggerType.LockChatTrigger, "LockChatTrigger", options));
@@ -294,12 +229,7 @@ namespace SteamChatBot
                         break;
                     case "unlockChatTriggerBox":
                         {
-                            string command;
-                            commandList.TryGetValue(TriggerType.UnlockChatTrigger, out command);
-                            TriggerOptions options = new TriggerOptions()
-                            {
-                                Command = command
-                            };
+                            TriggerOptions options = GetTriggerOptions(TriggerType.UnlockChatTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.UnlockChatTrigger);
                             triggers.Remove(removed);
                             triggers.Add(new UnlockChatTrigger(TriggerType.UnlockChatTrigger, "UnlockChatTrigger", options));
@@ -307,12 +237,7 @@ namespace SteamChatBot
                         break;
                     case "moderateChatTriggerBox":
                         {
-                            string command;
-                            commandList.TryGetValue(TriggerType.ModerateChatTrigger, out command);
-                            TriggerOptions options = new TriggerOptions()
-                            {
-                                Command = command
-                            };
+                            TriggerOptions options = GetTriggerOptions(TriggerType.ModerateChatTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.ModerateChatTrigger);
                             triggers.Remove(removed);
                             triggers.Add(new ModerateChatTrigger(TriggerType.ModerateChatTrigger, "ModerateChatTrigger", options));
@@ -320,12 +245,7 @@ namespace SteamChatBot
                         break;
                     case "unmoderateChatTriggerBox":
                         {
-                            string command;
-                            commandList.TryGetValue(TriggerType.UnmoderateChatTrigger, out command);
-                            TriggerOptions options = new TriggerOptions()
-                            {
-                                Command = command
-                            };
+                            TriggerOptions options = GetTriggerOptions(TriggerType.UnmoderateChatTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.UnmoderateChatTrigger);
                             triggers.Remove(removed);
                             triggers.Add(new UnmoderateChatTrigger(TriggerType.UnmoderateChatTrigger, "UnmoderateChatTrigger", options));
@@ -333,12 +253,7 @@ namespace SteamChatBot
                         break;
                     case "unbanTriggerBox":
                         {
-                            string command;
-                            commandList.TryGetValue(TriggerType.UnbanTrigger, out command);
-                            TriggerOptions options = new TriggerOptions()
-                            {
-                                Command = command
-                            };
+                            TriggerOptions options = GetTriggerOptions(TriggerType.UnbanTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.UnbanTrigger);
                             triggers.Remove(removed);
                             triggers.Add(new UnbanTrigger(TriggerType.UnbanTrigger, "UnbanTrigger", options));
@@ -346,15 +261,7 @@ namespace SteamChatBot
                         break;
                     case "banCheckTriggerBox":
                         {
-                            string command;
-                            string api;
-                            commandList.TryGetValue(TriggerType.BanCheckTrigger, out command);
-                            apiKeys.TryGetValue(TriggerType.BanCheckTrigger, out api);
-                            TriggerOptions options = new TriggerOptions()
-                            {
-                                Command = command,
-                                ApiKey = api
-                            };
+                            TriggerOptions options = GetTriggerOptions(TriggerType.BanCheckTrigger);
                             var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.BanCheckTrigger);
                             triggers.Remove(removed);
                             triggers.Add(new BanCheckTrigger(TriggerType.BanCheckTrigger, "BanCheckTrigger", options));
@@ -378,6 +285,43 @@ namespace SteamChatBot
             {
                 manager.RunWaitCallbacks(TimeSpan.FromSeconds(1));
             }
+        }
+
+        private static TriggerOptions GetTriggerOptions(TriggerType type)
+        {
+            string command;
+            List<string> matches;
+            List<string> responses;
+            int timeout;
+            int delay;
+            int probability;
+            List<SteamID> room;
+            List<SteamID> user;
+            List<SteamID> ignore;
+            string api;
+            commandList.TryGetValue(type, out command);
+            matchesList.TryGetValue(type, out matches);
+            responsesList.TryGetValue(type, out responses);
+            delays.TryGetValue(type, out delay);
+            timeouts.TryGetValue(type, out timeout);
+            probs.TryGetValue(type, out probability);
+            rooms.TryGetValue(type, out room);
+            users.TryGetValue(type, out user);
+            ignores.TryGetValue(type, out ignore);
+            apiKeys.TryGetValue(type, out api);
+            TriggerOptions options = new TriggerOptions
+            {
+                Command = command,
+                Delay = delay,
+                Timeout = timeout,
+                Probability = probability != 0 ? probability / 100 : 1,
+                Rooms = room,
+                Ignore = ignore,
+                User = user,
+                ApiKey = api
+            };
+
+            return options;
         }
 
         public void Dispose()
