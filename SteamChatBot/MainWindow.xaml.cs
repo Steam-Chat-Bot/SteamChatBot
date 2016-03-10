@@ -45,7 +45,6 @@ namespace SteamChatBot
         Log Log;
         string logFile;
         string sentryFile;
-        string autoJoinFile;
         string username;
         string password;
         string displayName;
@@ -91,7 +90,6 @@ namespace SteamChatBot
                 var _data = Bot.ReadData();
                 logFile = _data.logFile;
                 sentryFile = _data.sentryFile;
-                autoJoinFile = _data.autoJoinFile;
                 username = _data.username;
                 password = _data.password;
                 displayName = _data.displayName;
@@ -704,6 +702,45 @@ namespace SteamChatBot
             selectedElement = TriggerType.BanCheckTrigger;
         }
 
+        private void weatherTriggerBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+
+            commandBox.IsEnabled = true;
+            commandLabel.IsEnabled = true;
+            commandDoneButton.IsEnabled = true;
+
+            timeoutLabel.IsEnabled = true;
+            timeoutBox.IsEnabled = true;
+            timeoutDoneButton.IsEnabled = true;
+
+            delayLabel.IsEnabled = true;
+            delayBox.IsEnabled = true;
+            delayDoneButton.IsEnabled = true;
+
+            probLabel.IsEnabled = true;
+            probBox.IsEnabled = true;
+            probDoneButton.IsEnabled = true;
+
+            roomsLabel.IsEnabled = true;
+            roomsBox.IsEnabled = true;
+            roomsDoneButton.IsEnabled = true;
+
+            usersLabel.IsEnabled = true;
+            usersBox.IsEnabled = true;
+            usersDoneButton.IsEnabled = true;
+
+            ignoresLabel.IsEnabled = true;
+            ignoresBox.IsEnabled = true;
+            ignoresDoneButton.IsEnabled = true;
+
+            apiLabel.IsEnabled = true;
+            apiBox.IsEnabled = true;
+            apiDoneButton.IsEnabled = true;
+
+            selectedElement = TriggerType.WeatherTrigger;
+        }
+
         #endregion
 
         #region button label box after-button click
@@ -964,5 +1001,10 @@ namespace SteamChatBot
 
         #endregion
 
+        private void aboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            AboutBox box = new AboutBox();
+            box.ShowDialog();
+        }
     }
 }

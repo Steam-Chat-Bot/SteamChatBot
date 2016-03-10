@@ -67,6 +67,7 @@
                         <CheckBox x:Name="unbanTriggerBox" Content="UnbanTrigger - Unbans a user from the chat" GotFocus="unbanTriggerBox_GotFocus"/>
                         <CheckBox x:Name="unlockChatTriggerBox" Content="UnlockChatTrigger - Unlocks a chat room" GotFocus="unlockChatTriggerBox_GotFocus"/>
                         <CheckBox x:Name="unmoderateChatTriggerBox" Content="UnmoderateChatTrigger - Unmoderates a chat room" GotFocus="unmoderateTriggerBox_GotFocus"/>
+                        <CheckBox x:Name="weatherTriggerBox" Content="WeatherTrigger - Gets weather for a location" GotFocus="weatherTriggerBox_GotFocus"/>
                     </ListBox>
                     <Label x:Name="commandLabel" Content="Command:" Grid.Column="2" Margin="122,8,184,420" Visibility="Visible"/>
                     <TextBox x:Name="commandBox" TextWrapping="Wrap" Grid.Column="2" Margin="189,12,105,424" Visibility="Visible"/>
@@ -102,6 +103,7 @@
             </TabItem>
         </TabControl>
         <Button x:Name="startButton" Content="Start Bot" HorizontalAlignment="Center" Margin="0,510,0,0" VerticalAlignment="Top" Width="370" Click="startButton_Click" Height="20" TabIndex="7"/>
+        <Button x:Name="aboutButton" Content="About" HorizontalAlignment="Left" Margin="10,510,0,0" VerticalAlignment="Top" Width="75" Click="aboutButton_Click"/>
 
     </Grid>
 </Window>

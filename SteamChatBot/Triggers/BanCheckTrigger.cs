@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web.Script.Serialization;
 
-using Newtonsoft.Json;
 using SteamKit2;
 
 namespace SteamChatBot.Triggers

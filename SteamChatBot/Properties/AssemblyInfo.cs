@@ -8,7 +8,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SteamChatBot")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A simplified interface for a Steam chat bot.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Steam-Chat-Bot")]
 [assembly: AssemblyProduct("SteamChatBot")]
@@ -51,5 +51,7 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("0.0.1.0")]
+[assembly: AssemblyFileVersion("0.0.1.0")]
+[assembly: NeutralResourcesLanguage("en-US")]
+

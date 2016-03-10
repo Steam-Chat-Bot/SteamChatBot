@@ -43,7 +43,7 @@ namespace SteamChatBot.Triggers
         /// <param name="cbn"></param>
         /// <param name="name"></param>
         /// <param name="error"></param>
-        /// <returns>string</returns>
+        /// <returns>error string</returns>
         protected string IfError(string cbn, string name, string error)
         {
             return string.Format("{0}/{1}: Error: {2}", cbn, name, error);
@@ -86,7 +86,7 @@ namespace SteamChatBot.Triggers
                 File.WriteAllText("triggers/" + Name + ".json", json);
             }
         }
-
+        
         public static List<BaseTrigger> ReadTriggers()
         {
             List<BaseTrigger> temp = new List<BaseTrigger>();
@@ -147,6 +147,9 @@ namespace SteamChatBot.Triggers
                         break;
                     case TriggerType.UnmoderateChatTrigger:
                         temp.Add(new UnmoderateChatTrigger(type, _file, options));
+                        break;
+                    case TriggerType.WeatherTrigger:
+                        temp.Add(new WeatherTrigger(type, _file, options));
                         break;
                     default:
                         break;
@@ -700,7 +703,7 @@ namespace SteamChatBot.Triggers
         /// <param name="room"></param>
         protected void SendMessageAfterDelay(SteamID steamID, string message, bool room)
         {
-            if (Options.Delay == null)
+            if (Options.Delay == null || Options.Delay.Value == 0)
             {
                 Log.Instance.Silly("{0}/{1}: Sending non delayed message to {2}: {3}", Bot.username, Name, steamID, message);
                 if (room)

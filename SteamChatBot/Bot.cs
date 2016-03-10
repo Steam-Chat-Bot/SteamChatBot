@@ -267,6 +267,14 @@ namespace SteamChatBot
                             triggers.Add(new BanCheckTrigger(TriggerType.BanCheckTrigger, "BanCheckTrigger", options));
                         }
                         break;
+                    case "weatherTriggerBox":
+                        {
+                            TriggerOptions options = GetTriggerOptions(TriggerType.WeatherTrigger);
+                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.WeatherTrigger);
+                            triggers.Remove(removed);
+                            triggers.Add(new WeatherTrigger(TriggerType.WeatherTrigger, "WeatherTrigger", options));
+                        }
+                        break;
                 }
             }
 

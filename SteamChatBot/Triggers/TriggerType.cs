@@ -17,6 +17,7 @@
         ModerateChatTrigger,
         UnbanTrigger,
         UnlockChatTrigger,
-        UnmoderateChatTrigger
+        UnmoderateChatTrigger,
+        WeatherTrigger
     }
 }
