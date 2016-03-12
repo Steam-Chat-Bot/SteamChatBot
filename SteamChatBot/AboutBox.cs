@@ -15,11 +15,10 @@ namespace SteamChatBot
         {
             InitializeComponent();
             this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
+            this.linkLabelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
             this.labelCopyright.Text = AssemblyCopyright;
-            this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
+            this.labelDescription.Text = AssemblyDescription;
         }
 
         #region Assembly Attribute Accessors
@@ -101,5 +100,11 @@ namespace SteamChatBot
             }
         }
         #endregion
+
+        private void linkLabelProductName_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkLabelProductName.LinkVisited = true;
+            System.Diagnostics.Process.Start("https://github.com/Steam-Chat-Bot/SteamChatBot");
+        }
     }
 }
