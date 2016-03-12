@@ -106,5 +106,10 @@ namespace SteamChatBot
             linkLabelProductName.LinkVisited = true;
             System.Diagnostics.Process.Start("https://github.com/Steam-Chat-Bot/SteamChatBot");
         }
+
+        private void okButton_Click(object sender, EventArgs e)
+        {
+            Close(); //cause it won't close automatically
+        }
     }
 }
