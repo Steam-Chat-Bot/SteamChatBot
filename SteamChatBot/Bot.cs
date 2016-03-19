@@ -5,11 +5,16 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Xaml;
 using System.Windows.Controls;
+using System.ComponentModel;
 
 using SteamKit2;
 using SteamKit2.Internal;
 using Newtonsoft.Json;
 using SteamChatBot.Triggers;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Automation;
+using System.Windows.Automation.Peers;
 
 namespace SteamChatBot
 {
@@ -58,8 +63,23 @@ namespace SteamChatBot
         public static List<BaseTrigger> triggers = new List<BaseTrigger>();
         public static List<CheckBox> checkBoxes = new List<CheckBox>();
         public static List<CheckBox> activeCheckBoxes = new List<CheckBox>();
-        
+
+        public static LoggerWindow logWindow;
+        public static BackgroundWorker worker;
         private bool disposed = false;
+
+        /*
+        private static async void RunCallbacks()
+        {
+            while (true)
+            {
+                await Task.Run(() =>
+                {
+                    manager.RunWaitCallbacks(TimeSpan.FromSeconds(1));
+                });
+            }
+        }
+        */
 
         #region login data read/write
 
@@ -289,9 +309,43 @@ namespace SteamChatBot
 
             Connect();
 
+            /*
             while (isRunning)
             {
                 manager.RunWaitCallbacks(TimeSpan.FromSeconds(1));
+            }
+            */
+            /*
+            worker = new BackgroundWorker
+            {
+                WorkerSupportsCancellation = true
+            };
+
+            worker.DoWork += (sender, e) =>
+            {
+                while (!worker.CancellationPending)
+                {
+                    manager.RunWaitCallbacks(TimeSpan.FromSeconds(1));
+                }
+            };
+
+            worker.RunWorkerAsync();
+            */
+
+
+
+            RunCallbacks();
+            logWindow.loggerBox.SelectionMode = SelectionMode.Single;
+        }
+
+        private static async void RunCallbacks()
+        {
+            while (isRunning)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(1));
+                manager.RunWaitCallbacks(TimeSpan.FromSeconds(1));
+
+                logWindow.loggerBox.ScrollIntoView(logWindow.loggerBox.Items[logWindow.loggerBox.Items.Count - 1]);
             }
         }
 

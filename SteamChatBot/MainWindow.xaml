@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SteamChatBot"
         mc:Ignorable="d"
-        Title="Steam Chat Bot" Height="583" Width="837" Loaded="Window_Loaded" Icon="scb.ico">
+        Title="Steam Chat Bot" Height="583" Width="837" Loaded="Window_Loaded" Icon="scb.ico" StateChanged="Window_StateChanged">
     <Grid Margin="0,0,0,-21">
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="487" Margin="10,10,0,0" VerticalAlignment="Top" Width="796">
             <TabItem Header="Login Details">

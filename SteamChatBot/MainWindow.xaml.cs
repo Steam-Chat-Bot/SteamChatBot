@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Drawing;
 
 using System.Windows;
 using System.Windows.Controls;
@@ -25,21 +26,48 @@ using SteamChatBot.Triggers;
 using SteamKit2;
 
 namespace SteamChatBot
-{
+{ 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
     public partial class MainWindow : Window
     {
+        private System.Windows.Forms.NotifyIcon ni;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            ni = new System.Windows.Forms.NotifyIcon();
+            var ih = Properties.Resources.scb.GetHicon();
+            ni.Icon = System.Drawing.Icon.FromHandle(ih);
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DisableAll();
+        }
+
+        private void ni_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            WindowState = WindowState.Normal;
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if(WindowState == WindowState.Minimized)
+            {
+                ShowInTaskbar = false;
+                ni.BalloonTipTitle = "Minimization Successfull";
+                ni.BalloonTipTitle = "Successfully minimized the app to system tray.";
+            }
+            else if(WindowState == WindowState.Normal)
+            {
+                ni.Visible = false;
+                ShowInTaskbar = true;
+            }
         }
 
         Log Log;
@@ -96,12 +124,15 @@ namespace SteamChatBot
                 cll = _data.cll;
                 fll = _data.fll;
 
-                Log = Log.CreateInstance(logFile, username, (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll, true), (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll, true));
-
-                Close();
-
+                LoggerWindow logWindow = new LoggerWindow();
+                Bot.logWindow = logWindow;
+                Log = Log.CreateInstance(logFile, username, (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll, true),
+                    (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll, true), logWindow);
+            
                 Log.Instance.Silly("Successfully read login data from file");
                 AddTriggersToList();
+                logWindow.Show();
+                Close();
                 Bot.Start(username, password, cll, fll, logFile, displayName, sentryFile);
             }
             else
@@ -111,22 +142,26 @@ namespace SteamChatBot
                 {
                     object cll = ((ListBoxItem)consoleLLBox.SelectedValue).Content;
                     object fll = ((ListBoxItem)fileLLBox.SelectedValue).Content;
+                    LoggerWindow logWindow = new LoggerWindow();
+                    Bot.logWindow = logWindow;
 
                     Log = Log.CreateInstance((logFileTextBox.Text == "" ? usernameBox.Text + ".log" : logFileTextBox.Text), usernameBox.Text,
                         (cll == null ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) :
                         (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll.ToString(), true)),
                         (fll == null ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) :
-                        (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll.ToString(), true)));
+                        (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll.ToString(), true)), logWindow);
 
                     Log.Instance.Silly("Console started successfully!");
                     if (passwordBox.Password != "" && displaynameBox.Text != "")
                     {
-                        Close();
                         AddTriggersToList();
+                        logWindow.Show();
+                        Close();
                         Bot.Start(usernameBox.Text, passwordBox.Password, (cll == null ? "Silly" :
                             cll.ToString()), (fll == null ? "Silly" :
                             fll.ToString()), (logFile == null ? usernameBox.Text + ".log" : logFile),
                             displaynameBox.Text, (sentryFile == null ? usernameBox.Text + ".sentry" : sentryFile));
+
                     }
                 }
                 else

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7765B712-A1A7-4B94-8465-68D76C72E588}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SteamChatBot</RootNamespace>
     <AssemblyName>SteamChatBot</AssemblyName>
@@ -126,6 +126,14 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Bot.cs" />
+    <Compile Include="LoggerWindow.xaml.cs">
+      <DependentUpon>LoggerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Triggers\BanCheckTrigger.cs" />
     <Compile Include="Triggers\LockChatTrigger.cs" />
     <Compile Include="SteamHelper.cs" />
@@ -142,12 +150,16 @@
     <Compile Include="Triggers\LinkNameTrigger.cs" />
     <Compile Include="Triggers\ModerateTrigger.cs" />
     <Compile Include="Triggers\TriggerOptions.cs" />
-    <Compile Include="Triggers\TriggerType.cs" />
+    <Compile Include="Triggers\TriggerTypes.cs" />
     <Compile Include="Triggers\UnbanTrigger.cs" />
     <Compile Include="Triggers\UnlockChatTrigger.cs" />
     <Compile Include="Triggers\UnmoderateTrigger.cs" />
     <Compile Include="Triggers\WeatherTrigger.cs" />
     <Compile Include="UserInfo.cs" />
+    <Page Include="LoggerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -166,11 +178,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -181,6 +188,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -209,7 +217,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\scb.png" />
+    <Content Include="Resources\scb.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
