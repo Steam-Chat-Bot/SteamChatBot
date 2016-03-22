@@ -224,7 +224,7 @@ namespace SteamChatBot
                 case LogLevel.Verbose:
                     return Brushes.Cyan;
                 default:
-                    return Brushes.Black;
+                    return Brushes.White;
             }
         }
 

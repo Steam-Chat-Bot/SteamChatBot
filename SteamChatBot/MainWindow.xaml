@@ -44,13 +44,13 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Trigger Details">
-                <Grid Background="White">
+                <Grid Background="White" RenderTransformOrigin="0.515,0.503">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="45*"/>
                         <ColumnDefinition Width="372*"/>
                         <ColumnDefinition Width="373*"/>
                     </Grid.ColumnDefinitions>
-                    <ListBox x:Name="triggerCheckBoxList" HorizontalAlignment="Left" Height="479" Margin="10,10,0,-30" VerticalAlignment="Top" Width="494" Grid.ColumnSpan="3">
+                    <ListBox x:Name="triggerCheckBoxList" HorizontalAlignment="Left" Height="439" Margin="10,10,0,0" VerticalAlignment="Top" Width="499" Grid.ColumnSpan="3">
                         <CheckBox x:Name="acceptChatInviteTriggerBox" Content="AcceptChatInviteTrigger - Accepts chat invites from all (blank rooms) or specific rooms" Width="484" GotFocus="acceptChatInviteTriggerBox_GotFocus"/>
                         <CheckBox x:Name="acceptFriendRequestTriggerBox" Content="AcceptFriendRequestTrigger - Accepts all friend requests" GotFocus="acceptFriendRequestTrigger_GotFocus"/>
                         <CheckBox x:Name="autojoinChatTriggerBox" Content="AutojoinChatTrigger - Autojoins chat room(s)" GotFocus="autojoinChatTriggerBox_GotFocus"/>
