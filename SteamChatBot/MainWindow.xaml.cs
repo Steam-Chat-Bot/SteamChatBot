@@ -34,41 +34,14 @@ namespace SteamChatBot
     /// 
     public partial class MainWindow : Window
     {
-        private System.Windows.Forms.NotifyIcon ni;
-
         public MainWindow()
         {
             InitializeComponent();
-
-            ni = new System.Windows.Forms.NotifyIcon();
-            var ih = Properties.Resources.scb.GetHicon();
-            ni.Icon = System.Drawing.Icon.FromHandle(ih);
-
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DisableAll();
-        }
-
-        private void ni_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            WindowState = WindowState.Normal;
-        }
-
-        private void Window_StateChanged(object sender, EventArgs e)
-        {
-            if(WindowState == WindowState.Minimized)
-            {
-                ShowInTaskbar = false;
-                ni.BalloonTipTitle = "Minimization Successfull";
-                ni.BalloonTipTitle = "Successfully minimized the app to system tray.";
-            }
-            else if(WindowState == WindowState.Normal)
-            {
-                ni.Visible = false;
-                ShowInTaskbar = true;
-            }
         }
 
         Log Log;

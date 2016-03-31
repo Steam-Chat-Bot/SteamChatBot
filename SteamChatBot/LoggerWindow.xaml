@@ -8,6 +8,5 @@
         Title="Logger Window" Height="670" Width="782" Icon="scb.ico">
     <Grid>
         <ListBox x:Name="loggerBox" HorizontalAlignment="Left" Height="619" Margin="10,10,0,0" VerticalAlignment="Top" Width="754" Background="Black" Foreground="White"/>
-
     </Grid>
 </Window>
