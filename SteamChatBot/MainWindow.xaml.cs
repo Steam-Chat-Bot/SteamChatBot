@@ -24,14 +24,13 @@ using Microsoft.Win32;
 using SteamChatBot;
 using SteamChatBot.Triggers;
 using SteamKit2;
-using ConsoleControl.WPF;
 
 namespace SteamChatBot
-{ 
+{
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    /// 
+    ///
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -102,7 +101,7 @@ namespace SteamChatBot
                 Bot.logWindow = logWindow;
                 Log = Log.CreateInstance(logFile, username, (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll, true),
                     (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll, true), logWindow);
-            
+
                 Log.Instance.Silly("Successfully read login data from file");
                 AddTriggersToList();
                 logWindow.Show();
