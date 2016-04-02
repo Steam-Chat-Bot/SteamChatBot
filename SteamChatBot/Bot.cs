@@ -16,6 +16,8 @@ using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 
+using Microsoft.VisualBasic;
+
 namespace SteamChatBot
 {
     public class Bot
@@ -121,20 +123,9 @@ namespace SteamChatBot
 
             if (!File.Exists("login.json"))
             {
-                Console.WriteLine("Save steam info to file? y//n");
-                Console.CursorVisible = false;
-                ConsoleKeyInfo save = Console.ReadKey(true);
-                if (save.Key == ConsoleKey.Y)
+                MessageBoxResult save = MessageBox.Show("Save login information to file?", "Save Data", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (save == MessageBoxResult.Yes)
                 {
-                    WriteData();
-                }
-                else if (save.Key == ConsoleKey.N)
-                {
-                    Console.WriteLine("Not saving data.");
-                }
-                else
-                {
-                    Console.WriteLine("Unknown response, defaulting to YES");
                     WriteData();
                 }
             }
@@ -528,25 +519,21 @@ namespace SteamChatBot
             {
                 if (callback.Result == EResult.AccountLoginDeniedNeedTwoFactor)
                 {
-                    Console.WriteLine("Two factor code (sent via sms): ");
-                    string _tfc = Console.ReadLine();
+                    string _tfc = Interaction.InputBox("Two factor code (sent via sms): ");
                     twoFactorAuth = _tfc;
                 }
                 else if (callback.Result == EResult.AccountLogonDenied)
                 {
-                    Console.WriteLine("Steam guard code (sent to your email at " + callback.EmailDomain + "): ");
-                    string _sgc = Console.ReadLine();
+                    string _sgc = Interaction.InputBox("Steam guard code (sent to your email at " + callback.EmailDomain + "): ");
                     authCode = _sgc;
                 }
             }
             else if (callback.Result == EResult.InvalidPassword)
             {
                 Log.Instance.Error("Invalid password! Delete login.json and manually enter your details in the GUI application to change them for future runs!");
-                Console.WriteLine("Username: ");
-                string _u = Console.ReadLine();
+                string _u = Interaction.InputBox("Username: ");
                 username = _u;
-                Console.WriteLine("Password: ");
-                string _p = Console.ReadLine();
+                string _p = Interaction.InputBox("Password: ");
                 password = _p;
             }
             else

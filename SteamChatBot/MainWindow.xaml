@@ -26,7 +26,7 @@
                     <ListBox x:Name="consoleLLBox" HorizontalAlignment="Left" Height="125" Margin="276,173,0,0" VerticalAlignment="Top" Width="135" TabIndex="5">
                         <ListBoxItem Content="Silly"/>
                         <ListBoxItem Content="Debug"/>
-                        <ListBoxItem Content="Verbose"/>
+                        <ListBoxItem Content="Verbose" IsSelected="True"/>
                         <ListBoxItem Content="Info"/>
                         <ListBoxItem Content="Warn"/>
                         <ListBoxItem Content="Error"/>
@@ -35,7 +35,7 @@
                     <ListBox x:Name="fileLLBox" HorizontalAlignment="Left" Height="125" Margin="497,173,0,0" VerticalAlignment="Top" Width="135" TabIndex="6">
                         <ListBoxItem Content="Silly"/>
                         <ListBoxItem Content="Debug"/>
-                        <ListBoxItem Content="Verbose"/>
+                        <ListBoxItem Content="Verbose" IsSelected="True"/>
                         <ListBoxItem Content="Info"/>
                         <ListBoxItem Content="Warn"/>
                         <ListBoxItem Content="Error"/>

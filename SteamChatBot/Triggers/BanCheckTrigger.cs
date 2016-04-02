@@ -44,23 +44,6 @@ namespace SteamChatBot.Triggers
                     string text = "";
                     BanCheckResponse bans = null;
 
-                    /*
-                    try {
-                        using (var steamwebresponse = (HttpWebResponse)request.GetResponse())
-                        {
-                            using (var sr = new StreamReader(steamwebresponse.GetResponseStream()))
-                            {
-                                text = sr.ReadToEnd();
-                                bans = JsonConvert.DeserializeObject<BanCheckResponse>(text);
-                            }
-                        }
-                    }
-                    catch(JsonReaderException e)
-                    {
-                        Console.WriteLine(text);
-                    }
-                    */
-
                     try {
                         using (var steamwebresponse = (HttpWebResponse)request.GetResponse())
                         {
@@ -74,9 +57,7 @@ namespace SteamChatBot.Triggers
                     }
                     catch(ArgumentException e)
                     {
-                        Console.WriteLine(text);
-                        Console.WriteLine(Options.ApiKey);
-                        Console.WriteLine(query[1]);
+                        Log.Instance.Error(e.StackTrace);
                     }
 
                     bool communitybanned = false;
@@ -98,7 +79,6 @@ namespace SteamChatBot.Triggers
                     }
                     if (bans.EconomyBan != "none" && bans.EconomyBan != null)
                     {
-                        Console.WriteLine(bans.EconomyBan);
                         econban = true;
                         bancount++;
                     }

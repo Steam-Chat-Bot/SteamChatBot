@@ -40,13 +40,15 @@ namespace SteamChatBot.Triggers
                         string title = Regex.Match(body, pattern, RegexOptions.IgnoreCase).Groups["Title"].Value;
                         if (title != null)
                         {
-                            Console.WriteLine(Options.Delay);
                             SendMessageAfterDelay(toID, title.ToString(), room);
                             return true;
                         }
                     }
                 }
-                catch (WebException e) { }
+                catch (WebException e)
+                {
+                    Log.Instance.Error(e.StackTrace);
+                }
             }
             return false;
         }

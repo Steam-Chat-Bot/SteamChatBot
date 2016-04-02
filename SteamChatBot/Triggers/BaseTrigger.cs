@@ -242,7 +242,6 @@ namespace SteamChatBot.Triggers
                     return false;
                 }
             }
-            Console.WriteLine(CheckUser(inviterID) + " " + CheckRoom(roomID) + " " + !CheckIgnores(roomID, inviterID));
             return false;
         }
 

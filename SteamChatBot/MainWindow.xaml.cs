@@ -24,7 +24,6 @@ using Microsoft.Win32;
 using SteamChatBot;
 using SteamChatBot.Triggers;
 using SteamKit2;
-using ConsoleControl.WPF;
 
 namespace SteamChatBot
 {

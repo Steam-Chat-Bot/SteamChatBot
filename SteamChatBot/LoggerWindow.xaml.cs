@@ -29,7 +29,7 @@ namespace SteamChatBot
         {
             InitializeComponent();
 
-            System.Windows.Forms.NotifyIcon ni = new System.Windows.Forms.NotifyIcon();
+            ni = new System.Windows.Forms.NotifyIcon();
             var ih = Properties.Resources.scb.GetHicon();
             ni.Icon = System.Drawing.Icon.FromHandle(ih);
             ni.Visible = true;
