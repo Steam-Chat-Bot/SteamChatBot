@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SteamChatBot"
         mc:Ignorable="d"
-        Title="Logger Window" Height="670" Width="782" Icon="scb.ico">
+        Title="Logger Window" Height="685" Width="794" Icon="scb.ico">
     <Grid>
-        <ListBox x:Name="loggerBox" HorizontalAlignment="Left" Height="619" Margin="10,10,0,0" VerticalAlignment="Top" Width="754" Background="Black" Foreground="White"/>
+        <ListBox x:Name="loggerBox" HorizontalAlignment="Center" Height="624" Margin="15,16,14,14" VerticalAlignment="Center" Width="757" Background="Black" Foreground="White" RenderTransformOrigin="0.5,0.5">
+            <ListBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.043"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ListBox.RenderTransform>
+        </ListBox>
     </Grid>
 </Window>

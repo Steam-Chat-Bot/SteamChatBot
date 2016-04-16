@@ -300,32 +300,8 @@ namespace SteamChatBot
 
             Connect();
 
-            /*
-            while (isRunning)
-            {
-                manager.RunWaitCallbacks(TimeSpan.FromSeconds(1));
-            }
-            */
-            /*
-            worker = new BackgroundWorker
-            {
-                WorkerSupportsCancellation = true
-            };
-
-            worker.DoWork += (sender, e) =>
-            {
-                while (!worker.CancellationPending)
-                {
-                    manager.RunWaitCallbacks(TimeSpan.FromSeconds(1));
-                }
-            };
-
-            worker.RunWorkerAsync();
-            */
-
-
-
             RunCallbacks();
+
             logWindow.loggerBox.SelectionMode = SelectionMode.Single;
         }
 

@@ -125,7 +125,7 @@ namespace SteamChatBot
                         (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll.ToString(), true)), logWindow);
 
                     Log.Instance.Silly("Console started successfully!");
-                    if (passwordBox.Password != "" && displaynameBox.Text != "")
+                    if (displaynameBox.Text != "")
                     {
                         AddTriggersToList();
                         logWindow.Show();
@@ -136,10 +136,14 @@ namespace SteamChatBot
                             displaynameBox.Text, (sentryFile == null ? usernameBox.Text + ".sentry" : sentryFile));
 
                     }
+                    else
+                    {
+                        MessageBox.Show("Missing Display Name!", "Error");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Missing either username or password.");
+                    MessageBox.Show("Missing either username or password.", "Error");
                 }
             }
         }
