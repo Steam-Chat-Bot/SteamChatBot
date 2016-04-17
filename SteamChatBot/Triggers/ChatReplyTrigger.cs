@@ -35,17 +35,20 @@ namespace SteamChatBot.Triggers
 
         private bool CheckMessage(string message)
         {
-            if(Options.Matches == null || Options.Matches.Count == 0)
+            if(Options.Matches != null && Options.Matches.Count > 0)
             {
-                return true;
-            }
-            for (int i = 0; i < Options.Matches.Count; i++)
-            {
-                string match = Options.Matches[i];
-                if(message.ToLower() == match.ToLower())
+                for (int i = 0; i < Options.Matches.Count; i++)
                 {
-                    return true;
+                    string match = Options.Matches[i];
+                    if (message.ToLower() == match.ToLower())
+                    {
+                        return true;
+                    }
                 }
+            }
+            else
+            {
+                return false;
             }
             return false;
         }

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace SteamChatBot
 {
@@ -16,7 +12,6 @@ namespace SteamChatBot
         private string botName;
         private LogLevel consoleLogLevel;
         private LogLevel fileLogLevel;
-        private static LoggerWindow window;
 
         public static Log Instance
         {
@@ -43,9 +38,8 @@ namespace SteamChatBot
         }
         */
 
-        public static Log CreateInstance(string logFile, string botName, LogLevel consoleLogLevel, LogLevel fileLogLevel, LoggerWindow _window)
+        public static Log CreateInstance(string logFile, string botName, LogLevel consoleLogLevel, LogLevel fileLogLevel)
         {
-            window = _window;
             return instance ?? (instance = new Log(logFile, botName, consoleLogLevel, fileLogLevel));
         }
 
@@ -81,6 +75,7 @@ namespace SteamChatBot
             _botName = botName;
             OutputLevel = consoleLogLevel;
             FileLogLevel = fileLogLevel;
+            Console.ForegroundColor = DefaultConsoleColor;
             ShowBotName = true;
         }
 
@@ -129,14 +124,12 @@ namespace SteamChatBot
         protected void _OutputLine(LogLevel level, string line, params object[] formatParams)
         {
             if (disposed)
-            {
                 return;
-            }
-            string formattedString = string.Format(
+            string formattedString = String.Format(
                 "[{0}{1}] {2}: {3}",
                 GetLogBotName(),
                 DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                _LogLevel(level).ToUpper(), (formatParams != null && formatParams.Any() ? string.Format(line, formatParams) : line)
+                _LogLevel(level).ToUpper(), (formatParams != null && formatParams.Any() ? String.Format(line, formatParams) : line)
                 );
 
             if (level >= FileLogLevel)
@@ -175,13 +168,9 @@ namespace SteamChatBot
         // formatting.
         protected void _OutputLineToConsole(LogLevel level, string line)
         {
-            ListBox lb = window.loggerBox;
-            ListBoxItem itemToAdd = new ListBoxItem();
-            itemToAdd.Content = line;
-            lb.Items.Add(itemToAdd);
-            ListBoxItem justAddedItem = (ListBoxItem)lb.Items[lb.Items.Count - 1];
-            justAddedItem.Foreground = _LogColor(level);
-
+            Console.ForegroundColor = _LogColor(level);
+            Console.WriteLine(line);
+            Console.ForegroundColor = DefaultConsoleColor;
         }
 
         // Determine the string equivalent of the LogLevel.
@@ -208,24 +197,24 @@ namespace SteamChatBot
 
         // Determine the color to be used when outputting to the
         // console.
-        protected Brush _LogColor(LogLevel level)
-        { 
+        protected ConsoleColor _LogColor(LogLevel level)
+        {
             switch (level)
             {
                 case LogLevel.Info:
-                    return Brushes.Green;
+                    return ConsoleColor.Green;
                 case LogLevel.Debug:
-                    return Brushes.Blue;
+                    return ConsoleColor.DarkBlue;
                 case LogLevel.Silly:
-                    return Brushes.Magenta;
+                    return ConsoleColor.Magenta;
                 case LogLevel.Warn:
-                    return Brushes.Yellow;
+                    return ConsoleColor.Yellow;
                 case LogLevel.Error:
-                    return Brushes.Red;
+                    return ConsoleColor.Red;
                 case LogLevel.Verbose:
-                    return Brushes.Cyan;
+                    return ConsoleColor.Cyan;
                 default:
-                    return Brushes.White;
+                    return DefaultConsoleColor;
             }
         }
 

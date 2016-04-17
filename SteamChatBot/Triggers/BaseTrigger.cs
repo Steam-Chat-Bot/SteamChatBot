@@ -452,6 +452,10 @@ namespace SteamChatBot.Triggers
                     return false;
                 }
             }
+            else
+            {
+                Log.Instance.Warn(ReplyEnabled.ToString() + RandomRoll().ToString() + CheckUser(chatterID) + CheckRoom(roomID) + !CheckIgnores(chatterID, roomID));
+            }
             return false;
         }
 
@@ -814,7 +818,7 @@ namespace SteamChatBot.Triggers
 
         protected void DisableForTimeout()
         {
-            if(Options.Timeout != null || Options.Timeout != 0)
+            if(Options.Timeout != null && Options.Timeout.Value > 0)
             {
                 ReplyEnabled = false;
                 Log.Instance.Silly("{0}/{1}: Setting timeout ({2} ms)", Bot.username, Name, Options.Timeout);

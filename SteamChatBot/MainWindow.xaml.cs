@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.Drawing;
 
 using System.Windows;
 using System.Windows.Controls;
@@ -30,7 +29,7 @@ namespace SteamChatBot
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    ///
+    /// 
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -104,40 +103,32 @@ namespace SteamChatBot
                     displayName = _data.displayName;
                     cll = _data.cll;
                     fll = _data.fll;
-
-                    LoggerWindow logWindow = new LoggerWindow();
-                    Bot.logWindow = logWindow;
+                    
                     Log = Log.CreateInstance(logFile, username, (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll, true),
-                        (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll, true), logWindow);
+                        (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll, true));
 
                     Log.Instance.Silly("Successfully read login data from file");
                     AddTriggersToList();
-                    logWindow.Show();
                     Close();
                     Bot.Start(username, password, cll, fll, logFile, displayName, sentryFile);
                 }
                 else
                 {
-                    MessageBox.Show("File.Exists = " + File.Exists(username + "/login.json") + "\n passwordBox.Password = " + passwordBox.Password + "\n sentryFileTextBox.Text = " + sentryFileTextBox.Text +
-                        "\n logFileTextBox.Text = " + logFileTextBox.Text + "\n displayNameBox.Text = " + displaynameBox.Text + "\n consoleLLBox.SelectedItem.ToString() = " + consoleLLBox.SelectedItem.ToString() + "\n fileLLBox.SelectedItem.ToString() = " + fileLLBox.SelectedItem.ToString());
                     if (passwordBox.Password != "")
                     {
                         object cll = ((ListBoxItem)consoleLLBox.SelectedValue).Content;
                         object fll = ((ListBoxItem)fileLLBox.SelectedValue).Content;
-                        LoggerWindow logWindow = new LoggerWindow();
-                        Bot.logWindow = logWindow;
 
                         Log = Log.CreateInstance((logFileTextBox.Text == "" ? usernameBox.Text + ".log" : logFileTextBox.Text), usernameBox.Text,
                             (cll == null ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) :
                             (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll.ToString(), true)),
                             (fll == null ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) :
-                            (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll.ToString(), true)), logWindow);
+                            (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll.ToString(), true)));
 
                         Log.Instance.Silly("Console started successfully!");
                         if (displaynameBox.Text != "")
                         {
                             AddTriggersToList();
-                            logWindow.Show();
                             Close();
                             Bot.Start(usernameBox.Text, passwordBox.Password, (cll == null ? "Silly" :
                                 cll.ToString()), (fll == null ? "Silly" :
@@ -902,7 +893,7 @@ namespace SteamChatBot
 
         private void matchesDoneButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Bot.matchesList.ContainsKey(selectedElement))
+            if (Bot.matchesList.ContainsKey(TriggerType.ChatReplyTrigger))
             {
                 MessageBox.Show("You already have matches for this trigger type.", "Error");
                 matchesLabel.IsEnabled = false;
@@ -918,7 +909,7 @@ namespace SteamChatBot
                 {
                     _matches.Add(match);
                 }
-                Bot.matchesList.Add(selectedElement, _matches);
+                Bot.matchesList.Add(TriggerType.ChatReplyTrigger, _matches);
                 MessageBox.Show("Trigger matches added successfully", "Success");
                 matchesLabel.IsEnabled = false;
                 matchesBox.IsEnabled = false;
@@ -929,7 +920,7 @@ namespace SteamChatBot
 
         private void responsesDoneButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Bot.responsesList.ContainsKey(selectedElement))
+            if (Bot.responsesList.ContainsKey(TriggerType.ChatReplyTrigger))
             {
                 MessageBox.Show("You already have responses for this trigger type.", "Error");
                 responsesLabel.IsEnabled = false;
@@ -945,7 +936,7 @@ namespace SteamChatBot
                 {
                     _responses.Add(response);
                 }
-                Bot.responsesList.Add(selectedElement, _responses);
+                Bot.responsesList.Add(TriggerType.ChatReplyTrigger, _responses);
                 MessageBox.Show("Trigger responses added successfully", "Success");
                 responsesLabel.IsEnabled = false;
                 responsesBox.IsEnabled = false;

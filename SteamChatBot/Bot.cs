@@ -65,8 +65,7 @@ namespace SteamChatBot
         public static List<BaseTrigger> triggers = new List<BaseTrigger>();
         public static List<CheckBox> checkBoxes = new List<CheckBox>();
         public static List<CheckBox> activeCheckBoxes = new List<CheckBox>();
-
-        public static LoggerWindow logWindow;
+        
         public static BackgroundWorker worker;
         private bool disposed = false;
 
@@ -305,19 +304,9 @@ namespace SteamChatBot
 
             Connect();
 
-            RunCallbacks();
-
-            logWindow.loggerBox.SelectionMode = SelectionMode.Single;
-        }
-
-        private static async void RunCallbacks()
-        {
             while (isRunning)
             {
-                await Task.Delay(TimeSpan.FromSeconds(1));
                 manager.RunWaitCallbacks(TimeSpan.FromSeconds(1));
-
-                logWindow.loggerBox.ScrollIntoView(logWindow.loggerBox.Items[logWindow.loggerBox.Items.Count - 1]);
             }
         }
 
