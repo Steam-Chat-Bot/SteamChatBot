@@ -9,5 +9,6 @@
         public string sentryFile { get; set; }
         public string cll { get; set; }
         public string fll { get; set; }
+        public string sharedSecret { get; set; }
     }
 }

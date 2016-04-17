@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System.Security.Cryptography;
-using System.Xaml;
-using System.Windows.Controls;
 using System.ComponentModel;
-
-using SteamKit2;
-using SteamKit2.Internal;
-using Newtonsoft.Json;
-using SteamChatBot.Triggers;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
+using System.Windows.Controls;
+using System.Xaml;
 
 using Microsoft.VisualBasic;
+
+using Newtonsoft.Json;
+using SteamAuth;
+using SteamChatBot.Triggers;
+using SteamKit2;
 
 namespace SteamChatBot
 {
@@ -28,7 +28,7 @@ namespace SteamChatBot
         public static CallbackManager manager = new CallbackManager(steamClient);
         public static SteamUser steamUser = steamClient.GetHandler<SteamUser>();
         public static SteamFriends steamFriends = steamClient.GetHandler<SteamFriends>();
-
+        public static SteamGuardAccount steamGuardAccount = new SteamGuardAccount();
         #endregion
 
         #region public static login variables
@@ -44,6 +44,7 @@ namespace SteamChatBot
         public static string logFile;
         public static string FLL;
         public static string CLL;
+        public static string sharedSecret;
 
         #endregion
 
@@ -102,7 +103,8 @@ namespace SteamChatBot
                 displayName = displayName,
                 sentryFile = sentryFile,
                 cll = CLL,
-                fll = FLL
+                fll = FLL,
+                sharedSecret = sharedSecret
             };
 
             string json = JsonConvert.SerializeObject(info, Formatting.Indented);
@@ -143,6 +145,10 @@ namespace SteamChatBot
 
             }
 
+            if(sharedSecret != "")
+            {
+                steamGuardAccount.SharedSecret = sharedSecret;
+            }
             SubForCB();
 
             if (Directory.Exists(username + "/triggers/") && Directory.GetFiles(username + "/triggers/").Length > 0)
@@ -491,8 +497,18 @@ namespace SteamChatBot
             {
                 if (callback.Result == EResult.AccountLoginDeniedNeedTwoFactor)
                 {
-                    string _tfc = Interaction.InputBox("Two factor code (sent via sms): ");
-                    twoFactorAuth = _tfc;
+                    if (sharedSecret == "")
+                    {
+                        string _tfc = Interaction.InputBox("Two factor code (sent via sms): ");
+                        twoFactorAuth = _tfc;
+                    }
+                    else
+                    {
+                        Log.Instance.Debug("Automatically getting 2FA code with Shared Secret");
+                        string _tfc = steamGuardAccount.GenerateSteamGuardCode();
+                        twoFactorAuth = _tfc;
+                    }
+                        
                 }
                 else if (callback.Result == EResult.AccountLogonDenied)
                 {

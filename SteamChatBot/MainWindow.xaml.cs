@@ -50,6 +50,7 @@ namespace SteamChatBot
         string displayName;
         string fll;
         string cll;
+        string sharedSecret;
         TriggerType selectedElement;
 
         #region file browse dialogs
@@ -104,6 +105,11 @@ namespace SteamChatBot
                     cll = _data.cll;
                     fll = _data.fll;
                     
+                    if(sharedSecretBox.Text != "")
+                    {
+                        Bot.sharedSecret = sharedSecretBox.Text;
+                    }
+
                     Log = Log.CreateInstance(logFile, username, (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll, true),
                         (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll, true));
 
@@ -130,6 +136,10 @@ namespace SteamChatBot
                         {
                             AddTriggersToList();
                             Close();
+                            if (sharedSecretBox.Text != "")
+                            {
+                                Bot.sharedSecret = sharedSecretBox.Text;
+                            }
                             Bot.Start(usernameBox.Text, passwordBox.Password, (cll == null ? "Silly" :
                                 cll.ToString()), (fll == null ? "Silly" :
                                 fll.ToString()), (logFile == null ? usernameBox.Text + ".log" : logFile),
