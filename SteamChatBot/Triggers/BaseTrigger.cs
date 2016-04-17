@@ -56,9 +56,9 @@ namespace SteamChatBot.Triggers
         /// </summary>
         public void SaveTrigger()
         {
-            if (!Directory.Exists("triggers/"))
+            if (!Directory.Exists(Bot.username + "/triggers/"))
             {
-                Directory.CreateDirectory("triggers/");
+                Directory.CreateDirectory(Bot.username + "/triggers/");
             }
 
             if (Options != null)
@@ -77,23 +77,23 @@ namespace SteamChatBot.Triggers
                     ApiKey = Options.ApiKey
                 };
                 string json = JsonConvert.SerializeObject(options, Formatting.Indented);
-                File.WriteAllText("triggers/" + Name + ".json", json);
+                File.WriteAllText(Bot.username + "/triggers/" + Name + ".json", json);
             }
             else if (Options == null)
             {
                 TriggerOptions options = new TriggerOptions();
                 string json = JsonConvert.SerializeObject(options, Formatting.Indented);
-                File.WriteAllText("triggers/" + Name + ".json", json);
+                File.WriteAllText(Bot.username + "/triggers/" + Name + ".json", json);
             }
         }
         
         public static List<BaseTrigger> ReadTriggers()
         {
             List<BaseTrigger> temp = new List<BaseTrigger>();
-            IEnumerable<string> files = Directory.EnumerateFiles("triggers/");
+            IEnumerable<string> files = Directory.EnumerateFiles(Bot.username + "/triggers/");
             foreach (string file in files)
             {
-                int start = file.IndexOf("/") + 1;
+                int start = file.IndexOf("triggers/") + "triggers/".Length;
                 int end = file.IndexOf(".", start);
                 string _file = file.Substring(start, end - start);
                 TriggerOptions options = JsonConvert.DeserializeObject<TriggerOptions>(File.ReadAllText(file));
@@ -764,7 +764,7 @@ namespace SteamChatBot.Triggers
 
         protected bool CheckRoom(SteamID toID)
         {
-            if (Options.Rooms == null)
+            if (Options.Rooms == null || Options.Rooms.Count == 0)
             {
                 return true;
             }
@@ -801,7 +801,7 @@ namespace SteamChatBot.Triggers
 
         protected bool RandomRoll()
         {
-            if(Options.Probability != null || Options.Probability != 0)
+            if(Options.Probability != null || Options.Probability == 1)
             {
                 double rng = new Random().Next(0, 1);
                 if(rng > Options.Probability)
@@ -814,7 +814,7 @@ namespace SteamChatBot.Triggers
 
         protected void DisableForTimeout()
         {
-            if(Options.Timeout != null)
+            if(Options.Timeout != null || Options.Timeout != 0)
             {
                 ReplyEnabled = false;
                 Log.Instance.Silly("{0}/{1}: Setting timeout ({2} ms)", Bot.username, Name, Options.Timeout);

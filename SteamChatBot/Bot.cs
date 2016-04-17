@@ -85,9 +85,10 @@ namespace SteamChatBot
 
         #region login data read/write
 
-        public static UserInfo ReadData()
+        public static UserInfo ReadData(string _username)
         {
-            string file = File.ReadAllText("login.json");
+            username = _username;
+            string file = File.ReadAllText(username + "/login.json");
             UserInfo info = JsonConvert.DeserializeObject<UserInfo>(file);
             return info;
         }
@@ -106,7 +107,11 @@ namespace SteamChatBot
             };
 
             string json = JsonConvert.SerializeObject(info, Formatting.Indented);
-            File.WriteAllText("login.json", json);
+            if(!Directory.Exists(username + "/"))
+            {
+                Directory.CreateDirectory(username + "/");
+            }
+            File.WriteAllText(username + "/login.json", json);
         }
 
         #endregion
@@ -121,7 +126,7 @@ namespace SteamChatBot
             CLL = cll;
             FLL = fll;
 
-            if (!File.Exists("login.json"))
+            if (!File.Exists(username + "/login.json"))
             {
                 MessageBoxResult save = MessageBox.Show("Save login information to file?", "Save Data", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (save == MessageBoxResult.Yes)
@@ -141,7 +146,7 @@ namespace SteamChatBot
 
             SubForCB();
 
-            if (Directory.Exists("triggers/") && Directory.GetFiles("triggers/").Length > 0)
+            if (Directory.Exists(username + "/triggers/") && Directory.GetFiles(username + "/triggers/").Length > 0)
             {
                 triggers = BaseTrigger.ReadTriggers();
                 Log.Instance.Silly("Successfully read trigger data from triggers/");
@@ -342,6 +347,8 @@ namespace SteamChatBot
             {
                 Command = command,
                 Delay = delay,
+                Matches = matches,
+                Responses = responses,
                 Timeout = timeout,
                 Probability = probability != 0 ? probability / 100 : 1,
                 Rooms = room,
@@ -452,9 +459,9 @@ namespace SteamChatBot
             {
                 Log.Instance.Info("Connected, logging in...");
                 sentryHash = null;
-                if (File.Exists(username + ".sentry"))
+                if (File.Exists(username + "/" + username + ".sentry"))
                 {
-                    byte[] _sentryFile = File.ReadAllBytes(sentryFile);
+                    byte[] _sentryFile = File.ReadAllBytes(username + "/" + sentryFile);
                     sentryHash = CryptoHelper.SHAHash(_sentryFile);
                 }
 
@@ -573,7 +580,7 @@ namespace SteamChatBot
             Log.Instance.Debug("New sentry: " + callback.FileName + ". Writing file...");
 
             int fileSize;
-            using (var fs = File.Open(username + ".sentry", FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            using (var fs = File.Open(username + "/" + username + ".sentry", FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
                 fs.Seek(callback.Offset, SeekOrigin.Begin);
                 fs.Write(callback.Data, 0, callback.BytesToWrite);

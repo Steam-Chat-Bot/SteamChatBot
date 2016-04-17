@@ -76,8 +76,8 @@ namespace SteamChatBot
             this.consoleLogLevel = consoleLogLevel;
             this.fileLogLevel = fileLogLevel;
 
-            path = Path.Combine("logs", logFile);
-            Directory.CreateDirectory("./logs");
+            path = Path.Combine(Bot.username + "/logs", logFile);
+            Directory.CreateDirectory(Bot.username + "/logs");
             _botName = botName;
             OutputLevel = consoleLogLevel;
             FileLogLevel = fileLogLevel;
@@ -136,7 +136,7 @@ namespace SteamChatBot
                 "[{0}{1}] {2}: {3}",
                 GetLogBotName(),
                 DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                _LogLevel(level).ToUpper(), (formatParams != null && formatParams.Any() ? String.Format(line, formatParams) : line)
+                _LogLevel(level).ToUpper(), (formatParams != null && formatParams.Any() ? string.Format(line, formatParams) : line)
                 );
 
             if (level >= FileLogLevel)
@@ -181,6 +181,7 @@ namespace SteamChatBot
             lb.Items.Add(itemToAdd);
             ListBoxItem justAddedItem = (ListBoxItem)lb.Items[lb.Items.Count - 1];
             justAddedItem.Foreground = _LogColor(level);
+
         }
 
         // Determine the string equivalent of the LogLevel.

@@ -85,65 +85,75 @@ namespace SteamChatBot
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            if (File.Exists("login.json") && usernameBox.Text == "" && passwordBox.Password == "" && sentryFileTextBox.Text == "" &&
-                logFileTextBox.Text == "" && displaynameBox.Text == "" && consoleLLBox.SelectedValue == null && fileLLBox.SelectedValue == null)
+            if (usernameBox.Text == "")
             {
-                var _data = Bot.ReadData();
-                logFile = _data.logFile;
-                sentryFile = _data.sentryFile;
-                username = _data.username;
-                password = _data.password;
-                displayName = _data.displayName;
-                cll = _data.cll;
-                fll = _data.fll;
-
-                LoggerWindow logWindow = new LoggerWindow();
-                Bot.logWindow = logWindow;
-                Log = Log.CreateInstance(logFile, username, (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll, true),
-                    (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll, true), logWindow);
-
-                Log.Instance.Silly("Successfully read login data from file");
-                AddTriggersToList();
-                logWindow.Show();
-                Close();
-                Bot.Start(username, password, cll, fll, logFile, displayName, sentryFile);
+                MessageBox.Show("Must include username.", "Error");
             }
             else
             {
-
-                if (usernameBox.Text != "" && passwordBox.Password != "")
+                username = usernameBox.Text;
+                if (File.Exists(username + "/login.json") && passwordBox.Password == "" && sentryFileTextBox.Text == "" &&
+                    logFileTextBox.Text == "" && displaynameBox.Text == "" && consoleLLBox.SelectedItem.ToString() == "System.Windows.Controls.ListBoxItem: Verbose" &&
+                    fileLLBox.SelectedItem.ToString() == "System.Windows.Controls.ListBoxItem: Verbose")
                 {
-                    object cll = ((ListBoxItem)consoleLLBox.SelectedValue).Content;
-                    object fll = ((ListBoxItem)fileLLBox.SelectedValue).Content;
+                    var _data = Bot.ReadData(username);
+                    logFile = _data.logFile;
+                    sentryFile = _data.sentryFile;
+                    username = _data.username;
+                    password = _data.password;
+                    displayName = _data.displayName;
+                    cll = _data.cll;
+                    fll = _data.fll;
+
                     LoggerWindow logWindow = new LoggerWindow();
                     Bot.logWindow = logWindow;
+                    Log = Log.CreateInstance(logFile, username, (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll, true),
+                        (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll, true), logWindow);
 
-                    Log = Log.CreateInstance((logFileTextBox.Text == "" ? usernameBox.Text + ".log" : logFileTextBox.Text), usernameBox.Text,
-                        (cll == null ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) :
-                        (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll.ToString(), true)),
-                        (fll == null ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) :
-                        (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll.ToString(), true)), logWindow);
-
-                    Log.Instance.Silly("Console started successfully!");
-                    if (displaynameBox.Text != "")
-                    {
-                        AddTriggersToList();
-                        logWindow.Show();
-                        Close();
-                        Bot.Start(usernameBox.Text, passwordBox.Password, (cll == null ? "Silly" :
-                            cll.ToString()), (fll == null ? "Silly" :
-                            fll.ToString()), (logFile == null ? usernameBox.Text + ".log" : logFile),
-                            displaynameBox.Text, (sentryFile == null ? usernameBox.Text + ".sentry" : sentryFile));
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Missing Display Name!", "Error");
-                    }
+                    Log.Instance.Silly("Successfully read login data from file");
+                    AddTriggersToList();
+                    logWindow.Show();
+                    Close();
+                    Bot.Start(username, password, cll, fll, logFile, displayName, sentryFile);
                 }
                 else
                 {
-                    MessageBox.Show("Missing either username or password.", "Error");
+                    MessageBox.Show("File.Exists = " + File.Exists(username + "/login.json") + "\n passwordBox.Password = " + passwordBox.Password + "\n sentryFileTextBox.Text = " + sentryFileTextBox.Text +
+                        "\n logFileTextBox.Text = " + logFileTextBox.Text + "\n displayNameBox.Text = " + displaynameBox.Text + "\n consoleLLBox.SelectedItem.ToString() = " + consoleLLBox.SelectedItem.ToString() + "\n fileLLBox.SelectedItem.ToString() = " + fileLLBox.SelectedItem.ToString());
+                    if (passwordBox.Password != "")
+                    {
+                        object cll = ((ListBoxItem)consoleLLBox.SelectedValue).Content;
+                        object fll = ((ListBoxItem)fileLLBox.SelectedValue).Content;
+                        LoggerWindow logWindow = new LoggerWindow();
+                        Bot.logWindow = logWindow;
+
+                        Log = Log.CreateInstance((logFileTextBox.Text == "" ? usernameBox.Text + ".log" : logFileTextBox.Text), usernameBox.Text,
+                            (cll == null ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) :
+                            (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll.ToString(), true)),
+                            (fll == null ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) :
+                            (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll.ToString(), true)), logWindow);
+
+                        Log.Instance.Silly("Console started successfully!");
+                        if (displaynameBox.Text != "")
+                        {
+                            AddTriggersToList();
+                            logWindow.Show();
+                            Close();
+                            Bot.Start(usernameBox.Text, passwordBox.Password, (cll == null ? "Silly" :
+                                cll.ToString()), (fll == null ? "Silly" :
+                                fll.ToString()), (logFile == null ? usernameBox.Text + ".log" : logFile),
+                                displaynameBox.Text, (sentryFile == null ? usernameBox.Text + ".sentry" : sentryFile));
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("Missing Display Name!", "Error");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Missing password.", "Error");
+                    }
                 }
             }
         }
@@ -892,7 +902,7 @@ namespace SteamChatBot
 
         private void matchesDoneButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Bot.matchesList.ContainsKey(TriggerType.ChatReplyTrigger))
+            if (Bot.matchesList.ContainsKey(selectedElement))
             {
                 MessageBox.Show("You already have matches for this trigger type.", "Error");
                 matchesLabel.IsEnabled = false;
@@ -908,7 +918,7 @@ namespace SteamChatBot
                 {
                     _matches.Add(match);
                 }
-                Bot.matchesList.Add(TriggerType.ChatReplyTrigger, _matches);
+                Bot.matchesList.Add(selectedElement, _matches);
                 MessageBox.Show("Trigger matches added successfully", "Success");
                 matchesLabel.IsEnabled = false;
                 matchesBox.IsEnabled = false;
@@ -919,7 +929,7 @@ namespace SteamChatBot
 
         private void responsesDoneButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Bot.responsesList.ContainsKey(TriggerType.ChatReplyTrigger))
+            if (Bot.responsesList.ContainsKey(selectedElement))
             {
                 MessageBox.Show("You already have responses for this trigger type.", "Error");
                 responsesLabel.IsEnabled = false;
@@ -935,7 +945,7 @@ namespace SteamChatBot
                 {
                     _responses.Add(response);
                 }
-                Bot.responsesList.Add(TriggerType.ChatReplyTrigger, _responses);
+                Bot.responsesList.Add(selectedElement, _responses);
                 MessageBox.Show("Trigger responses added successfully", "Success");
                 responsesLabel.IsEnabled = false;
                 responsesBox.IsEnabled = false;
