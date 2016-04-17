@@ -42,17 +42,17 @@
                     </ListBox>
                     <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="180,36,0,0" VerticalAlignment="Top" Width="144" Height="23" TabIndex="1"/>
                     <Label x:Name="label7" Content="Shared Secret" HorizontalAlignment="Left" Margin="10,245,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="sharedSecretBox" HorizontalAlignment="Left" Height="23" Margin="10,271,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168"/>
+                    <TextBox x:Name="sharedSecretBox" HorizontalAlignment="Left" Height="23" Margin="10,271,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" TabIndex="7"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Trigger Details">
+            <TabItem Header="Trigger Details" TabIndex="8">
                 <Grid Background="White" RenderTransformOrigin="0.515,0.503">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="45*"/>
                         <ColumnDefinition Width="372*"/>
                         <ColumnDefinition Width="373*"/>
                     </Grid.ColumnDefinitions>
-                    <ListBox x:Name="triggerCheckBoxList" HorizontalAlignment="Left" Height="439" Margin="10,10,0,0" VerticalAlignment="Top" Width="499" Grid.ColumnSpan="3">
+                    <ListBox x:Name="triggerCheckBoxList" HorizontalAlignment="Left" Height="439" Margin="10,10,0,0" VerticalAlignment="Top" Width="499" Grid.ColumnSpan="3" TabIndex="9">
                         <CheckBox x:Name="acceptChatInviteTriggerBox" Content="AcceptChatInviteTrigger - Accepts chat invites from all (blank rooms) or specific rooms" Width="484" GotFocus="acceptChatInviteTriggerBox_GotFocus"/>
                         <CheckBox x:Name="acceptFriendRequestTriggerBox" Content="AcceptFriendRequestTrigger - Accepts all friend requests" GotFocus="acceptFriendRequestTrigger_GotFocus"/>
                         <CheckBox x:Name="autojoinChatTriggerBox" Content="AutojoinChatTrigger - Autojoins chat room(s)" GotFocus="autojoinChatTriggerBox_GotFocus"/>
@@ -72,40 +72,40 @@
                         <CheckBox x:Name="weatherTriggerBox" Content="WeatherTrigger - Gets weather for a location" GotFocus="weatherTriggerBox_GotFocus"/>
                     </ListBox>
                     <Label x:Name="commandLabel" Content="Command:" Grid.Column="2" Margin="115,73,191,355" Visibility="Visible"/>
-                    <TextBox x:Name="commandBox" TextWrapping="Wrap" Grid.Column="2" Margin="189,76,107,363" Visibility="Visible"/>
-                    <Button x:Name="commandDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,76,0,0" VerticalAlignment="Top" Width="90" Height="20" Click="commandDoneButton_Click" Visibility="Visible"/>
+                    <TextBox x:Name="commandBox" TextWrapping="Wrap" Grid.Column="2" Margin="189,76,107,363" Visibility="Visible" TabIndex="10"/>
+                    <Button x:Name="commandDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,76,0,0" VerticalAlignment="Top" Width="90" Height="20" Click="commandDoneButton_Click" Visibility="Visible" TabIndex="11"/>
                     <Label x:Name="matchesLabel" Content="Matches:" Grid.Column="2" HorizontalAlignment="Left" Margin="125,190,0,0" VerticalAlignment="Top" Visibility="Visible"/>
                     <Label x:Name="responsesLabel" Content="Responses:" Grid.Column="2" HorizontalAlignment="Left" Margin="114,227,0,0" VerticalAlignment="Top" Visibility="Visible"/>
-                    <Button x:Name="matchesDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,190,0,0" VerticalAlignment="Top" Width="90" Click="matchesDoneButton_Click" Visibility="Visible"/>
-                    <Button x:Name="responsesDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,230,0,0" VerticalAlignment="Top" Width="90" Click="responsesDoneButton_Click" Visibility="Visible"/>
-                    <TextBox x:Name="matchesBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
-                    <TextBox x:Name="responsesBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
+                    <Button x:Name="matchesDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,190,0,0" VerticalAlignment="Top" Width="90" Click="matchesDoneButton_Click" Visibility="Visible" TabIndex="17"/>
+                    <Button x:Name="responsesDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,230,0,0" VerticalAlignment="Top" Width="90" Click="responsesDoneButton_Click" Visibility="Visible" TabIndex="19"/>
+                    <TextBox x:Name="matchesBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible" TabIndex="16"/>
+                    <TextBox x:Name="responsesBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible" TabIndex="18"/>
                     <Label x:Name="delayLabel" Content="Delay (ms):" Grid.Column="2" HorizontalAlignment="Left" Margin="114,109,0,0" VerticalAlignment="Top" Visibility="Visible"/>
-                    <Button x:Name="delayDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,111,0,0" VerticalAlignment="Top" Width="90" Click="delayDoneButton_Click" Visibility="Visible"/>
-                    <TextBox x:Name="delayBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
+                    <Button x:Name="delayDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,111,0,0" VerticalAlignment="Top" Width="90" Click="delayDoneButton_Click" Visibility="Visible" TabIndex="13"/>
+                    <TextBox x:Name="delayBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible" TabIndex="12"/>
                     <Label x:Name="timeoutLabel" Content="Timeout (ms):" Grid.Column="2" HorizontalAlignment="Left" Margin="100,151,0,0" VerticalAlignment="Top" Visibility="Visible"/>
-                    <Button x:Name="timeoutDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,151,0,0" VerticalAlignment="Top" Width="90" Click="timeoutDoneButton_Click" Visibility="Visible"/>
-                    <TextBox x:Name="timeoutBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
+                    <Button x:Name="timeoutDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,151,0,0" VerticalAlignment="Top" Width="90" Click="timeoutDoneButton_Click" Visibility="Visible" TabIndex="15"/>
+                    <TextBox x:Name="timeoutBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible" TabIndex="14"/>
                     <Label x:Name="probLabel" Content="Probability (%):" Grid.Column="2" HorizontalAlignment="Left" Margin="92,266,0,0" VerticalAlignment="Top" Visibility="Visible"/>
-                    <Button x:Name="probDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,269,0,0" VerticalAlignment="Top" Width="90" Click="probDoneButton_Click" Visibility="Visible"/>
-                    <TextBox x:Name="probBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,269,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
+                    <Button x:Name="probDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,269,0,0" VerticalAlignment="Top" Width="90" Click="probDoneButton_Click" Visibility="Visible" TabIndex="21"/>
+                    <TextBox x:Name="probBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,269,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible" TabIndex="20"/>
                     <Label x:Name="roomsLabel" Content="Rooms:" Grid.Column="2" HorizontalAlignment="Left" Margin="133,308,0,0" VerticalAlignment="Top" Visibility="Visible"/>
-                    <Button x:Name="roomsDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,311,0,0" VerticalAlignment="Top" Width="90" Click="roomsDoneButton_Click" Visibility="Visible"/>
-                    <TextBox x:Name="roomsBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,311,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
+                    <Button x:Name="roomsDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,311,0,0" VerticalAlignment="Top" Width="90" Click="roomsDoneButton_Click" Visibility="Visible" TabIndex="23"/>
+                    <TextBox x:Name="roomsBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,311,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible" TabIndex="22"/>
                     <Label x:Name="usersLabel" Content="Users:" Grid.Column="2" HorizontalAlignment="Left" Margin="146,350,0,0" VerticalAlignment="Top" Visibility="Visible"/>
-                    <Button x:Name="usersDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,350,0,0" VerticalAlignment="Top" Width="90" Click="usersDoneButton_Click" Visibility="Visible"/>
-                    <TextBox x:Name="usersBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,350,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
+                    <Button x:Name="usersDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,350,0,0" VerticalAlignment="Top" Width="90" Click="usersDoneButton_Click" Visibility="Visible" TabIndex="25"/>
+                    <TextBox x:Name="usersBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,350,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible" TabIndex="24"/>
                     <Label x:Name="ignoresLabel" Content="Ignores:" Grid.Column="2" HorizontalAlignment="Left" Margin="130,387,0,0" VerticalAlignment="Top" Visibility="Visible"/>
-                    <Button x:Name="ignoresDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,390,0,0" VerticalAlignment="Top" Width="90" Click="ignoresDoneButton_Click" Visibility="Visible"/>
-                    <TextBox x:Name="ignoresBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,390,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
+                    <Button x:Name="ignoresDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,390,0,0" VerticalAlignment="Top" Width="90" Click="ignoresDoneButton_Click" Visibility="Visible" TabIndex="27"/>
+                    <TextBox x:Name="ignoresBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,390,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible" TabIndex="26"/>
                     <Label x:Name="apiLabel" Content="API Key:" Grid.Column="2" HorizontalAlignment="Left" Margin="130,426,0,0" VerticalAlignment="Top" Visibility="Visible"/>
-                    <Button x:Name="apiDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,429,0,0" VerticalAlignment="Top" Width="90" Click="apiDoneButton_Click" Visibility="Visible"/>
-                    <TextBox x:Name="apiBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,429,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible"/>
+                    <Button x:Name="apiDoneButton" Content="Done" Grid.Column="2" HorizontalAlignment="Left" Margin="271,429,0,0" VerticalAlignment="Top" Width="90" Click="apiDoneButton_Click" Visibility="Visible" TabIndex="29"/>
+                    <TextBox x:Name="apiBox" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="187,429,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Visibility="Visible" TabIndex="28"/>
                     <TextBlock x:Name="textBlock" Grid.Column="2" HorizontalAlignment="Left" Margin="125,13,0,0" TextWrapping="Wrap" Text="Separate plural options (ends with an &quot;s&quot; e.g. matcheS, roomS) with a comma, no space. " VerticalAlignment="Top" Height="55" Width="238"/>
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button x:Name="startButton" Content="Start Bot" HorizontalAlignment="Center" Margin="0,510,0,0" VerticalAlignment="Top" Width="370" Click="startButton_Click" Height="20" TabIndex="7"/>
+        <Button x:Name="startButton" Content="Start Bot" HorizontalAlignment="Center" Margin="0,510,0,0" VerticalAlignment="Top" Width="370" Click="startButton_Click" Height="20" TabIndex="30"/>
         <Button x:Name="aboutButton" Content="About" HorizontalAlignment="Left" Margin="10,510,0,0" VerticalAlignment="Top" Width="75" Click="aboutButton_Click"/>
 
     </Grid>
