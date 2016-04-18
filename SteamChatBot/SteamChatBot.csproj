@@ -27,15 +27,15 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>false</MapFileExtensions>
-    <InstallUrl>https://github.com/Steam-Chat-Bot/SteamChatBot/blob/clickonce/publish/</InstallUrl>
-    <UpdateUrl>https://github.com/Steam-Chat-Bot/SteamChatBot/releases/</UpdateUrl>
+    <InstallUrl>https://raw.githubusercontent.com/Steam-Chat-Bot/SteamChatBot/master/SteamChatBot/publish/</InstallUrl>
+    <UpdateUrl>https://raw.githubusercontent.com/Steam-Chat-Bot/SteamChatBot/master/SteamChatBot/publish/</UpdateUrl>
     <SupportUrl>https://github.com/Steam-Chat-Bot/SteamChatBot/issues</SupportUrl>
     <ErrorReportUrl>https://github.com/Steam-Chat-Bot/SteamChatBot/issues</ErrorReportUrl>
     <ProductName>Steam Chat Bot</ProductName>
     <PublisherName>Steam-Chat-Bot</PublisherName>
     <SuiteName>SteamChatBot</SuiteName>
     <MinimumRequiredVersion>1.0.0.0</MinimumRequiredVersion>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
