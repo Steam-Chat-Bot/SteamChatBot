@@ -35,7 +35,7 @@
     <PublisherName>Steam-Chat-Bot</PublisherName>
     <SuiteName>SteamChatBot</SuiteName>
     <MinimumRequiredVersion>1.0.0.0</MinimumRequiredVersion>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -261,7 +261,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Windows Kits\10\bin\x86\signtool" sign /a SteamChatBot.exe</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!--
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -274,7 +275,8 @@
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
   -->
+  <Target Name="AfterBuild">
+    <Exec Command="&quot;C:\Program Files (x86)\Windows Kits\10\bin\x86\signtool&quot; sign /a &quot;$(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName)&quot;"/>
+  </Target>
 </Project>
