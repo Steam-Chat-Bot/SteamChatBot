@@ -28,21 +28,29 @@ namespace SteamChatBot.Triggers
         private bool Respond(SteamID toID, string message, bool room)
         {
             string pattern = @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>";
-
+            Uri uriResult;
             string[] splitmes = message.Split(' ');
             for (int i = 0; i < splitmes.Length; i++)
             {
                 try
                 {
-                    using (WebClient client = new WebClient())
+                    bool result = Uri.TryCreate(splitmes[i], UriKind.Absolute, out uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+                    if (result)
                     {
-                        string body = client.DownloadString(splitmes[i]);
-                        string title = Regex.Match(body, pattern, RegexOptions.IgnoreCase).Groups["Title"].Value;
-                        if (title != null)
+                        using (WebClient client = new WebClient())
                         {
-                            SendMessageAfterDelay(toID, title.ToString(), room);
-                            return true;
+                            string body = client.DownloadString(splitmes[i]);
+                            string title = Regex.Match(body, pattern, RegexOptions.IgnoreCase).Groups["Title"].Value;
+                            if (title != null)
+                            {
+                                SendMessageAfterDelay(toID, title.ToString(), room);
+                                return true;
+                            }
                         }
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
                 catch (WebException e)

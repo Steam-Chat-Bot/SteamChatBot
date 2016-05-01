@@ -28,15 +28,15 @@ namespace SteamChatBot.Triggers
 
         private bool Respond(SteamID toID, string message, bool room)
         {
-            if (Options.ApiKey == null)
+            string[] query = StripCommand(message, Options.Command);
+            if (query != null && query[1] != null)
             {
-                SendMessageAfterDelay(toID, "API Key from Wunderground is required.", room);
-                return false;
-            }
-            else
-            {
-                string[] query = StripCommand(message, Options.Command);
-                if (query != null && query[1] != null)
+                if (Options.ApiKey == null)
+                {
+                    SendMessageAfterDelay(toID, "API Key from Wunderground is required.", room);
+                    return false;
+                }
+                else
                 {
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format("http://api.wunderground.com/api/{0}/{1}/q/{2}.json", Options.ApiKey, "conditions", query[1]));
                     string body = "";
@@ -50,12 +50,13 @@ namespace SteamChatBot.Triggers
                             body = sr.ReadToEnd();
                             weather = (Weather)js.Deserialize(body, typeof(Weather));
                             SendMessageAfterDelay(toID, ParseResult(weather), room);
+                            return true;
                         }
                     }
-                    
+
                 }
-                return false;
             }
+            return false;
         }
 
         class Weather
