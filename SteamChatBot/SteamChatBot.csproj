@@ -16,10 +16,10 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish/</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Web</InstallFrom>
+    <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
@@ -27,7 +27,6 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>false</MapFileExtensions>
-    <InstallUrl>https://raw.githubusercontent.com/Steam-Chat-Bot/SteamChatBot/master/SteamChatBot/publish/</InstallUrl>
     <UpdateUrl>https://raw.githubusercontent.com/Steam-Chat-Bot/SteamChatBot/master/SteamChatBot/publish/</UpdateUrl>
     <SupportUrl>https://github.com/Steam-Chat-Bot/SteamChatBot/issues</SupportUrl>
     <ErrorReportUrl>https://github.com/Steam-Chat-Bot/SteamChatBot/issues</ErrorReportUrl>
@@ -35,7 +34,7 @@
     <PublisherName>Steam-Chat-Bot</PublisherName>
     <SuiteName>SteamChatBot</SuiteName>
     <MinimumRequiredVersion>1.0.0.0</MinimumRequiredVersion>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -277,6 +276,6 @@
   </Target>
   -->
   <Target Name="AfterBuild">
-    <Exec Command="&quot;C:\Program Files (x86)\Windows Kits\10\bin\x86\signtool&quot; sign /a &quot;$(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName)&quot;"/>
+    <Exec Command="&quot;C:\Program Files (x86)\Windows Kits\10\bin\x86\signtool&quot; sign /a &quot;$(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName)&quot;" />
   </Target>
 </Project>
