@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xaml;
-using System.IO;
 using System.Threading.Tasks;
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
+using System.Xaml;
 
 using System.Windows;
 using System.Windows.Controls;
@@ -20,7 +21,6 @@ using System.Windows.Shapes;
 
 using Microsoft.Win32;
 
-using SteamChatBot;
 using SteamChatBot.Triggers;
 using SteamKit2;
 
@@ -32,16 +32,6 @@ namespace SteamChatBot
     /// 
     public partial class MainWindow : Window
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            DisableAll();
-        }
-
         Log Log;
         string logFile;
         string sentryFile;
@@ -51,7 +41,33 @@ namespace SteamChatBot
         string fll;
         string cll;
         string sharedSecret;
+        string chatbots;
         TriggerType selectedElement;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            DisableAll();
+            try
+            {
+                using (FileStream fs = new FileStream("chatbots.txt", FileMode.Open))
+                {
+                    using (TextReader tr = new StreamReader(fs))
+                    {
+                        chatbots = tr.ReadToEnd();
+                    }
+                }
+                    if (chatbots.Length > 0)
+                    {
+                        chatbotsBox.ItemsSource = chatbots.Split('\n');
+                    }
+            }
+            catch (FileNotFoundException err) { }
+        }
 
         #region file browse dialogs
 
@@ -85,11 +101,37 @@ namespace SteamChatBot
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            if (usernameBox.Text == "")
+            if (usernameBox.Text == "" && chatbotsBox.SelectedIndex != -1)
             {
-                MessageBox.Show("Must include username.", "Error");
+                username = chatbotsBox.SelectedValue.ToString();
+                if (File.Exists(username + "/login.json") && passwordBox.Password == "" && sentryFileTextBox.Text == "" &&
+                    logFileTextBox.Text == "" && displaynameBox.Text == "" && consoleLLBox.SelectedItem.ToString() == "System.Windows.Controls.ListBoxItem: Verbose" &&
+                    fileLLBox.SelectedItem.ToString() == "System.Windows.Controls.ListBoxItem: Verbose")
+                {
+                    var _data = Bot.ReadData(username);
+                    logFile = _data.logFile;
+                    sentryFile = _data.sentryFile;
+                    username = _data.username;
+                    password = _data.password;
+                    displayName = _data.displayName;
+                    cll = _data.cll;
+                    fll = _data.fll;
+
+                    if (sharedSecretBox.Text != "")
+                    {
+                        Bot.sharedSecret = sharedSecretBox.Text;
+                    }
+
+                    Log = Log.CreateInstance(logFile, username, (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll, true),
+                        (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll, true));
+
+                    Log.Instance.Silly("Successfully read login data from file");
+                    AddTriggersToList();
+                    Close();
+                    Bot.Start(username, password, cll, fll, logFile, displayName, sentryFile);
+                }
             }
-            else
+            else if(usernameBox.Text != "")
             {
                 username = usernameBox.Text;
                 if (File.Exists(username + "/login.json") && passwordBox.Password == "" && sentryFileTextBox.Text == "" &&
@@ -104,8 +146,8 @@ namespace SteamChatBot
                     displayName = _data.displayName;
                     cll = _data.cll;
                     fll = _data.fll;
-                    
-                    if(sharedSecretBox.Text != "")
+
+                    if (sharedSecretBox.Text != "")
                     {
                         Bot.sharedSecret = sharedSecretBox.Text;
                     }
@@ -1028,6 +1070,11 @@ namespace SteamChatBot
         {
             AboutBox box = new AboutBox();
             box.ShowDialog();
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://github.com/Steam-Chat-Bot/SteamChatBot/issues");
         }
     }
 }

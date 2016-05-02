@@ -20,8 +20,8 @@
                     <TextBox x:Name="sentryFileTextBox" HorizontalAlignment="Left" Height="23" Margin="346,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200
                              " TabIndex="2"/>
                     <TextBox x:Name="logFileTextBox" HorizontalAlignment="Left" Height="23" Margin="561,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" TabIndex="3"/>
-                    <Label x:Name="label4" Content="Display Name" HorizontalAlignment="Left" Margin="10,142,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="displaynameBox" HorizontalAlignment="Left" Height="23" Margin="10,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" TabIndex="4"/>
+                    <Label x:Name="label4" Content="Display Name" HorizontalAlignment="Left" Margin="10,168,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="displaynameBox" HorizontalAlignment="Left" Height="23" Margin="10,194,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" TabIndex="4"/>
                     <Label x:Name="label5" Content="Console Log Level" HorizontalAlignment="Left" Margin="276,142,0,0" VerticalAlignment="Top"/>
                     <ListBox x:Name="consoleLLBox" HorizontalAlignment="Left" Height="125" Margin="276,173,0,0" VerticalAlignment="Top" Width="135" TabIndex="5">
                         <ListBoxItem Content="Silly"/>
@@ -43,6 +43,7 @@
                     <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="180,36,0,0" VerticalAlignment="Top" Width="144" Height="23" TabIndex="1"/>
                     <Label x:Name="label7" Content="Shared Secret" HorizontalAlignment="Left" Margin="10,245,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="sharedSecretBox" HorizontalAlignment="Left" Height="23" Margin="10,271,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" TabIndex="7"/>
+                    <ListBox x:Name="chatbotsBox" HorizontalAlignment="Left" Height="80" Margin="10,68,0,0" VerticalAlignment="Top" Width="144"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Trigger Details" TabIndex="8">
@@ -107,6 +108,7 @@
         </TabControl>
         <Button x:Name="startButton" Content="Start Bot" HorizontalAlignment="Center" Margin="0,510,0,0" VerticalAlignment="Top" Width="370" Click="startButton_Click" Height="20" TabIndex="30"/>
         <Button x:Name="aboutButton" Content="About" HorizontalAlignment="Left" Margin="10,510,0,0" VerticalAlignment="Top" Width="75" Click="aboutButton_Click"/>
+        <Button x:Name="button" Content="Bugs" HorizontalAlignment="Left" Margin="97,510,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
 
     </Grid>
 </Window>

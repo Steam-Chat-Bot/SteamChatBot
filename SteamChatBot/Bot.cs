@@ -113,6 +113,8 @@ namespace SteamChatBot
                 Directory.CreateDirectory(username + "/");
             }
             File.WriteAllText(username + "/login.json", json);
+            File.AppendAllText("chatbots.txt", username + "\n");
+            File.SetAttributes("chatbots.txt", File.GetAttributes("chatbots.txt") | FileAttributes.Hidden);
         }
 
         #endregion
@@ -385,6 +387,7 @@ namespace SteamChatBot
 
         public static void LogOn()
         {
+            isRunning = true;
             Log.Instance.Verbose("Logging in...");
             steamUser.LogOn(new SteamUser.LogOnDetails
             {
@@ -526,7 +529,6 @@ namespace SteamChatBot
             }
             else
             {
-                isRunning = false;
                 Log.Instance.Warn("EResult for logon: " + callback.Result + "/" + callback.ExtendedResult);
             }
         }
