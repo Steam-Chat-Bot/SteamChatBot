@@ -61,10 +61,10 @@ namespace SteamChatBot
                         chatbots = tr.ReadToEnd();
                     }
                 }
-                    if (chatbots.Length > 0)
-                    {
-                        chatbotsBox.ItemsSource = chatbots.Split('\n');
-                    }
+                if (chatbots.Length > 0)
+                {
+                    chatbotsBox.ItemsSource = chatbots.Split('\n');
+                }
             }
             catch (FileNotFoundException err) { }
         }
@@ -168,9 +168,9 @@ namespace SteamChatBot
                         object fll = ((ListBoxItem)fileLLBox.SelectedValue).Content;
 
                         Log = Log.CreateInstance((logFileTextBox.Text == "" ? usernameBox.Text + ".log" : logFileTextBox.Text), usernameBox.Text,
-                            (cll == null ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) :
+                            (cll == null ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Verbose", true) :
                             (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), cll.ToString(), true)),
-                            (fll == null ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Silly", true) :
+                            (fll == null ? (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), "Verbose", true) :
                             (Log.LogLevel)Enum.Parse(typeof(Log.LogLevel), fll.ToString(), true)));
 
                         Log.Instance.Silly("Console started successfully!");
@@ -182,8 +182,8 @@ namespace SteamChatBot
                             {
                                 Bot.sharedSecret = sharedSecretBox.Text;
                             }
-                            Bot.Start(usernameBox.Text, passwordBox.Password, (cll == null ? "Silly" :
-                                cll.ToString()), (fll == null ? "Silly" :
+                            Bot.Start(usernameBox.Text, passwordBox.Password, (cll == null ? "Verbose" :
+                                cll.ToString()), (fll == null ? "Verbose" :
                                 fll.ToString()), (logFile == null ? usernameBox.Text + ".log" : logFile),
                                 displaynameBox.Text, (sentryFile == null ? usernameBox.Text + ".sentry" : sentryFile));
 
