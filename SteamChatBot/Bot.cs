@@ -68,6 +68,11 @@ namespace SteamChatBot
 
         #region login data read/write
 
+        /// <summary>
+        /// Reads login data from username/login.json
+        /// </summary>
+        /// <param name="_username"></param>
+        /// <returns></returns>
         public static UserInfo ReadData(string _username)
         {
             username = _username;
@@ -76,6 +81,9 @@ namespace SteamChatBot
             return info;
         }
 
+        /// <summary>
+        /// Writes login data to username/login.json
+        /// </summary>
         public static void WriteData()
         {
             UserInfo info = new UserInfo
@@ -102,6 +110,16 @@ namespace SteamChatBot
 
         #endregion
 
+        /// <summary>
+        /// Starts the bot
+        /// </summary>
+        /// <param name="_username"></param>
+        /// <param name="_password"></param>
+        /// <param name="cll"></param>
+        /// <param name="fll"></param>
+        /// <param name="_logFile"></param>
+        /// <param name="_displayName"></param>
+        /// <param name="_sentryFile"></param>
         public static void Start(string _username, string _password, string cll, string fll, string _logFile, string _displayName, string _sentryFile)
         {
             username = _username;

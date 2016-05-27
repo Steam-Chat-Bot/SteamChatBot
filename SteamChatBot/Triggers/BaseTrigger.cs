@@ -24,6 +24,12 @@ namespace SteamChatBot.Triggers
 
         #region constructors
 
+        /// <summary>
+        /// Constructor for ChatCommand triggers
+        /// </summary>
+        /// <param name="type">TriggerType</param>
+        /// <param name="name">Name of the trigger</param>
+        /// <param name="chatCommand">ChatCommand object with options</param>
         public BaseTrigger(TriggerType type, string name, ChatCommand chatCommand)
         {
             OptionsType = "ChatCommand";
@@ -37,6 +43,12 @@ namespace SteamChatBot.Triggers
             };
         }
 
+        /// <summary>
+        /// Constructor for ChatReply triggers
+        /// </summary>
+        /// <param name="type">TriggerType</param>
+        /// <param name="name">Name of the trigger</param>
+        /// <param name="chatReply">ChatReply object with options</param>
         public BaseTrigger(TriggerType type, string name, ChatReply chatReply)
         {
             OptionsType = "ChatReply";
@@ -50,6 +62,12 @@ namespace SteamChatBot.Triggers
             };
         }
 
+        /// <summary>
+        /// Constructor for NoCommand triggers
+        /// </summary>
+        /// <param name="type">TriggerType</param>
+        /// <param name="name">Name of teh trigger</param>
+        /// <param name="noCommand">NoCommand object with options</param>
         public BaseTrigger(TriggerType type, string name, NoCommand noCommand)
         {
             OptionsType = "NoCommand";
@@ -63,6 +81,12 @@ namespace SteamChatBot.Triggers
             };
         }
 
+        /// <summary>
+        /// Constructor for ChatCommandApi triggers
+        /// </summary>
+        /// <param name="type">TriggerType</param>
+        /// <param name="name">Name of the trigger</param>
+        /// <param name="chatCommandApi">ChatCommandApi object with options</param>
         public BaseTrigger(TriggerType type, string name, ChatCommandApi chatCommandApi)
         {
             OptionsType = "ChatCommandApi";
@@ -76,6 +100,12 @@ namespace SteamChatBot.Triggers
             };
         }
 
+        /// <summary>
+        /// Constructor for TriggerLists triggers
+        /// </summary>
+        /// <param name="type">TriggerType</param>
+        /// <param name="name">Name of the trigger</param>
+        /// <param name="tl">TriggerLists object with options</param>
         public BaseTrigger(TriggerType type, string name, TriggerLists tl)
         {
             OptionsType = "JustLists";
@@ -139,6 +169,10 @@ namespace SteamChatBot.Triggers
             }
         }
         
+        /// <summary>
+        /// Read triggers from username/triggers/
+        /// </summary>
+        /// <returns>A list of BaseTrigger objects</returns>
         public static List<BaseTrigger> ReadTriggers()
         {
             List<BaseTrigger> temp = new List<BaseTrigger>();
@@ -632,6 +666,12 @@ namespace SteamChatBot.Triggers
             return false;
         }
 
+        /// <summary>
+        /// Return true if a message was sent
+        /// </summary>
+        /// <param name="roomID"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public virtual bool OnLeftChat(SteamID roomID, SteamID userID)
         {
             if (ReplyEnabled && RandomRoll() && CheckRoom(roomID) && CheckUser(userID) && !CheckIgnores(roomID, userID))
@@ -803,7 +843,7 @@ namespace SteamChatBot.Triggers
             }
         }
 
-        private void TimerElapsed_Message(object sender, System.Timers.ElapsedEventArgs e, SteamID steamID, string message, bool room)
+        private void TimerElapsed_Message(object sender, ElapsedEventArgs e, SteamID steamID, string message, bool room)
         {
             if (room)
             {
@@ -815,6 +855,12 @@ namespace SteamChatBot.Triggers
             }
         }
 
+        /// <summary>
+        /// Splits the message and returns an array of words
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
         protected string[] StripCommand(string message, string command)
         {
             if (message != null && command != null && message.ToLower().IndexOf(command.ToLower()) == 0)
@@ -824,7 +870,12 @@ namespace SteamChatBot.Triggers
             return null;
         }
 
-        
+        /// <summary>
+        /// Check to see if the user or room is on the ignore list
+        /// </summary>
+        /// <param name="toID"></param>
+        /// <param name="fromID"></param>
+        /// <returns></returns>
         protected bool CheckIgnores(SteamID toID, SteamID fromID)
         {
             List<SteamID> ignore = new List<SteamID>();
@@ -864,6 +915,11 @@ namespace SteamChatBot.Triggers
             return false;
         }
 
+        /// <summary>
+        /// Check to see if the room is on the whitelist
+        /// </summary>
+        /// <param name="toID"></param>
+        /// <returns></returns>
         protected bool CheckRoom(SteamID toID)
         {
             List<SteamID> rooms = new List<SteamID>();
@@ -906,6 +962,11 @@ namespace SteamChatBot.Triggers
             }
         }
 
+        /// <summary>
+        /// Check to see if the user is on the whitelist
+        /// </summary>
+        /// <param name="fromID"></param>
+        /// <returns></returns>
         protected bool CheckUser(SteamID fromID)
         {
             List<SteamID> users = new List<SteamID>();
@@ -945,6 +1006,10 @@ namespace SteamChatBot.Triggers
             return true;
         }
 
+        /// <summary>
+        /// Randomly decides if a message will be sent
+        /// </summary>
+        /// <returns></returns>
         protected bool RandomRoll()
         {
             float prob = 1;
@@ -977,6 +1042,9 @@ namespace SteamChatBot.Triggers
             return true;
         }
 
+        /// <summary>
+        /// Disables bot reply for the duration of the timeout
+        /// </summary>
         protected void DisableForTimeout()
         {
             int to = 0;
