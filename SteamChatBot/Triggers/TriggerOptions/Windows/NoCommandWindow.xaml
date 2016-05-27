@@ -8,20 +8,20 @@
         Title="NoCommandWindow" Height="304.559" Width="390.274" Icon="/SteamChatBot;component/scb.ico" ResizeMode="NoResize">
     <Grid>
         <Label x:Name="delayLabel" Content="Delay (ms):" HorizontalAlignment="Left" Margin="23,44,0,0" VerticalAlignment="Top" Visibility="Visible" Height="28" Width="70"/>
-        <TextBox x:Name="delayBox" HorizontalAlignment="Left" Height="22" Margin="94,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="12"/>
+        <TextBox x:Name="delayBox" HorizontalAlignment="Left" Height="22" Margin="94,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="0"/>
         <Label x:Name="timeoutLabel" Content="Timeout (ms):" HorizontalAlignment="Left" Margin="8,72,0,0" VerticalAlignment="Top" Visibility="Visible" Height="26" Width="85"/>
-        <TextBox x:Name="timeoutBox" HorizontalAlignment="Left" Height="22" Margin="94,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="14"/>
+        <TextBox x:Name="timeoutBox" HorizontalAlignment="Left" Height="22" Margin="94,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="1"/>
         <Label x:Name="probLabel" Content="Probability (%):" HorizontalAlignment="Left" Margin="1,99,0,0" VerticalAlignment="Top" Visibility="Visible" Height="27" Width="93"/>
-        <TextBox x:Name="probBox" HorizontalAlignment="Left" Height="22" Margin="94,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="20"/>
+        <TextBox x:Name="probBox" HorizontalAlignment="Left" Height="22" Margin="94,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="2"/>
         <Label x:Name="roomsLabel" Content="Rooms:" HorizontalAlignment="Left" Margin="40,132,0,0" VerticalAlignment="Top" Visibility="Visible" Height="29" Width="50"/>
-        <TextBox x:Name="roomsBox" HorizontalAlignment="Left" Height="22" Margin="95,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="22"/>
+        <TextBox x:Name="roomsBox" HorizontalAlignment="Left" Height="22" Margin="95,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="3"/>
         <Label x:Name="usersLabel" Content="Users:" HorizontalAlignment="Left" Margin="52,157,0,0" VerticalAlignment="Top" Visibility="Visible" Height="27" Width="42"/>
-        <TextBox x:Name="usersBox" HorizontalAlignment="Left" Height="22" Margin="95,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="24"/>
+        <TextBox x:Name="usersBox" HorizontalAlignment="Left" Height="22" Margin="95,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="4"/>
         <Label x:Name="ignoresLabel" Content="Ignores:" HorizontalAlignment="Left" Margin="40,189,0,0" VerticalAlignment="Top" Visibility="Visible" Height="30" Width="54"/>
-        <TextBox x:Name="ignoresBox" HorizontalAlignment="Left" Height="22" Margin="95,195,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="26"/>
+        <TextBox x:Name="ignoresBox" HorizontalAlignment="Left" Height="22" Margin="95,195,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="5"/>
         <Label x:Name="label" Content="* Name:" HorizontalAlignment="Left" Margin="206,46,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="nameBox" HorizontalAlignment="Left" Height="22" Margin="264,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
-        <Button x:Name="button" Content="Done" HorizontalAlignment="Left" Margin="234,123,-54,0" VerticalAlignment="Top" Width="112" Height="58" Click="button_Click"/>
+        <TextBox x:Name="nameBox" HorizontalAlignment="Left" Height="22" Margin="264,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" TabIndex="6"/>
+        <Button x:Name="button" Content="Done" HorizontalAlignment="Left" Margin="234,123,-54,0" VerticalAlignment="Top" Width="112" Height="58" Click="button_Click" TabIndex="7"/>
 
     </Grid>
 </Window>

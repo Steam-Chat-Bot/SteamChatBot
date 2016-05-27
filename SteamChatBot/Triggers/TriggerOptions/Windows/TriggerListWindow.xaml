@@ -8,14 +8,14 @@
         Title="TriggerListWindow" Height="300" Width="300" Icon="/SteamChatBot;component/scb.ico" ResizeMode="NoResize">
     <Grid>
         <Label x:Name="roomsLabel" Content="Rooms:" HorizontalAlignment="Left" Margin="10,28,0,0" VerticalAlignment="Top" Visibility="Visible" Height="29" Width="50"/>
-        <TextBox x:Name="roomsBox" HorizontalAlignment="Left" Height="22" Margin="65,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="22"/>
+        <TextBox x:Name="roomsBox" HorizontalAlignment="Left" Height="22" Margin="65,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="0"/>
         <Label x:Name="usersLabel" Content="Users:" HorizontalAlignment="Left" Margin="18,58,0,0" VerticalAlignment="Top" Visibility="Visible" Height="27" Width="42"/>
-        <TextBox x:Name="usersBox" HorizontalAlignment="Left" Height="22" Margin="65,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="24"/>
+        <TextBox x:Name="usersBox" HorizontalAlignment="Left" Height="22" Margin="65,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="1"/>
         <Label x:Name="ignoresLabel" Content="Ignores:" HorizontalAlignment="Left" Margin="6,87,0,0" VerticalAlignment="Top" Visibility="Visible" Height="30" Width="54"/>
-        <TextBox x:Name="ignoresBox" HorizontalAlignment="Left" Height="22" Margin="65,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="26"/>
-        <Button x:Name="button" Content="Done" HorizontalAlignment="Left" Margin="112,186,0,0" VerticalAlignment="Top" Width="112" Height="58" Click="button_Click"/>
+        <TextBox x:Name="ignoresBox" HorizontalAlignment="Left" Height="22" Margin="65,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="2"/>
+        <Button x:Name="button" Content="Done" HorizontalAlignment="Left" Margin="112,186,0,0" VerticalAlignment="Top" Width="112" Height="58" Click="button_Click" TabIndex="4"/>
         <Label x:Name="label" Content="* Name:" HorizontalAlignment="Left" Margin="7,136,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="nameBox" HorizontalAlignment="Left" Height="22" Margin="65,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="nameBox" HorizontalAlignment="Left" Height="22" Margin="65,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" TabIndex="3"/>
 
     </Grid>
 </Window>
