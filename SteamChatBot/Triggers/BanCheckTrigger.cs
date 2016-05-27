@@ -9,11 +9,13 @@ using System.Web.Script.Serialization;
 
 using SteamKit2;
 
+using SteamChatBot.Triggers.TriggerOptions;
+
 namespace SteamChatBot.Triggers
 {
     class BanCheckTrigger : BaseTrigger
     {
-        public BanCheckTrigger(TriggerType type, string name, TriggerOptions options) : base(type, name, options)
+        public BanCheckTrigger(TriggerType type, string name, ChatCommandApi options) : base(type, name, options)
         { }
 
         public override bool respondToChatMessage(SteamID roomID, SteamID chatterId, string message)
@@ -28,9 +30,9 @@ namespace SteamChatBot.Triggers
 
         private bool Respond(SteamID toID, SteamID userID, string message, bool room)
         {
-            string[] query = StripCommand(message, Options.Command);
+            string[] query = StripCommand(message, Options.ChatCommandApi.ChatCommand.Command);
 
-            if(Options.ApiKey == null || Options.ApiKey == "")
+            if(Options.ChatCommandApi.ApiKey == null || Options.ChatCommandApi.ApiKey == "")
             {
                 SendMessageAfterDelay(toID, "You must declare a Steam API key to use this trigger.", room);
                 return false;
@@ -39,7 +41,7 @@ namespace SteamChatBot.Triggers
             {
                 if (query[1] != null)
                 {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format("http://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key={0}&steamids={1}", Options.ApiKey, query[1]));
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format("http://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key={0}&steamids={1}", Options.ChatCommandApi.ApiKey, query[1]));
 
                     string text = "";
                     BanCheckResponse bans = null;

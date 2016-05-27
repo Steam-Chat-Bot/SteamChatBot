@@ -1,0 +1,31 @@
+﻿<Window x:Class="SteamChatBot.Triggers.TriggerOptions.Windows.ChatCommandApiWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SteamChatBot.Triggers.TriggerOptions.Windows"
+        mc:Ignorable="d"
+        Title="ChatCommandApiWindow" Height="324.62" Width="410.334" Icon="/SteamChatBot;component/scb.ico" ResizeMode="NoResize">
+    <Grid>
+        <Label x:Name="delayLabel" Content="Delay (ms):" HorizontalAlignment="Left" Margin="29,73,0,0" VerticalAlignment="Top" Visibility="Visible" Height="28" Width="70"/>
+        <TextBox x:Name="delayBox" HorizontalAlignment="Left" Height="22" Margin="104,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="12"/>
+        <Label x:Name="timeoutLabel" Content="Timeout (ms):" HorizontalAlignment="Left" Margin="14,106,0,0" VerticalAlignment="Top" Visibility="Visible" Height="26" Width="85"/>
+        <TextBox x:Name="timeoutBox" HorizontalAlignment="Left" Height="22" Margin="104,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="14"/>
+        <Label x:Name="probLabel" Content="Probability (%):" HorizontalAlignment="Left" Margin="8,142,0,0" VerticalAlignment="Top" Visibility="Visible" Height="27" Width="93"/>
+        <TextBox x:Name="probBox" HorizontalAlignment="Left" Height="22" Margin="104,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="20"/>
+        <Label x:Name="roomsLabel" Content="Rooms:" HorizontalAlignment="Left" Margin="49,186,0,0" VerticalAlignment="Top" Visibility="Visible" Height="29" Width="50"/>
+        <TextBox x:Name="roomsBox" HorizontalAlignment="Left" Height="22" Margin="104,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="22"/>
+        <Label x:Name="usersLabel" Content="Users:" HorizontalAlignment="Left" Margin="57,216,0,0" VerticalAlignment="Top" Visibility="Visible" Height="27" Width="42"/>
+        <TextBox x:Name="usersBox" HorizontalAlignment="Left" Height="22" Margin="104,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="24"/>
+        <Label x:Name="ignoresLabel" Content="Ignores:" HorizontalAlignment="Left" Margin="45,245,0,0" VerticalAlignment="Top" Visibility="Visible" Height="30" Width="54"/>
+        <TextBox x:Name="ignoresBox" HorizontalAlignment="Left" Height="22" Margin="104,249,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="26"/>
+        <Button x:Name="button" Content="Done" HorizontalAlignment="Left" Margin="250,142,0,0" VerticalAlignment="Top" Width="112" Height="58" Click="button_Click"/>
+        <Label x:Name="label" Content="* Name:" HorizontalAlignment="Left" Margin="204,42,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="nameBox" HorizontalAlignment="Left" Height="22" Margin="262,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="commandLabel" Content="* Command:" HorizontalAlignment="Left" Margin="25,30,0,0" VerticalAlignment="Top" Visibility="Visible" Height="28" Width="74"/>
+        <TextBox x:Name="commandBox" HorizontalAlignment="Left" Height="22" Margin="104,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="12"/>
+        <Label x:Name="apiLabel" Content="* API Key:" HorizontalAlignment="Left" Margin="34,6,0,0" VerticalAlignment="Top" Visibility="Visible" Height="28" Width="65"/>
+        <TextBox x:Name="apiBox" HorizontalAlignment="Left" Height="22" Margin="104,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="12"/>
+
+    </Grid>
+</Window>

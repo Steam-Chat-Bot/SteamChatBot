@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using SteamKit2;
 using SteamKit2.Internal;
 
+using SteamChatBot.Triggers.TriggerOptions;
+
 namespace SteamChatBot.Triggers
 {
     class LockChatTrigger : BaseTrigger
     {
-        public LockChatTrigger(TriggerType type, string name, TriggerOptions options) : base(type, name, options)
+        public LockChatTrigger(TriggerType type, string name, ChatCommand options) : base(type, name, options)
         { }
 
         public override bool respondToChatMessage(SteamID roomID, SteamID chatterId, string message)
@@ -21,7 +23,7 @@ namespace SteamChatBot.Triggers
 
         private bool Respond(SteamID roomID, string message)
         {
-            string[] query = StripCommand(message, Options.Command);
+            string[] query = StripCommand(message, Options.ChatCommand.Command);
             if(query != null)
             {
                 var msg = new ClientMsg<MsgClientChatAction>();

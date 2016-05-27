@@ -9,11 +9,13 @@ using System.IO;
 
 using SteamKit2;
 
+using SteamChatBot.Triggers.TriggerOptions;
+
 namespace SteamChatBot.Triggers
 {
     class WeatherTrigger : BaseTrigger
     {
-        public WeatherTrigger(TriggerType type, string name, TriggerOptions options) : base(type, name, options)
+        public WeatherTrigger(TriggerType type, string name, ChatCommandApi options) : base(type, name, options)
         { }
 
         public override bool respondToChatMessage(SteamID roomID, SteamID chatterId, string message)
@@ -28,17 +30,17 @@ namespace SteamChatBot.Triggers
 
         private bool Respond(SteamID toID, string message, bool room)
         {
-            string[] query = StripCommand(message, Options.Command);
+            string[] query = StripCommand(message, Options.ChatCommandApi.ChatCommand.Command);
             if (query != null && query[1] != null)
             {
-                if (Options.ApiKey == null)
+                if (Options.ChatCommandApi.ApiKey == null)
                 {
                     SendMessageAfterDelay(toID, "API Key from Wunderground is required.", room);
                     return false;
                 }
                 else
                 {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format("http://api.wunderground.com/api/{0}/{1}/q/{2}.json", Options.ApiKey, "conditions", query[1]));
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(string.Format("http://api.wunderground.com/api/{0}/{1}/q/{2}.json", Options.ChatCommandApi.ApiKey, "conditions", query[1]));
                     string body = "";
                     Weather weather = null;
 

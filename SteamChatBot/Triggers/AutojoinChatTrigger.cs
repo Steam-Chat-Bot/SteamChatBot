@@ -6,23 +6,24 @@ using System.Threading.Tasks;
 
 using SteamKit2;
 
+using SteamChatBot.Triggers.TriggerOptions;
+
 namespace SteamChatBot.Triggers
 {
     class AutojoinChatTrigger : BaseTrigger
     {
-        public AutojoinChatTrigger(TriggerType type, string name, TriggerOptions options) : base(type, name, options)
+        public AutojoinChatTrigger(TriggerType type, string name, TriggerLists tl) : base(type, name, tl)
         { }
 
         public override bool OnLoggedOn()
         {
-            if(Options.Rooms.Count == 0 || Options.Rooms == null)
+            if(Options.TriggerLists.Rooms.Count == 0 || Options.TriggerLists.Rooms == null)
             {
-                Log.Instance.Error("Must have rooms!");
-                return false;
+                throw new InvalidOperationException("Must include rooms!");
             }
             else
             {
-                foreach (SteamID roomID in Options.Rooms)
+                foreach (SteamID roomID in Options.TriggerLists.Rooms)
                 {
                     Log.Instance.Verbose("Joining chat room " + roomID.ToString());
                     Bot.steamFriends.JoinChat(roomID);

@@ -48,24 +48,7 @@ namespace SteamChatBot
 
         #endregion
 
-        #region trigger options
-
-        public static Dictionary<TriggerType, string> commandList = new Dictionary<TriggerType, string>();
-        public static Dictionary<TriggerType, List<string>> matchesList = new Dictionary<TriggerType, List<string>>();
-        public static Dictionary<TriggerType, List<string>> responsesList = new Dictionary<TriggerType, List<string>>();
-        public static Dictionary<TriggerType, int> delays = new Dictionary<TriggerType, int>();
-        public static Dictionary<TriggerType, int> timeouts = new Dictionary<TriggerType, int>();
-        public static Dictionary<TriggerType, int> probs = new Dictionary<TriggerType, int>();
-        public static Dictionary<TriggerType, List<SteamID>> rooms = new Dictionary<TriggerType, List<SteamID>>();
-        public static Dictionary<TriggerType, List<SteamID>> users = new Dictionary<TriggerType, List<SteamID>>();
-        public static Dictionary<TriggerType, List<SteamID>> ignores = new Dictionary<TriggerType, List<SteamID>>();
-        public static Dictionary<TriggerType, string> apiKeys = new Dictionary<TriggerType, string>();
-
-        #endregion
-
         public static List<BaseTrigger> triggers = new List<BaseTrigger>();
-        public static List<CheckBox> checkBoxes = new List<CheckBox>();
-        public static List<CheckBox> activeCheckBoxes = new List<CheckBox>();
         
         public static BackgroundWorker worker;
         private bool disposed = false;
@@ -138,174 +121,26 @@ namespace SteamChatBot
                 }
             }
 
-            foreach (CheckBox box in checkBoxes)
-            {
-                if (box.IsChecked == true)
-                {
-                    activeCheckBoxes.Add(box);
-                }
-
-            }
-
             if(sharedSecret != "")
             {
                 steamGuardAccount.SharedSecret = sharedSecret;
             }
+
             SubForCB();
 
             if (Directory.Exists(username + "/triggers/") && Directory.GetFiles(username + "/triggers/").Length > 0)
             {
                 triggers = BaseTrigger.ReadTriggers();
-                Log.Instance.Silly("Successfully read trigger data from triggers/");
+                Log.Instance.Silly("Successfully read trigger data from " + username + "/triggers/");
             }
-            foreach (CheckBox box in activeCheckBoxes)
+            else
             {
-                switch (box.Name)
+                Log.Instance.Verbose("Saving triggers...");
+                foreach (BaseTrigger trigger in triggers)
                 {
-                    case "isUpTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.IsUpTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.IsUpTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new IsUpTrigger(TriggerType.IsUpTrigger, "IsUpTrigger", options));
-                        }
-                        break;
-                    case "chatReplyTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.ChatReplyTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.ChatReplyTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new ChatReplyTrigger(TriggerType.ChatReplyTrigger, "ChatReplyTrigger", options));
-                        }
-                        break;
-                    case "acceptFriendRequestTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.AcceptFriendRequestTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.AcceptFriendRequestTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new AcceptFriendRequestTrigger(TriggerType.AcceptFriendRequestTrigger, "AcceptFriendRequestTrigger"));
-                        }
-                        break;
-                    case "autojoinChatTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.AutojoinChatTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.AutojoinChatTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new AutojoinChatTrigger(TriggerType.AutojoinChatTrigger, "AutojoinChatTrigger", options));
-                        }
-                        break;
-                    case "banTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.BanTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.BanTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new BanTrigger(TriggerType.BanTrigger, "BanTrigger", options));
-                        }
-                        break;
-                    case "kickTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.KickTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.KickTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new KickTrigger(TriggerType.KickTrigger, "KickTrigger", options));
-                        }
-                        break;
-                    case "acceptChatInviteTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.AcceptChatInviteTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.AcceptChatInviteTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new AcceptChatInviteTrigger(TriggerType.AcceptChatInviteTrigger, "AcceptChatInviteTrigger", options));
-                        }
-                        break;
-                    case "leaveChatTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.LeaveChatTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.LeaveChatTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new LeaveChatTrigger(TriggerType.LeaveChatTrigger, "LeaveChatTrigger", options));
-                        }
-                        break;
-                    case "linkNameTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.LinkNameTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.LinkNameTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new LinkNameTrigger(TriggerType.LinkNameTrigger, "LinkNameTrigger", options));
-                        }
-                        break;
-                    case "doormatTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.DoormatTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.DoormatTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new DoormatTrigger(TriggerType.DoormatTrigger, "DoormatTrigger", options));
-                        }
-                        break;
-                    case "lockChatTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.LockChatTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.LockChatTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new LockChatTrigger(TriggerType.LockChatTrigger, "LockChatTrigger", options));
-                        }
-                        break;
-                    case "unlockChatTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.UnlockChatTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.UnlockChatTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new UnlockChatTrigger(TriggerType.UnlockChatTrigger, "UnlockChatTrigger", options));
-                        }
-                        break;
-                    case "moderateChatTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.ModerateChatTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.ModerateChatTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new ModerateChatTrigger(TriggerType.ModerateChatTrigger, "ModerateChatTrigger", options));
-                        }
-                        break;
-                    case "unmoderateChatTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.UnmoderateChatTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.UnmoderateChatTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new UnmoderateChatTrigger(TriggerType.UnmoderateChatTrigger, "UnmoderateChatTrigger", options));
-                        }
-                        break;
-                    case "unbanTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.UnbanTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.UnbanTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new UnbanTrigger(TriggerType.UnbanTrigger, "UnbanTrigger", options));
-                        }
-                        break;
-                    case "banCheckTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.BanCheckTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.BanCheckTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new BanCheckTrigger(TriggerType.BanCheckTrigger, "BanCheckTrigger", options));
-                        }
-                        break;
-                    case "weatherTriggerBox":
-                        {
-                            TriggerOptions options = GetTriggerOptions(TriggerType.WeatherTrigger);
-                            var removed = triggers.SingleOrDefault(r => r.Type == TriggerType.WeatherTrigger);
-                            triggers.Remove(removed);
-                            triggers.Add(new WeatherTrigger(TriggerType.WeatherTrigger, "WeatherTrigger", options));
-                        }
-                        break;
+                    trigger.SaveTrigger();
+                    Log.Instance.Silly("Trigger {0} saved", trigger.Name);
                 }
-            }
-
-            Log.Instance.Verbose("Saving triggers...");
-            foreach (BaseTrigger trigger in triggers)
-            {
-                trigger.SaveTrigger();
-                Log.Instance.Silly("Trigger {0} saved", trigger.Name);
             }
 
             isRunning = true;
@@ -316,45 +151,6 @@ namespace SteamChatBot
             {
                 manager.RunWaitCallbacks(TimeSpan.FromSeconds(1));
             }
-        }
-
-        private static TriggerOptions GetTriggerOptions(TriggerType type)
-        {
-            string command;
-            List<string> matches;
-            List<string> responses;
-            int timeout;
-            int delay;
-            int probability;
-            List<SteamID> room;
-            List<SteamID> user;
-            List<SteamID> ignore;
-            string api;
-            commandList.TryGetValue(type, out command);
-            matchesList.TryGetValue(type, out matches);
-            responsesList.TryGetValue(type, out responses);
-            delays.TryGetValue(type, out delay);
-            timeouts.TryGetValue(type, out timeout);
-            probs.TryGetValue(type, out probability);
-            rooms.TryGetValue(type, out room);
-            users.TryGetValue(type, out user);
-            ignores.TryGetValue(type, out ignore);
-            apiKeys.TryGetValue(type, out api);
-            TriggerOptions options = new TriggerOptions
-            {
-                Command = command,
-                Delay = delay,
-                Matches = matches,
-                Responses = responses,
-                Timeout = timeout,
-                Probability = probability != 0 ? probability / 100 : 1,
-                Rooms = room,
-                Ignore = ignore,
-                User = user,
-                ApiKey = api
-            };
-
-            return options;
         }
 
         public void Dispose()

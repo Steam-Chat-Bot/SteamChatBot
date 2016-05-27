@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using SteamKit2;
+
+using SteamChatBot.Triggers.TriggerOptions;
 
 namespace SteamChatBot.Triggers
 {
     class DoormatTrigger : BaseTrigger
     {
-        public DoormatTrigger(TriggerType type, string name, TriggerOptions options) : base(type, name, options)
+        public DoormatTrigger(TriggerType type, string name, NoCommand options) : base(type, name, options)
         { }
 
         public override bool respondToEnteredMessage(SteamID roomID, SteamID userID)

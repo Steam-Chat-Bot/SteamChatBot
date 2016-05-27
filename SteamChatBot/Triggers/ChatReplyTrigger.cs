@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using SteamKit2;
+
+using SteamChatBot.Triggers.TriggerOptions;
 
 namespace SteamChatBot.Triggers
 {
     class ChatReplyTrigger : BaseTrigger
     {
-        public ChatReplyTrigger(TriggerType type, string name, TriggerOptions options) : base(type, name, options)
+        public ChatReplyTrigger(TriggerType type, string name, ChatReply options) : base(type, name, options)
         { }
 
         public override bool respondToFriendMessage(SteamID userID, string message)
@@ -35,11 +38,11 @@ namespace SteamChatBot.Triggers
 
         private bool CheckMessage(string message)
         {
-            if(Options.Matches != null && Options.Matches.Count > 0)
+            if(Options.ChatReply.Matches != null && Options.ChatReply.Matches.Count > 0)
             {
-                for (int i = 0; i < Options.Matches.Count; i++)
+                for (int i = 0; i < Options.ChatReply.Matches.Count; i++)
                 {
-                    string match = Options.Matches[i];
+                    string match = Options.ChatReply.Matches[i];
                     if (message.ToLower() == match.ToLower())
                     {
                         return true;
@@ -55,11 +58,11 @@ namespace SteamChatBot.Triggers
 
         private string PickResponse()
         {
-            if(Options.Responses != null && Options.Responses.Count > 0)
+            if(Options.ChatReply.Responses != null && Options.ChatReply.Responses.Count > 0)
             {
                 Random rnd = new Random();
-                int index = rnd.Next(0, Options.Responses.Count);
-                return Options.Responses[index];
+                int index = rnd.Next(0, Options.ChatReply.Responses.Count);
+                return Options.ChatReply.Responses[index];
             }
             return "";
         }

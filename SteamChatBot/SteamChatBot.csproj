@@ -179,7 +179,28 @@
     <Compile Include="Triggers\LeaveChatTrigger.cs" />
     <Compile Include="Triggers\LinkNameTrigger.cs" />
     <Compile Include="Triggers\ModerateTrigger.cs" />
-    <Compile Include="Triggers\TriggerOptions.cs" />
+    <Compile Include="Triggers\TriggerOptions\ChatCommand.cs" />
+    <Compile Include="Triggers\TriggerOptions\ChatCommandApi.cs" />
+    <Compile Include="Triggers\TriggerOptions\ChatReply.cs" />
+    <Compile Include="Triggers\TriggerOptions\NoCommand.cs" />
+    <Compile Include="Triggers\TriggerOptions\TriggerLists.cs" />
+    <Compile Include="Triggers\TriggerOptions\TriggerNumbers.cs" />
+    <Compile Include="Triggers\TriggerOptions\TriggerOptionsBase.cs" />
+    <Compile Include="Triggers\TriggerOptions\Windows\ChatCommandApiWindow.xaml.cs">
+      <DependentUpon>ChatCommandApiWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Triggers\TriggerOptions\Windows\ChatCommandWindow.xaml.cs">
+      <DependentUpon>ChatCommandWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Triggers\TriggerOptions\Windows\ChatReplyWindow.xaml.cs">
+      <DependentUpon>ChatReplyWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Triggers\TriggerOptions\Windows\NoCommandWindow.xaml.cs">
+      <DependentUpon>NoCommandWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Triggers\TriggerOptions\Windows\TriggerListWindow.xaml.cs">
+      <DependentUpon>TriggerListWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Triggers\TriggerType.cs" />
     <Compile Include="Triggers\UnbanTrigger.cs" />
     <Compile Include="Triggers\UnlockChatTrigger.cs" />
@@ -199,6 +220,26 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Triggers\TriggerOptions\Windows\ChatCommandApiWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Triggers\TriggerOptions\Windows\ChatCommandWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Triggers\TriggerOptions\Windows\ChatReplyWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Triggers\TriggerOptions\Windows\NoCommandWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Triggers\TriggerOptions\Windows\TriggerListWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

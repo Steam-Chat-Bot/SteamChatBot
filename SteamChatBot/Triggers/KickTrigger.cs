@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 using SteamKit2;
 
+using SteamChatBot.Triggers.TriggerOptions;
+
 namespace SteamChatBot.Triggers
 {
     class KickTrigger : BaseTrigger
     {
-        public KickTrigger(TriggerType type, string name, TriggerOptions options) : base(type, name, options)
+        public KickTrigger(TriggerType type, string name, ChatCommand options) : base(type, name, options)
         { }
 
         public override bool respondToChatMessage(SteamID roomID, SteamID chatterId, string message)
@@ -20,7 +22,7 @@ namespace SteamChatBot.Triggers
 
         private bool Respond(SteamID toID, SteamID userID, string message)
         {
-            string[] query = StripCommand(message, Options.Command);
+            string[] query = StripCommand(message, Options.ChatCommand.Command);
             if(query != null && query[1] != null)
             {
                 Bot.steamFriends.KickChatMember(toID, new SteamID(Convert.ToUInt64(query[1])));
