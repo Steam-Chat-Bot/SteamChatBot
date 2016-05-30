@@ -67,13 +67,14 @@
                         <ListBoxItem x:Name="linkNameTrigger" Content="LinkNameTrigger - Gets the title of the website from a link"/>
                         <ListBoxItem x:Name="lockChatTrigger" Content="LockChatTrigger - Locks the chat room"/>
                         <ListBoxItem x:Name="moderateChatTrigger" Content="ModerateChatTrigger - Moderates a chat room"/>
+                        <ListBoxItem x:Name="playGameTrigger" Content="PlayGameTrigger - Plays a game (AppID)"/>
                         <ListBoxItem x:Name="unbanTrigger" Content="UnbanTrigger - Unbans a user from chat"/>
                         <ListBoxItem x:Name="unmoderateChatTrigger" Content="UnmoderateChatTrigger - Unmoderates the chat"/>
                         <ListBoxItem x:Name="weatherTrigger" Content="WeatherTrigger - Gets the weather for a certain location"/>
                     </ListBox>
                     <Button x:Name="minusTriggerButton" Content="-" Grid.Column="1" HorizontalAlignment="Left" Margin="203,428,0,0" VerticalAlignment="Top" Width="44" FontSize="14.667" Click="minusTriggerButton_Click"/>
                     <ListBox x:Name="addedTriggersListBox" Grid.Column="2" HorizontalAlignment="Left" Height="418" Margin="75,10,0,0" VerticalAlignment="Top" Width="275"/>
-                    <Button x:Name="plusTriggerButton" Content="+" Grid.Column="1" HorizontalAlignment="Left" Margin="159,428,0,0" VerticalAlignment="Top" Width="44" FontSize="14.667" Click="plusTriggerButton_Click"/>
+                    <Button x:Name="plusTriggerButton" Content="+" Grid.Column="1" HorizontalAlignment="Left" Margin="159,428,0,7" Width="44" FontSize="14.667" Click="plusTriggerButton_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

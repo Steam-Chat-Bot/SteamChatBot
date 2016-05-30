@@ -239,7 +239,8 @@ namespace SteamChatBot
 
             if (selected == "isUpTrigger" || selected == "leaveChatTrigger" || selected == "kickTrigger"
                 || selected == "banTrigger" || selected == "unbanTrigger" || selected == "lockTrigger"
-                || selected == "unlockTrigger" || selected == "moderateTrigger" || selected == "unmoderateTrigger")
+                || selected == "unlockTrigger" || selected == "moderateTrigger" || selected == "unmoderateTrigger"
+                || selected == "playGameTrigger")
             {
                 ChatCommandWindow ccw = new ChatCommandWindow();
                 ccw.ShowDialog();
@@ -308,7 +309,10 @@ namespace SteamChatBot
                     BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, tl.Name, tl);
                     Bot.triggers.Add(trigger);
                 }
-
+            }
+            else
+            {
+                MessageBox.Show("Unknown Trigger. Please contact the developer.", "Error", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
             }
         }
 

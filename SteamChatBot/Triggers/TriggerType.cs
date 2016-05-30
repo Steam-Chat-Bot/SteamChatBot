@@ -15,6 +15,7 @@
         LinkNameTrigger,
         LockChatTrigger,
         ModerateChatTrigger,
+        PlayGameTrigger,
         UnbanTrigger,
         UnlockChatTrigger,
         UnmoderateChatTrigger,

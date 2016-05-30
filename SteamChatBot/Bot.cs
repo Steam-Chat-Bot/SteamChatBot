@@ -28,10 +28,13 @@ namespace SteamChatBot
         public static CallbackManager manager = new CallbackManager(steamClient);
         public static SteamUser steamUser = steamClient.GetHandler<SteamUser>();
         public static SteamFriends steamFriends = steamClient.GetHandler<SteamFriends>();
+        public static SteamGameCoordinator steamGC = steamClient.GetHandler<SteamGameCoordinator>();
+
         public static SteamGuardAccount steamGuardAccount = new SteamGuardAccount();
+
         #endregion
 
-        #region public static login variables
+        #region login variables
 
         public static bool isRunning;
         public static string username;
@@ -49,22 +52,8 @@ namespace SteamChatBot
         #endregion
 
         public static List<BaseTrigger> triggers = new List<BaseTrigger>();
-        
-        public static BackgroundWorker worker;
-        private bool disposed = false;
 
-        /*
-        private static async void RunCallbacks()
-        {
-            while (true)
-            {
-                await Task.Run(() =>
-                {
-                    manager.RunWaitCallbacks(TimeSpan.FromSeconds(1));
-                });
-            }
-        }
-        */
+        private bool disposed = false;
 
         #region login data read/write
 
@@ -346,17 +335,6 @@ namespace SteamChatBot
                 Log.Instance.Warn("EResult for logon: " + callback.Result + "/" + callback.ExtendedResult);
             }
         }
-
-        /*
-        private static void OnFriendAdded(SteamFriends.FriendAddedCallback callback)
-        {
-            Log.Instance.Debug("{0} proposed friend add.", callback.SteamID);
-            foreach (BaseTrigger trigger in triggers)
-            {
-                trigger.OnFriendRequest(callback.SteamID);
-            }
-        }
-        */
 
         private static void OnFriendList(SteamFriends.FriendsListCallback callback)
         {

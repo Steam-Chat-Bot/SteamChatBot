@@ -34,7 +34,9 @@
     <PublisherName>Steam-Chat-Bot</PublisherName>
     <SuiteName>SteamChatBot</SuiteName>
     <MinimumRequiredVersion>1.0.0.0</MinimumRequiredVersion>
-    <ApplicationRevision>4</ApplicationRevision>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -179,6 +181,7 @@
     <Compile Include="Triggers\LeaveChatTrigger.cs" />
     <Compile Include="Triggers\LinkNameTrigger.cs" />
     <Compile Include="Triggers\ModerateTrigger.cs" />
+    <Compile Include="Triggers\PlayGameTrigger.cs" />
     <Compile Include="Triggers\TriggerOptions\ChatCommand.cs" />
     <Compile Include="Triggers\TriggerOptions\ChatCommandApi.cs" />
     <Compile Include="Triggers\TriggerOptions\ChatReply.cs" />
@@ -278,6 +281,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\scb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

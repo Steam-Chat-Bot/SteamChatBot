@@ -230,6 +230,9 @@ namespace SteamChatBot.Triggers
                     case TriggerType.ModerateChatTrigger:
                         temp.Add(new ModerateChatTrigger(type, name, options.ChatCommand));
                         break;
+                    case TriggerType.PlayGameTrigger:
+                        temp.Add(new PlayGameTrigger(type, name, options.ChatCommand));
+                        break;
                     case TriggerType.UnbanTrigger:
                         temp.Add(new UnbanTrigger(type, name, options.ChatCommand));
                         break;
