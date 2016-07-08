@@ -119,7 +119,20 @@ namespace SteamChatBot.Triggers
             };
         }
 
+        public BaseTrigger(TriggerType type, string name, AntiSpamTriggerOptions options)
+        {
+            OptionsType = "AntiSpamTrigger";
+            Type = type;
+            Name = name;
+            Options = new TriggerOptionsBase
+            {
+                Type = type,
+                Name = name,
+                AntiSpamTriggerOptions = options
+            };
+        }
         #endregion
+
 
         /// <summary>
         /// If there is an error, log it easily
@@ -156,7 +169,8 @@ namespace SteamChatBot.Triggers
                     ChatReply = Options.ChatReply,
                     NoCommand = Options.NoCommand,
                     TriggerLists = Options.TriggerLists,
-                    TriggerNumbers = Options.TriggerNumbers
+                    TriggerNumbers = Options.TriggerNumbers,
+                    AntiSpamTriggerOptions = Options.AntiSpamTriggerOptions
                 };
                 string json = JsonConvert.SerializeObject(options, Formatting.Indented);
                 File.WriteAllText(Bot.username + "/triggers/" + Name + ".json", json);
@@ -196,6 +210,9 @@ namespace SteamChatBot.Triggers
                         break;
                     case TriggerType.AcceptFriendRequestTrigger:
                         temp.Add(new AcceptFriendRequestTrigger(type, name, options.TriggerLists));
+                        break;
+                    case TriggerType.AntispamTrigger:
+                        temp.Add(new AntispamTrigger(type, name, options.AntiSpamTriggerOptions));
                         break;
                     case TriggerType.AutojoinChatTrigger:
                         temp.Add(new AutojoinChatTrigger(type, name, options.TriggerLists));
@@ -824,6 +841,9 @@ namespace SteamChatBot.Triggers
                 case "JustLists":
                     delay = 0;
                     break;
+                case "AntiSpamTrigger":
+                    delay = Options.AntiSpamTriggerOptions.NoCommand.TriggerNumbers.Delay == null ? 0 : Options.AntiSpamTriggerOptions.NoCommand.TriggerNumbers.Delay.Value;
+                    break;
             }
             if (delay == 0)
             {
@@ -839,8 +859,9 @@ namespace SteamChatBot.Triggers
             }
             else
             {
+                Log.Instance.Warn(delay.ToString());
                 Log.Instance.Silly("{0}/{1}: Sending delayed message to {2}: {3}", Bot.username, Name, steamID, message);
-                System.Timers.Timer timer = new System.Timers.Timer(delay / 1000);
+                System.Timers.Timer timer = new System.Timers.Timer(delay);
 
                 timer.Elapsed += (sender, e) => TimerElapsed_Message(sender, e, steamID, message, room);
             }
@@ -902,6 +923,9 @@ namespace SteamChatBot.Triggers
                 case "ListsAndNumbers":
                     ignore = Options.TriggerLists.Ignore;
                     break;
+                case "AntiSpamTrigger":
+                    ignore = Options.AntiSpamTriggerOptions.NoCommand.TriggerLists.Ignore;
+                    break;
             }
             if (ignore != null && ignore.Count > 0)
             {
@@ -945,6 +969,9 @@ namespace SteamChatBot.Triggers
                     break;
                 case "ListsAndNumbers":
                     rooms = Options.TriggerLists.Rooms;
+                    break;
+                case "AntiSpamTrigger":
+                    rooms = Options.AntiSpamTriggerOptions.NoCommand.TriggerLists.Rooms;
                     break;
             }
             if (rooms == null || rooms.Count == 0)
@@ -993,6 +1020,9 @@ namespace SteamChatBot.Triggers
                 case "ListsAndNumbers":
                     users = Options.TriggerLists.User;
                     break;
+                case "AntiSpamTrigger":
+                    users = Options.AntiSpamTriggerOptions.NoCommand.TriggerLists.User;
+                    break;
             }
             if (users != null && users.Count > 0)
             {
@@ -1033,6 +1063,9 @@ namespace SteamChatBot.Triggers
                 case "JustLists":
                     prob = 1;
                     break;
+                case "AntiSpamTrigger":
+                    prob = Options.AntiSpamTriggerOptions.NoCommand.TriggerNumbers.Probability == null ? 1 : Options.AntiSpamTriggerOptions.NoCommand.TriggerNumbers.Probability.Value;
+                    break;
             }
             if (prob != 1)
             {
@@ -1067,6 +1100,9 @@ namespace SteamChatBot.Triggers
                     break;
                 case "JustLists":
                     to = 0;
+                    break;
+                case "AntiSpamTrigger":
+                    to = Options.AntiSpamTriggerOptions.NoCommand.TriggerNumbers.Timeout == null ? 0 : Options.AntiSpamTriggerOptions.NoCommand.TriggerNumbers.Timeout.Value;
                     break;
             }
             if (to > 0)

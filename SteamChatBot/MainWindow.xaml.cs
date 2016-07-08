@@ -236,6 +236,7 @@ namespace SteamChatBot
             NoCommand nc = new NoCommand();
             TriggerLists tl = new TriggerLists();
             TriggerNumbers tn = new TriggerNumbers();
+            AntiSpamTriggerOptions asto = new AntiSpamTriggerOptions();
 
             if (selected == "isUpTrigger" || selected == "leaveChatTrigger" || selected == "kickTrigger"
                 || selected == "banTrigger" || selected == "unbanTrigger" || selected == "lockTrigger"
@@ -308,6 +309,22 @@ namespace SteamChatBot
                     addedTriggersListBox.Items.Add(string.Format("{0} - {1}", tl.Name, type));
                     BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, tl.Name, tl);
                     Bot.triggers.Add(trigger);
+                }
+            }
+            else if(selected == "antispamTrigger")
+            {
+                AntiSpamTriggerOptionsWindow astow = new AntiSpamTriggerOptionsWindow();
+                astow.ShowDialog();
+                if(astow.DialogResult.HasValue && astow.DialogResult.Value)
+                {
+                    AntiSpamTriggerOptions astow_asto = astow.ASTO;
+                    NoCommand astow_nc = astow.NC;
+                    asto = GetAntispamTriggerOptions(astow_asto);
+                    type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
+                    addedTriggersListBox.Items.Add(string.Format("{0} - {1}", asto.Name, type));
+                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, asto.Name, asto);
+                    Bot.triggers.Add(trigger);
+
                 }
             }
             else
@@ -400,6 +417,25 @@ namespace SteamChatBot
                     Rooms = tl.Rooms,
                     User = tl.User,
                     Ignore = tl.Ignore
+                };
+            }
+            catch (Exception e) { return null; }
+        }
+
+        private AntiSpamTriggerOptions GetAntispamTriggerOptions(AntiSpamTriggerOptions asto)
+        {
+            try
+            {
+                return new AntiSpamTriggerOptions
+                {
+                    Name = asto.Name,
+                    admins = asto.admins,
+                    NoCommand = asto.NoCommand,
+                    msgPenalty = asto.msgPenalty,
+                    ptimer = asto.ptimer,
+                    timers = asto.timers,
+                    score = asto.score,
+                    warnMessage = asto.warnMessage
                 };
             }
             catch (Exception e) { return null; }

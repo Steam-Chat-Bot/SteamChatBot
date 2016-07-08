@@ -10,5 +10,6 @@
         public NoCommand NoCommand { get; set; }
         public TriggerLists TriggerLists { get; set; }
         public TriggerNumbers TriggerNumbers { get; set; }
+        public AntiSpamTriggerOptions AntiSpamTriggerOptions { get; set; }
     }
 }

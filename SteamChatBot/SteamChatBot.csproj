@@ -166,6 +166,7 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Bot.cs" />
+    <Compile Include="Triggers\AnispamTrigger.cs" />
     <Compile Include="Triggers\BanCheckTrigger.cs" />
     <Compile Include="Triggers\LockChatTrigger.cs" />
     <Compile Include="SteamHelper.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="Triggers\LinkNameTrigger.cs" />
     <Compile Include="Triggers\ModerateTrigger.cs" />
     <Compile Include="Triggers\PlayGameTrigger.cs" />
+    <Compile Include="Triggers\TriggerOptions\AntiSpamTriggerOptions.cs" />
     <Compile Include="Triggers\TriggerOptions\ChatCommand.cs" />
     <Compile Include="Triggers\TriggerOptions\ChatCommandApi.cs" />
     <Compile Include="Triggers\TriggerOptions\ChatReply.cs" />
@@ -189,6 +191,9 @@
     <Compile Include="Triggers\TriggerOptions\TriggerLists.cs" />
     <Compile Include="Triggers\TriggerOptions\TriggerNumbers.cs" />
     <Compile Include="Triggers\TriggerOptions\TriggerOptionsBase.cs" />
+    <Compile Include="Triggers\TriggerOptions\Windows\AntiSpamTriggerOptionsWindow.xaml.cs">
+      <DependentUpon>AntiSpamTriggerOptionsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Triggers\TriggerOptions\Windows\ChatCommandApiWindow.xaml.cs">
       <DependentUpon>ChatCommandApiWindow.xaml</DependentUpon>
     </Compile>
@@ -223,6 +228,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Triggers\TriggerOptions\Windows\AntiSpamTriggerOptionsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Triggers\TriggerOptions\Windows\ChatCommandApiWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

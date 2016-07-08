@@ -4,6 +4,7 @@
     {
         AcceptChatInviteTrigger,
         AcceptFriendRequestTrigger,
+        AntispamTrigger,
         AutojoinChatTrigger,
         BanCheckTrigger,
         BanTrigger,

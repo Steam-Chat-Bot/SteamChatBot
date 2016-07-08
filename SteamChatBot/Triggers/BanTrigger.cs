@@ -24,7 +24,7 @@ namespace SteamChatBot.Triggers
         {
             string[] query = StripCommand(message, Options.ChatCommand.Command);
             if (query != null && query[1] != null)
-            {
+            { 
                 Bot.steamFriends.BanChatMember(roomID, new SteamID(Convert.ToUInt64(query[1])));
                 return true;
             }

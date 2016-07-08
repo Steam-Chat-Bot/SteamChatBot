@@ -56,6 +56,7 @@
                     <ListBox x:Name="triggerListBox" HorizontalAlignment="Left" Height="418" Margin="10,10,0,0" VerticalAlignment="Top" Width="470" Grid.ColumnSpan="3">
                         <ListBoxItem x:Name="acceptChatInviteTrigger" Content="AcceptChatInviteTrigger - Accepts chat invites from all (blank rooms) or specific rooms"/>
                         <ListBoxItem x:Name="acceptFriendRequestTrigger" Content="AcceptFriendRequestTrigger - Accepts all friend requests"/>
+                        <ListBoxItem x:Name="antispamTrigger" Content="AntispamTrigger - Punishes users for spamming"/>
                         <ListBoxItem x:Name="autojoinChatTrigger" Content="AutojoinChatTrigger - Autojoins chat room(s)"/>
                         <ListBoxItem x:Name="banTrigger" Content="BanTrigger - Bans a user from chat"/>
                         <ListBoxItem x:Name="banCheckTrigger" Content="BanCheckTrigger - Checks SteamCommunity for bans"/>
@@ -72,9 +73,9 @@
                         <ListBoxItem x:Name="unmoderateChatTrigger" Content="UnmoderateChatTrigger - Unmoderates the chat"/>
                         <ListBoxItem x:Name="weatherTrigger" Content="WeatherTrigger - Gets the weather for a certain location"/>
                     </ListBox>
-                    <Button x:Name="minusTriggerButton" Content="-" Grid.Column="1" HorizontalAlignment="Left" Margin="203,428,0,0" VerticalAlignment="Top" Width="44" FontSize="14.667" Click="minusTriggerButton_Click"/>
+                    <Button x:Name="minusTriggerButton" Content="-" Grid.Column="1" HorizontalAlignment="Left" Margin="208,428,0,0" VerticalAlignment="Top" Width="44" FontSize="14.667" Click="minusTriggerButton_Click" Height="24"/>
                     <ListBox x:Name="addedTriggersListBox" Grid.Column="2" HorizontalAlignment="Left" Height="418" Margin="75,10,0,0" VerticalAlignment="Top" Width="275"/>
-                    <Button x:Name="plusTriggerButton" Content="+" Grid.Column="1" HorizontalAlignment="Left" Margin="159,428,0,7" Width="44" FontSize="14.667" Click="plusTriggerButton_Click"/>
+                    <Button x:Name="plusTriggerButton" Content="+" Grid.Column="1" HorizontalAlignment="Left" Margin="159,428,0,7" Width="44" FontSize="14.667" Click="plusTriggerButton_Click" Height="24"/>
                 </Grid>
             </TabItem>
         </TabControl>
