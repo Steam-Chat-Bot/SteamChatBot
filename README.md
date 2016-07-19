@@ -7,11 +7,14 @@ Update February 28, 2016:
 	
 ### Screenshots
 
-Main Window + About 
+##### Main Window + About 
+
 ![Main + About](https://raw.githubusercontent.com/Steam-Chat-Bot/SteamChatBot/master/Screenshots/main_about.png)
 
-Trigger options
+##### Trigger options
+
 ![Triggers](https://raw.githubusercontent.com/Steam-Chat-Bot/SteamChatBot/master/Screenshots/triggers.png)
 
-Logger window (while bot is running)
+##### Logger window (while bot is running)
+
 ![Logger](https://raw.githubusercontent.com/Steam-Chat-Bot/SteamChatBot/master/Screenshots/logger.png)
