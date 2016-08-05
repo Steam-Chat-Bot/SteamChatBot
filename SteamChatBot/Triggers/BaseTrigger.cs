@@ -563,10 +563,6 @@ namespace SteamChatBot.Triggers
                     return false;
                 }
             }
-            else
-            {
-                Log.Instance.Warn(ReplyEnabled.ToString() + RandomRoll().ToString() + CheckUser(chatterID) + CheckRoom(roomID) + !CheckIgnores(chatterID, roomID));
-            }
             return false;
         }
 

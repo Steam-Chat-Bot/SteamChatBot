@@ -69,9 +69,15 @@ namespace SteamChatBot.Triggers.TriggerOptions.Windows
 
                 if (adminsBox.Text.Split(',').Length > 0 && adminsBox.Text != "")
                 {
-                    foreach (string admin in adminsBox.Text.Split(','))
+                    try {
+                        foreach (string admin in adminsBox.Text.Split(','))
+                        {
+                            admins.Add(new SteamID(Convert.ToUInt64(admin)));
+                        }
+                    }
+                    catch(Exception err)
                     {
-                        admins.Add(new SteamID(Convert.ToUInt64(admin)));
+                        MessageBox.Show(err.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
                     }
                 }
 

@@ -137,16 +137,45 @@ namespace SteamChatBot
 
             if (Directory.Exists(username + "/triggers/") && Directory.GetFiles(username + "/triggers/").Length > 0)
             {
-                triggers = BaseTrigger.ReadTriggers();
-                Log.Instance.Silly("Successfully read trigger data from " + username + "/triggers/");
+                if (triggers.Count > 0)
+                {
+                    List<BaseTrigger> oldTriggers = BaseTrigger.ReadTriggers();
+                    List<BaseTrigger> newTriggers = triggers;
+
+                    Log.Instance.Verbose("Saving triggers...");
+                    int count = triggers.Count;
+                    foreach (BaseTrigger trigger in newTriggers)
+                    {
+                        Log.Instance.Debug("Saving triggers, " + count + " left");
+                        trigger.SaveTrigger();
+                        Log.Instance.Silly("Trigger {0}/{1} saved", trigger.Name, trigger.Type.ToString());
+                        count--;
+                    }
+                    Log.Instance.Verbose("Successfully read trigger data from " + username + "/triggers/ and from triggers window");
+
+                    triggers = oldTriggers.Concat(newTriggers).ToList();
+                }
+                else
+                {
+                    Log.Instance.Verbose("Loading triggers...");
+                    triggers = BaseTrigger.ReadTriggers();
+                    Log.Instance.Verbose("Successfully read trigger data from " + username + "/triggers/");
+                }
             }
             else
             {
-                Log.Instance.Verbose("Saving triggers...");
-                foreach (BaseTrigger trigger in triggers)
+                if (triggers.Count > 0)
                 {
-                    trigger.SaveTrigger();
-                    Log.Instance.Silly("Trigger {0} saved", trigger.Name);
+                    Log.Instance.Verbose("Saving triggers...");
+                    int count = triggers.Count;
+                    foreach (BaseTrigger trigger in triggers)
+                    {
+                        Log.Instance.Debug("Saving triggers, " + count + " left");
+                        trigger.SaveTrigger(); // save new triggers to file
+                        Log.Instance.Silly("Trigger {0}/{1} saved", trigger.Name, trigger.Type.ToString());
+                        count--;
+                    }
+                    Log.Instance.Verbose("Successfully read trigger data from triggers window");
                 }
             }
 
@@ -232,13 +261,17 @@ namespace SteamChatBot
 
         private static void OnFriendMsg(SteamFriends.FriendMsgCallback callback)
         {
-            Log.Instance.Info("Friend Msg " + callback.EntryType + " " + callback.Sender + ": " + callback.Message);
             if (callback.EntryType == EChatEntryType.ChatMsg)
             {
+                Log.Instance.Info("Friend Msg " + callback.EntryType + " " + callback.Sender + ": " + callback.Message);
                 foreach (BaseTrigger trigger in triggers)
                 {
                     trigger.OnFriendMessage(callback.Sender, callback.Message, true);
                 }
+            }
+            else
+            {
+                Log.Instance.Silly("Friend Msg " + callback.EntryType + " " + callback.Sender + ": " + callback.Message);
             }
         }
 
