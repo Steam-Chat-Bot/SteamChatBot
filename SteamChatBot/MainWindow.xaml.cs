@@ -340,9 +340,9 @@ namespace SteamChatBot
                 string selectedString = ((string)addedTriggersListBox.SelectedValue);
                 addedTriggersListBox.Items.Remove(addedTriggersListBox.SelectedValue);
                 IEnumerable<BaseTrigger> triggers = Bot.triggers.Where(x => x.Name == selectedString.Substring(0, selectedString.IndexOf(" -")));
-                foreach (BaseTrigger trigger in triggers)
+                for (int i = 0; i < triggers.Count(); i++)
                 {
-                    Bot.triggers.Remove(trigger);
+                    Bot.triggers.Remove(triggers.ElementAt(i));
                 }
             }
             catch (Exception err) { throw err; }
