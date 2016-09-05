@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SteamChatBot.Triggers.TriggerOptions.Windows"
         mc:Ignorable="d"
-        Title="AntiSpamTriggerOptionsWindow" Height="362.185" Width="422.328">
+        Title="Options" Height="362.185" Width="422.328">
     <Grid>
         <Label x:Name="label_Copy" Content="Warn message:" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="warnMsgBox" HorizontalAlignment="Left" Height="23" Margin="117,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>

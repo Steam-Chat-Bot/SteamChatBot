@@ -1,0 +1,19 @@
+﻿<Window x:Class="SteamChatBot.Triggers.TriggerOptions.Windows.DiscordTriggerOptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SteamChatBot.Triggers.TriggerOptions.Windows"
+        mc:Ignorable="d"
+        Title="Options" Height="300" Width="300">
+    <Grid>
+        <Label x:Name="tokenLabel" Content="* Token:" HorizontalAlignment="Left" Margin="36,24,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tokenBox" HorizontalAlignment="Left" Height="23" Margin="145,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="serverIDLabel" Content="* Discord Server ID:" HorizontalAlignment="Left" Margin="36,71,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="serverIDBox" HorizontalAlignment="Left" Height="23" Margin="145,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="steamchatLabel" Content="* Steam Group ID:" HorizontalAlignment="Left" Margin="36,121,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="steamchatBox" HorizontalAlignment="Left" Height="23" Margin="145,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="doneButton" Content="Done" HorizontalAlignment="Left" Margin="78,182,0,0" VerticalAlignment="Top" Width="121" Height="47" Click="doneButton_Click"/>
+
+    </Grid>
+</Window>

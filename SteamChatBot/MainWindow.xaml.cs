@@ -104,7 +104,7 @@ namespace SteamChatBot
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            if (usernameBox.Text == "" && chatbotsBox.SelectedIndex != -1)
+            if (usernameBox.Text == "" && chatbotsBox.SelectedIndex != -1 && chatbotsBox.SelectedValue.ToString() != "")
             {
                 username = chatbotsBox.SelectedValue.ToString();
                 if (File.Exists(username + "/login.json") && passwordBox.Password == "" && sentryFileTextBox.Text == "" &&
@@ -237,6 +237,7 @@ namespace SteamChatBot
             TriggerLists tl = new TriggerLists();
             TriggerNumbers tn = new TriggerNumbers();
             AntiSpamTriggerOptions asto = new AntiSpamTriggerOptions();
+            DiscordOptions _do = new DiscordOptions(); // "do" is a keyword
 
             if (selected == "isUpTrigger" || selected == "leaveChatTrigger" || selected == "kickTrigger"
                 || selected == "banTrigger" || selected == "unbanTrigger" || selected == "lockTrigger"
@@ -325,6 +326,21 @@ namespace SteamChatBot
                     BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, asto.Name, asto);
                     Bot.triggers.Add(trigger);
 
+                }
+            }
+            else if(selected == "discordTrigger")
+            {
+                DiscordTriggerOptionsWindow dtow = new DiscordTriggerOptionsWindow();
+                dtow.ShowDialog();
+                if(dtow.DialogResult.HasValue && dtow.DialogResult.Value)
+                {
+                    DiscordOptions dtow_do = dtow.DO;
+                    NoCommand dtow_nc = dtow.NC;
+                    _do = GetDiscordOptions(dtow_do);
+                    type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
+                    addedTriggersListBox.Items.Add(string.Format("{0} - {1}", _do.Name, type));
+                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, _do.Name, _do);
+                    Bot.triggers.Add(trigger);
                 }
             }
             else
@@ -436,6 +452,22 @@ namespace SteamChatBot
                     timers = asto.timers,
                     score = asto.score,
                     warnMessage = asto.warnMessage
+                };
+            }
+            catch (Exception e) { return null; }
+        }
+
+        private DiscordOptions GetDiscordOptions(DiscordOptions _do)
+        {
+            try
+            {
+                return new DiscordOptions
+                {
+                    Name = _do.Name,
+                    NoCommand = _do.NoCommand,
+                    Token = _do.Token,
+                    DiscordServerID = _do.DiscordServerID,
+                    SteamChat = _do.SteamChat
                 };
             }
             catch (Exception e) { return null; }

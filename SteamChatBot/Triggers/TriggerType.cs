@@ -9,6 +9,7 @@
         BanCheckTrigger,
         BanTrigger,
         ChatReplyTrigger,
+        DiscordTrigger,
         DoormatTrigger,
         IsUpTrigger,
         KickTrigger,

@@ -11,5 +11,6 @@
         public TriggerLists TriggerLists { get; set; }
         public TriggerNumbers TriggerNumbers { get; set; }
         public AntiSpamTriggerOptions AntiSpamTriggerOptions { get; set; }
+        public DiscordOptions DiscordOptions { get; set; }
     }
 }

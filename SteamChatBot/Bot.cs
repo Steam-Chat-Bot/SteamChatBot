@@ -181,6 +181,7 @@ namespace SteamChatBot
 
             isRunning = true;
 
+            Log.Instance.Verbose("Connecting to Steam...");
             Connect();
 
             while (isRunning)
@@ -212,14 +213,11 @@ namespace SteamChatBot
 
         public static void Connect()
         {
-            isRunning = true;
             steamClient.Connect();
-            Log.Instance.Verbose("Connecting to Steam...");
         }
 
         public static void LogOn()
         {
-            isRunning = true;
             Log.Instance.Verbose("Logging in...");
             steamUser.LogOn(new SteamUser.LogOnDetails
             {
@@ -250,6 +248,7 @@ namespace SteamChatBot
             manager.Subscribe<SteamFriends.FriendsListCallback>(OnFriendList);
             manager.Subscribe<SteamFriends.ChatInviteCallback>(OnChatInvite);
             manager.Subscribe<SteamFriends.ChatMemberInfoCallback>(OnChatMemberInfo);
+
             Log.Instance.Silly("Callback managers subscribed");
         }
 
@@ -310,16 +309,19 @@ namespace SteamChatBot
 
         private static void OnLoggedOff(SteamUser.LoggedOffCallback callback)
         {
-            Log.Instance.Error("Logged off from Steam for reason: " + callback.Result + ", logging in again...");
-            isRunning = false;
+            Log.Instance.Warn("Logged off from Steam for reason: " + callback.Result + ", logging in again...");
+            foreach(var trigger in triggers)
+            {
+                trigger.OnLoggedOff();
+            }
             LogOn();
         }
 
         private static void OnDisconnected(SteamClient.DisconnectedCallback callback)
         {
-            Log.Instance.Error("Disconnected from Steam, reconnecting...");
-            isRunning = false;
+            Log.Instance.Warn("Disconnected from Steam, reconnecting...");
             Connect();
+            
         }
 
         private static void OnLoggedOn(SteamUser.LoggedOnCallback callback)
@@ -402,6 +404,27 @@ namespace SteamChatBot
                     foreach (BaseTrigger trigger in triggers)
                     {
                         trigger.OnEnteredChat(callback.ChatRoomID, callback.StateChangeInfo.ChatterActedOn, true);
+                    }
+                }
+                else if(callback.StateChangeInfo.StateChange == EChatMemberStateChange.Left)
+                {
+                    foreach (BaseTrigger trigger in triggers)
+                    {
+                        trigger.OnLeftChat(callback.ChatRoomID, callback.StateChangeInfo.ChatterActedOn);
+                    }
+                }
+                else if(callback.StateChangeInfo.StateChange == EChatMemberStateChange.Kicked)
+                {
+                    foreach(BaseTrigger trigger in triggers)
+                    {
+                        trigger.OnKickedChat(callback.ChatRoomID, callback.StateChangeInfo.ChatterActedOn, callback.StateChangeInfo.ChatterActedBy, true);
+                    }
+                }
+                else if(callback.StateChangeInfo.StateChange == EChatMemberStateChange.Banned)
+                {
+                    foreach (BaseTrigger trigger in triggers)
+                    {
+                        trigger.OnBannedChat(callback.ChatRoomID, callback.StateChangeInfo.ChatterActedOn, callback.StateChangeInfo.ChatterActedBy, true);
                     }
                 }
             }

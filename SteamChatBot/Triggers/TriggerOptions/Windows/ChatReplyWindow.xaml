@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SteamChatBot.Triggers.TriggerOptions.Windows"
         mc:Ignorable="d"
-        Title="ChatReplyWindow" Height="295.441" Width="383.891" Icon="/SteamChatBot;component/scb.ico" ResizeMode="NoResize">
+        Title="Options" Height="295.441" Width="383.891" Icon="/SteamChatBot;component/scb.ico" ResizeMode="NoResize">
     <Grid>
         <Label x:Name="matchesLabel" Content="* Matches:" HorizontalAlignment="Left" Margin="18,19,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="matchesBox" HorizontalAlignment="Left" Height="22" Margin="89,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="265" TabIndex="0"/>

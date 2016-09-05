@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SteamChatBot.Triggers.TriggerOptions.Windows"
         mc:Ignorable="d"
-        Title="ChatCommandApiWindow" Height="324.62" Width="410.334" Icon="/SteamChatBot;component/scb.ico" ResizeMode="NoResize">
+        Title="Options" Height="324.62" Width="410.334" Icon="/SteamChatBot;component/scb.ico" ResizeMode="NoResize">
     <Grid>
         <Label x:Name="delayLabel" Content="Delay (ms):" HorizontalAlignment="Left" Margin="29,73,0,0" VerticalAlignment="Top" Visibility="Visible" Height="28" Width="70"/>
         <TextBox x:Name="delayBox" HorizontalAlignment="Left" Height="22" Margin="104,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="2"/>
