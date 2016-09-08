@@ -5,10 +5,6 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamChatBot", "SteamChatBot\SteamChatBot.csproj", "{7765B712-A1A7-4B94-8465-68D76C72E588}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamChatBot_Mono", "SteamChatBot_Mono\SteamChatBot_Mono.csproj", "{6E45EC7C-0C9C-44A9-B914-8635C8B91A5A}"
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "InstallSteamChatBot", "InstallSteamChatBot\InstallSteamChatBot.vdproj", "{1BE3ABB0-78D0-4818-9F21-824A79B11503}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
