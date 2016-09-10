@@ -181,6 +181,9 @@ namespace SteamChatBot
 
             isRunning = true;
 
+            Log.Instance.Silly("Updating SteamKit2 servers...");
+            SteamDirectory.Initialize().Wait();
+
             Log.Instance.Verbose("Connecting to Steam...");
             Connect();
 
@@ -319,9 +322,17 @@ namespace SteamChatBot
 
         private static void OnDisconnected(SteamClient.DisconnectedCallback callback)
         {
-            Log.Instance.Warn("Disconnected from Steam, reconnecting...");
-            Connect();
+            Log.Instance.Warn("Disconnected from Steam, reconnecting in 5 seconds...");
+            System.Timers.Timer t = new System.Timers.Timer(5000);
+            t.Elapsed += T_Elapsed;
+            t.AutoReset = false;
+            t.Start();
             
+        }
+
+        private static void T_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            Connect();
         }
 
         private static void OnLoggedOn(SteamUser.LoggedOnCallback callback)
@@ -359,11 +370,12 @@ namespace SteamChatBot
             }
             else if (callback.Result == EResult.InvalidPassword)
             {
-                Log.Instance.Error("Invalid password! Delete login.json and manually enter your details in the GUI application to change them for future runs!");
+                Log.Instance.Error("Invalid username/password combination!");
                 string _u = Interaction.InputBox("Username: ");
                 username = _u;
                 string _p = Interaction.InputBox("Password: ");
                 password = _p;
+                WriteData();
             }
             else
             {

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamChatBot", "SteamChatBot\SteamChatBot.csproj", "{7765B712-A1A7-4B94-8465-68D76C72E588}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "InstallSteamChatBot", "InstallSteamChatBot\InstallSteamChatBot.vdproj", "{9FFB8D8B-974D-43C8-A7C3-1219483C80AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,13 +17,10 @@ Global
 		{7765B712-A1A7-4B94-8465-68D76C72E588}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7765B712-A1A7-4B94-8465-68D76C72E588}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7765B712-A1A7-4B94-8465-68D76C72E588}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6E45EC7C-0C9C-44A9-B914-8635C8B91A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E45EC7C-0C9C-44A9-B914-8635C8B91A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E45EC7C-0C9C-44A9-B914-8635C8B91A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E45EC7C-0C9C-44A9-B914-8635C8B91A5A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1BE3ABB0-78D0-4818-9F21-824A79B11503}.Debug|Any CPU.ActiveCfg = Debug
-		{1BE3ABB0-78D0-4818-9F21-824A79B11503}.Release|Any CPU.ActiveCfg = Release
-		{1BE3ABB0-78D0-4818-9F21-824A79B11503}.Release|Any CPU.Build.0 = Release
+		{9FFB8D8B-974D-43C8-A7C3-1219483C80AF}.Debug|Any CPU.ActiveCfg = Debug
+		{9FFB8D8B-974D-43C8-A7C3-1219483C80AF}.Debug|Any CPU.Build.0 = Debug
+		{9FFB8D8B-974D-43C8-A7C3-1219483C80AF}.Release|Any CPU.ActiveCfg = Release
+		{9FFB8D8B-974D-43C8-A7C3-1219483C80AF}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
