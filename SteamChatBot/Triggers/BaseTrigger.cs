@@ -24,6 +24,23 @@ namespace SteamChatBot.Triggers
 
         #region constructors
 
+        public BaseTrigger(TriggerType type, string name, TriggerOptionsBase options)
+        {
+            if (options.AntiSpamTriggerOptions != null) OptionsType = OptionType.AntiSpamTrigger;
+            else if (options.ChatCommand != null) OptionsType = OptionType.ChatCommand;
+            else if (options.ChatCommandApi != null) OptionsType = OptionType.ChatCommandAPI;
+            else if (options.ChatReply != null) OptionsType = OptionType.ChatReply;
+            else if (options.DiscordOptions != null) OptionsType = OptionType.DiscordTrigger;
+            else if (options.NoCommand != null) OptionsType = OptionType.NoCommand;
+            else if (options.TriggerLists != null && options.TriggerNumbers != null) OptionsType = OptionType.ListsAndNumbers;
+            else if (options.TriggerLists != null) OptionsType = OptionType.JustLists;
+
+            Type = type;
+            Name = name;
+            Options = options;
+        }
+
+        /*
         /// <summary>
         /// Constructor for ChatCommand triggers
         /// </summary>
@@ -156,6 +173,9 @@ namespace SteamChatBot.Triggers
                 DiscordOptions = options
             };
         }
+
+        */
+
         #endregion
 
 
@@ -232,64 +252,64 @@ namespace SteamChatBot.Triggers
                 switch (type)
                 {
                     case TriggerType.AcceptChatInviteTrigger:
-                        temp.Add(new AcceptChatInviteTrigger(type, name, options.TriggerLists));
+                        temp.Add(new AcceptChatInviteTrigger(type, name, options));
                         break;
                     case TriggerType.AcceptFriendRequestTrigger:
-                        temp.Add(new AcceptFriendRequestTrigger(type, name, options.TriggerLists));
+                        temp.Add(new AcceptFriendRequestTrigger(type, name, options));
                         break;
                     case TriggerType.AntispamTrigger:
-                        temp.Add(new AntispamTrigger(type, name, options.AntiSpamTriggerOptions));
+                        temp.Add(new AntispamTrigger(type, name, options));
                         break;
                     case TriggerType.AutojoinChatTrigger:
-                        temp.Add(new AutojoinChatTrigger(type, name, options.TriggerLists));
+                        temp.Add(new AutojoinChatTrigger(type, name, options));
                         break;
                     case TriggerType.BanCheckTrigger:
-                        temp.Add(new BanCheckTrigger(type, name, options.ChatCommandApi));
+                        temp.Add(new BanCheckTrigger(type, name, options));
                         break;
                     case TriggerType.BanTrigger:
-                        temp.Add(new BanTrigger(type, name, options.ChatCommand));
+                        temp.Add(new BanTrigger(type, name, options));
                         break;
                     case TriggerType.ChatReplyTrigger:
-                        temp.Add(new ChatReplyTrigger(type, name, options.ChatReply));
+                        temp.Add(new ChatReplyTrigger(type, name, options));
                         break;
                     case TriggerType.DiscordTrigger:
-                        temp.Add(new DiscordTrigger(type, name, options.DiscordOptions));
+                        temp.Add(new DiscordTrigger(type, name, options));
                         break;
                     case TriggerType.DoormatTrigger:
-                        temp.Add(new DoormatTrigger(type, name, options.NoCommand));
+                        temp.Add(new DoormatTrigger(type, name, options));
                         break;
                     case TriggerType.IsUpTrigger:
-                        temp.Add(new IsUpTrigger(type, name, options.ChatCommand));
+                        temp.Add(new IsUpTrigger(type, name, options));
                         break;
                     case TriggerType.KickTrigger:
-                        temp.Add(new KickTrigger(type, name, options.ChatCommand));
+                        temp.Add(new KickTrigger(type, name, options));
                         break;
                     case TriggerType.LeaveChatTrigger:
-                        temp.Add(new LeaveChatTrigger(type, name, options.ChatCommand));
+                        temp.Add(new LeaveChatTrigger(type, name, options));
                         break;
                     case TriggerType.LinkNameTrigger:
-                        temp.Add(new LinkNameTrigger(type, name, options.NoCommand));
+                        temp.Add(new LinkNameTrigger(type, name, options));
                         break;
                     case TriggerType.LockChatTrigger:
-                        temp.Add(new LockChatTrigger(type, name, options.ChatCommand));
+                        temp.Add(new LockChatTrigger(type, name, options));
                         break;
                     case TriggerType.ModerateChatTrigger:
-                        temp.Add(new ModerateChatTrigger(type, name, options.ChatCommand));
+                        temp.Add(new ModerateChatTrigger(type, name, options));
                         break;
                     case TriggerType.PlayGameTrigger:
-                        temp.Add(new PlayGameTrigger(type, name, options.ChatCommand));
+                        temp.Add(new PlayGameTrigger(type, name, options));
                         break;
                     case TriggerType.UnbanTrigger:
-                        temp.Add(new UnbanTrigger(type, name, options.ChatCommand));
+                        temp.Add(new UnbanTrigger(type, name, options));
                         break;
                     case TriggerType.UnlockChatTrigger:
-                        temp.Add(new UnlockChatTrigger(type, name, options.ChatCommand));
+                        temp.Add(new UnlockChatTrigger(type, name, options));
                         break;
                     case TriggerType.UnmoderateChatTrigger:
-                        temp.Add(new UnmoderateChatTrigger(type, name, options.ChatCommand));
+                        temp.Add(new UnmoderateChatTrigger(type, name, options));
                         break;
                     case TriggerType.WeatherTrigger:
-                        temp.Add(new WeatherTrigger(type, name, options.ChatCommandApi));
+                        temp.Add(new WeatherTrigger(type, name, options));
                         break;
                     default:
                         break;

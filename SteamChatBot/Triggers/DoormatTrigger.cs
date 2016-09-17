@@ -12,7 +12,7 @@ namespace SteamChatBot.Triggers
 {
     class DoormatTrigger : BaseTrigger
     {
-        public DoormatTrigger(TriggerType type, string name, NoCommand options) : base(type, name, options)
+        public DoormatTrigger(TriggerType type, string name, TriggerOptionsBase options) : base(type, name, options)
         { }
 
         public override bool respondToEnteredMessage(SteamID roomID, SteamID userID)

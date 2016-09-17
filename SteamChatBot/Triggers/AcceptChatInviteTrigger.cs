@@ -12,7 +12,7 @@ namespace SteamChatBot.Triggers
 {
     class AcceptChatInviteTrigger : BaseTrigger
     {
-        public AcceptChatInviteTrigger(TriggerType type, string name, TriggerLists tl) : base(type, name, tl)
+        public AcceptChatInviteTrigger(TriggerType type, string name, TriggerOptionsBase tl) : base(type, name, tl)
         { }
 
         public override bool respondToChatInvite(SteamID roomID, string roomName, SteamID inviterId)

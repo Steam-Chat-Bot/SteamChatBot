@@ -13,7 +13,7 @@ namespace SteamChatBot.Triggers
 {
     class IsUpTrigger : BaseTrigger
     {
-        public IsUpTrigger(TriggerType type, string name, ChatCommand options) : base(type, name, options)
+        public IsUpTrigger(TriggerType type, string name, TriggerOptionsBase options) : base(type, name, options)
         { }
 
         public override bool respondToFriendMessage(SteamID userID, string message)

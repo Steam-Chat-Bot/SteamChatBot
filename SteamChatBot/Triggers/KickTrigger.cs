@@ -12,7 +12,7 @@ namespace SteamChatBot.Triggers
 {
     class KickTrigger : BaseTrigger
     {
-        public KickTrigger(TriggerType type, string name, ChatCommand options) : base(type, name, options)
+        public KickTrigger(TriggerType type, string name, TriggerOptionsBase options) : base(type, name, options)
         { }
 
         public override bool respondToChatMessage(SteamID roomID, SteamID chatterId, string message)

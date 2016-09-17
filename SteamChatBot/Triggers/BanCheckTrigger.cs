@@ -15,7 +15,7 @@ namespace SteamChatBot.Triggers
 {
     class BanCheckTrigger : BaseTrigger
     {
-        public BanCheckTrigger(TriggerType type, string name, ChatCommandApi options) : base(type, name, options)
+        public BanCheckTrigger(TriggerType type, string name, TriggerOptionsBase options) : base(type, name, options)
         { }
 
         public override bool respondToChatMessage(SteamID roomID, SteamID chatterId, string message)

@@ -13,7 +13,7 @@ namespace SteamChatBot.Triggers
 {
     class ModerateChatTrigger : BaseTrigger
     {
-        public ModerateChatTrigger(TriggerType type, string name, ChatCommand options) : base(type, name, options)
+        public ModerateChatTrigger(TriggerType type, string name, TriggerOptionsBase options) : base(type, name, options)
         { }
 
         public override bool respondToChatMessage(SteamID roomID, SteamID chatterId, string message)

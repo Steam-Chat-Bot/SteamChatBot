@@ -14,7 +14,7 @@ namespace SteamChatBot.Triggers
     {
         private DiscordClient client;
         
-        public DiscordTrigger(TriggerType type, string name, DiscordOptions options) : base(type, name, options)
+        public DiscordTrigger(TriggerType type, string name, TriggerOptionsBase options) : base(type, name, options)
         { }
 
         public override bool onLoggedOn()

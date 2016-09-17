@@ -14,7 +14,7 @@ namespace SteamChatBot.Triggers
 {
     class LinkNameTrigger : BaseTrigger
     {
-        public LinkNameTrigger(TriggerType type, string name, NoCommand options) : base(type, name, options)
+        public LinkNameTrigger(TriggerType type, string name, TriggerOptionsBase options) : base(type, name, options)
         { }
 
         public override bool respondToChatMessage(SteamID roomID, SteamID chatterId, string message)

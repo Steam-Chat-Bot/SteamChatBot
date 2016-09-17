@@ -12,7 +12,7 @@ namespace SteamChatBot.Triggers
 {
     class AutojoinChatTrigger : BaseTrigger
     {
-        public AutojoinChatTrigger(TriggerType type, string name, TriggerLists tl) : base(type, name, tl)
+        public AutojoinChatTrigger(TriggerType type, string name, TriggerOptionsBase tl) : base(type, name, tl)
         { }
 
         public override bool OnLoggedOn()

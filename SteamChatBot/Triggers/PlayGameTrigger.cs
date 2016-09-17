@@ -13,7 +13,7 @@ namespace SteamChatBot.Triggers
 {
     class PlayGameTrigger : BaseTrigger
     {
-        public PlayGameTrigger(TriggerType type, string name, ChatCommand cc) : base(type, name, cc)
+        public PlayGameTrigger(TriggerType type, string name, TriggerOptionsBase cc) : base(type, name, cc)
         { }
 
         public override bool respondToFriendMessage(SteamID userID, string message)

@@ -11,10 +11,10 @@ namespace SteamChatBot.Triggers
 {
     class AntispamTrigger : BaseTrigger
     {
-        public AntispamTrigger(TriggerType type, string name, AntiSpamTriggerOptions options) : base(type, name, options)
+        public AntispamTrigger(TriggerType type, string name, TriggerOptionsBase options) : base(type, name, options)
         {
-            options.groups = new Dictionary<SteamID, Dictionary<SteamID, int>>();
-            Timer reducePenT = new Timer(options.ptimer.resolution);
+            options.AntiSpamTriggerOptions.groups = new Dictionary<SteamID, Dictionary<SteamID, int>>();
+            Timer reducePenT = new Timer(options.AntiSpamTriggerOptions.ptimer.resolution);
             reducePenT.Elapsed += ReducePenT_Tick;
             reducePenT.Start();
         }
