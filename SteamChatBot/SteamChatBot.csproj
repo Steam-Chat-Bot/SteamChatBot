@@ -187,7 +187,7 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Bot.cs" />
-    <Compile Include="Triggers\AnispamTrigger.cs" />
+    <Compile Include="Triggers\AntispamTrigger.cs" />
     <Compile Include="Triggers\BanCheckTrigger.cs" />
     <Compile Include="Triggers\DiscordTrigger.cs" />
     <Compile Include="Triggers\LockChatTrigger.cs" />
