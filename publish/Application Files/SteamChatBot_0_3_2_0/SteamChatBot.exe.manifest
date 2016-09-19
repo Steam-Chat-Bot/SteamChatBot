@@ -164,18 +164,6 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RestSharp.dll" size="168960">
-      <assemblyIdentity name="RestSharp" version="105.2.3.0" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>8kwZBHeWCymvIJJrTZ+Nd5HBSE8+fMJaOKOSjPNTwFw=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SteamAuth.dll" size="36352">
       <assemblyIdentity name="SteamAuth" version="1.0.1.0" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -195,7 +183,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>k6q8omA9BP5wO9Pu+M91dgtYtQf3/Pz7MYPTSGbl4SM=</dsig:DigestValue>
+        <dsig:DigestValue>cjaE6vsU2TXNt5BBJTiNarQUkbrs+6zxU56KvV7ZDEQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -256,13 +244,13 @@
       <dsig:DigestValue>EmrJZFBrzdKMO3lp/tOLSXHjKXWN5xSlXiIA8u5uySI=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="SteamChatBot.exe.config" size="785">
+  <file name="SteamChatBot.exe.config" size="768">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>Smutg88c7tuwDH77LtOcSgMtP4HCkWaJ2yZJoXcR5UU=</dsig:DigestValue>
+      <dsig:DigestValue>ONO1E7sMpNOdHOF+/oKYOmIutokMhY4GxQ7cUVTJ+4k=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
