@@ -238,6 +238,7 @@ namespace SteamChatBot
             TriggerNumbers tn = new TriggerNumbers();
             AntiSpamTriggerOptions asto = new AntiSpamTriggerOptions();
             DiscordOptions _do = new DiscordOptions(); // "do" is a keyword
+            TriggerOptionsBase tob = new TriggerOptionsBase();
 
             if (selected == "isUpTrigger" || selected == "leaveChatTrigger" || selected == "kickTrigger"
                 || selected == "banTrigger" || selected == "unbanTrigger" || selected == "lockTrigger"
@@ -250,9 +251,14 @@ namespace SteamChatBot
                 {
                     ChatCommand ccw_cc = ccw.CC;
                     cc = GetChatCommandOptions(ccw_cc);
+
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
                     addedTriggersListBox.Items.Add(string.Format("{0} - {1}", cc.Name, type.ToString()));
-                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, cc.Name, cc);
+
+                    tob.ChatCommand = cc;
+                    tob.Name = cc.Name;
+                    tob.Type = type;
+                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, cc.Name, tob);
                     Bot.triggers.Add(trigger);
                 }
             }
@@ -265,8 +271,12 @@ namespace SteamChatBot
                     ChatReply crw_cr = crw.CR;
                     cr = GetChatReplyOptions(crw_cr);
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
+
+                    tob.ChatReply = cr;
+                    tob.Name = cr.Name;
+                    tob.Type = type;
                     addedTriggersListBox.Items.Add(string.Format("{0} - {1}", cr.Name, type.ToString()));
-                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, cr.Name, cr);
+                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, cr.Name, tob);
                     Bot.triggers.Add(trigger);
                 }
             }
@@ -279,8 +289,12 @@ namespace SteamChatBot
                     NoCommand ncw_nc = ncw.NC;
                     nc = GetNoCommandOptions(ncw_nc);
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
+
+                    tob.NoCommand = nc;
+                    tob.Name = nc.Name;
+                    tob.Type = type;
                     addedTriggersListBox.Items.Add(string.Format("{0} - {1}", nc.Name, type.ToString()));
-                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, nc.Name, nc);
+                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, nc.Name, tob);
                     Bot.triggers.Add(trigger);
                 }
             }
@@ -293,8 +307,12 @@ namespace SteamChatBot
                     ChatCommandApi ccaw_cca = ccaw.CCA;
                     cca = GetChatCommandApiOptions(ccaw_cca);
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
+
+                    tob.ChatCommandApi = cca;
+                    tob.Name = cca.Name;
+                    tob.Type = type;
                     addedTriggersListBox.Items.Add(string.Format("{0} - {1}", cca.Name, type.ToString()));
-                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, cca.Name, cca);
+                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, cca.Name, tob);
                     Bot.triggers.Add(trigger);
                 }
             }
@@ -307,8 +325,12 @@ namespace SteamChatBot
                     TriggerLists tlw_tl = tlw.TL;
                     tl = GetTriggerListOptions(tlw_tl);
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
+
+                    tob.TriggerLists = tl;
+                    tob.Name = tl.Name;
+                    tob.Type = type;
                     addedTriggersListBox.Items.Add(string.Format("{0} - {1}", tl.Name, type));
-                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, tl.Name, tl);
+                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, tl.Name, tob);
                     Bot.triggers.Add(trigger);
                 }
             }
@@ -322,8 +344,12 @@ namespace SteamChatBot
                     NoCommand astow_nc = astow.NC;
                     asto = GetAntispamTriggerOptions(astow_asto);
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
+
+                    tob.AntiSpamTriggerOptions = asto;
+                    tob.Name = asto.Name;
+                    tob.Type = type;
                     addedTriggersListBox.Items.Add(string.Format("{0} - {1}", asto.Name, type));
-                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, asto.Name, asto);
+                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, asto.Name, tob);
                     Bot.triggers.Add(trigger);
 
                 }
@@ -338,8 +364,12 @@ namespace SteamChatBot
                     NoCommand dtow_nc = dtow.NC;
                     _do = GetDiscordOptions(dtow_do);
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
+
+                    tob.DiscordOptions = _do;
+                    tob.Name = _do.Name;
+                    tob.Type = type;
                     addedTriggersListBox.Items.Add(string.Format("{0} - {1}", _do.Name, type));
-                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, _do.Name, _do);
+                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, _do.Name, tob);
                     Bot.triggers.Add(trigger);
                 }
             }

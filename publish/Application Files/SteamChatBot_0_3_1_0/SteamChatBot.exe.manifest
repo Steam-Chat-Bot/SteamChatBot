@@ -92,14 +92,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll" size="100784">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll" size="90760">
       <assemblyIdentity name="Microsoft.VisualStudio.QualityTools.UnitTestFramework" version="10.0.0.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ZCnU7U4fB5Xig+EEo29KqJRWp1narjqE5eDvVgkpe3I=</dsig:DigestValue>
+        <dsig:DigestValue>FIejoPwAkh37U+PyGnjL7Zcj1bsM7xscXMebrwd1+qo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -188,14 +188,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SteamChatBot.exe" size="169984">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SteamChatBot.exe" size="170496">
       <assemblyIdentity name="SteamChatBot" version="0.0.1.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>XRMoua2P+SHLcTOQL8tDRBtkPfiZ0ZaTAUjHhxE9GYM=</dsig:DigestValue>
+        <dsig:DigestValue>II5DreWH9IYpBYW9lAbDggp5BNpA83DvP4bEWrDDn6g=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
