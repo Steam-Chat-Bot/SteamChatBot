@@ -305,14 +305,19 @@ namespace SteamChatBot
                 if (ccaw.DialogResult.HasValue && ccaw.DialogResult.Value)
                 {
                     ChatCommandApi ccaw_cca = ccaw.CCA;
+                    ChatCommand ccaw_cc = ccaw.CC;
+
                     cca = GetChatCommandApiOptions(ccaw_cca);
+                    cc = GetChatCommandOptions(ccaw_cc);
+
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
 
                     tob.ChatCommandApi = cca;
+                    tob.ChatCommandApi.ChatCommand = cc;
                     tob.Name = cca.Name;
                     tob.Type = type;
-                    addedTriggersListBox.Items.Add(string.Format("{0} - {1}", cca.Name, type.ToString()));
-                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, cca.Name, tob);
+                    addedTriggersListBox.Items.Add(string.Format("{0} - {1}", cc.Name, type.ToString()));
+                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, cc.Name, tob);
                     Bot.triggers.Add(trigger);
                 }
             }
@@ -343,9 +348,12 @@ namespace SteamChatBot
                     AntiSpamTriggerOptions astow_asto = astow.ASTO;
                     NoCommand astow_nc = astow.NC;
                     asto = GetAntispamTriggerOptions(astow_asto);
+                    nc = GetNoCommandOptions(astow_nc);
+
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
 
                     tob.AntiSpamTriggerOptions = asto;
+                    tob.AntiSpamTriggerOptions.NoCommand = nc;
                     tob.Name = asto.Name;
                     tob.Type = type;
                     addedTriggersListBox.Items.Add(string.Format("{0} - {1}", asto.Name, type));
@@ -363,9 +371,11 @@ namespace SteamChatBot
                     DiscordOptions dtow_do = dtow.DO;
                     NoCommand dtow_nc = dtow.NC;
                     _do = GetDiscordOptions(dtow_do);
+                    nc = GetNoCommandOptions(dtow_nc);
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
 
                     tob.DiscordOptions = _do;
+                    tob.DiscordOptions.NoCommand = nc;
                     tob.Name = _do.Name;
                     tob.Type = type;
                     addedTriggersListBox.Items.Add(string.Format("{0} - {1}", _do.Name, type));
