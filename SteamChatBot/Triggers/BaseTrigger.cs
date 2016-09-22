@@ -22,8 +22,6 @@ namespace SteamChatBot.Triggers
 
         public bool ReplyEnabled = true;
 
-        #region constructors
-
         public BaseTrigger(TriggerType type, string name, TriggerOptionsBase options)
         {
             if (options.AntiSpamTriggerOptions != null) OptionsType = OptionType.AntiSpamTrigger;
@@ -39,145 +37,6 @@ namespace SteamChatBot.Triggers
             Name = name;
             Options = options;
         }
-
-        /*
-        /// <summary>
-        /// Constructor for ChatCommand triggers
-        /// </summary>
-        /// <param name="type">TriggerType</param>
-        /// <param name="name">Name of the trigger</param>
-        /// <param name="chatCommand">ChatCommand object with options</param>
-        public BaseTrigger(TriggerType type, string name, ChatCommand chatCommand)
-        {
-            OptionsType = OptionType.ChatCommand;
-            Type = type;
-            Name = name;
-            Options = new TriggerOptionsBase
-            {
-                Type = type,
-                Name = name,
-                ChatCommand = chatCommand
-            };
-        }
-
-        /// <summary>
-        /// Constructor for ChatReply triggers
-        /// </summary>
-        /// <param name="type">TriggerType</param>
-        /// <param name="name">Name of the trigger</param>
-        /// <param name="chatReply">ChatReply object with options</param>
-        public BaseTrigger(TriggerType type, string name, ChatReply chatReply)
-        {
-            OptionsType = OptionType.ChatReply;
-            Type = type;
-            Name = name;
-            Options = new TriggerOptionsBase
-            {
-                Type = type,
-                Name = name,
-                ChatReply = chatReply
-            };
-        }
-
-        /// <summary>
-        /// Constructor for NoCommand triggers
-        /// </summary>
-        /// <param name="type">TriggerType</param>
-        /// <param name="name">Name of teh trigger</param>
-        /// <param name="noCommand">NoCommand object with options</param>
-        public BaseTrigger(TriggerType type, string name, NoCommand noCommand)
-        {
-            OptionsType = OptionType.NoCommand;
-            Type = type;
-            Name = name;
-            Options = new TriggerOptionsBase
-            {
-                Type = type,
-                Name = name,
-                NoCommand = noCommand
-            };
-        }
-
-        /// <summary>
-        /// Constructor for ChatCommandApi triggers
-        /// </summary>
-        /// <param name="type">TriggerType</param>
-        /// <param name="name">Name of the trigger</param>
-        /// <param name="chatCommandApi">ChatCommandApi object with options</param>
-        public BaseTrigger(TriggerType type, string name, ChatCommandApi chatCommandApi)
-        {
-            OptionsType = OptionType.ChatCommandAPI;
-            Type = type;
-            Name = name;
-            Options = new TriggerOptionsBase
-            {
-                Type = type,
-                Name = name,
-                ChatCommandApi = chatCommandApi
-            };
-        }
-
-        /// <summary>
-        /// Constructor for TriggerLists triggers
-        /// </summary>
-        /// <param name="type">TriggerType</param>
-        /// <param name="name">Name of the trigger</param>
-        /// <param name="tl">TriggerLists object with options</param>
-        public BaseTrigger(TriggerType type, string name, TriggerLists tl)
-        {
-            OptionsType = OptionType.JustLists;
-            Type = type;
-            Name = name;
-            Options = new TriggerOptionsBase
-            {
-                Type = type,
-                Name = name,
-                TriggerLists = tl
-            };
-        }
-
-        /// <summary>
-        /// Constructor for AntiSpamTrigger
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="name"></param>
-        /// <param name="options"></param>
-        public BaseTrigger(TriggerType type, string name, AntiSpamTriggerOptions options)
-        {
-            OptionsType = OptionType.AntiSpamTrigger;
-            Type = type;
-            Name = name;
-            Options = new TriggerOptionsBase
-            {
-                Type = type,
-                Name = name,
-                AntiSpamTriggerOptions = options
-            };
-        }
-
-        /// <summary>
-        /// Constructor for DiscordTrigger
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="name"></param>
-        /// <param name="options"></param>
-        public BaseTrigger(TriggerType type, string name, DiscordOptions options)
-        {
-            OptionsType = OptionType.DiscordTrigger;
-            Type = type;
-            Name = name;
-            Options = new TriggerOptionsBase
-            {
-                Type = type,
-                Name = name,
-                DiscordOptions = options
-            };
-        }
-
-        */
-
-        #endregion
-
 
         /// <summary>
         /// If there is an error, log it easily
@@ -743,7 +602,7 @@ namespace SteamChatBot.Triggers
             {
                 try
                 {
-                    bool messageSent = respondToEnteredMessage(roomID, userID);
+                    bool messageSent = respondToLeftMessage(roomID, userID);
                     if(messageSent)
                     {
                         DisableForTimeout();
