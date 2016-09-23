@@ -246,6 +246,7 @@
     <Compile Include="Triggers\LeaveChatTrigger.cs" />
     <Compile Include="Triggers\LinkNameTrigger.cs" />
     <Compile Include="Triggers\ModerateTrigger.cs" />
+    <Compile Include="Triggers\NoteTrigger.cs" />
     <Compile Include="Triggers\PlayGameTrigger.cs" />
     <Compile Include="Triggers\TriggerOptions\AntiSpamTriggerOptions.cs" />
     <Compile Include="Triggers\TriggerOptions\ChatCommand.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="Triggers\TriggerOptions\ChatReply.cs" />
     <Compile Include="Triggers\TriggerOptions\DiscordOptions.cs" />
     <Compile Include="Triggers\TriggerOptions\NoCommand.cs" />
+    <Compile Include="Triggers\TriggerOptions\NoteTriggerOptions.cs" />
     <Compile Include="Triggers\TriggerOptions\OptionType.cs" />
     <Compile Include="Triggers\TriggerOptions\TriggerLists.cs" />
     <Compile Include="Triggers\TriggerOptions\TriggerNumbers.cs" />
@@ -274,6 +276,9 @@
     </Compile>
     <Compile Include="Triggers\TriggerOptions\Windows\NoCommandWindow.xaml.cs">
       <DependentUpon>NoCommandWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Triggers\TriggerOptions\Windows\NoteTriggerOptionsWindow.xaml.cs">
+      <DependentUpon>NoteTriggerOptionsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Triggers\TriggerOptions\Windows\TriggerListWindow.xaml.cs">
       <DependentUpon>TriggerListWindow.xaml</DependentUpon>
@@ -318,6 +323,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Triggers\TriggerOptions\Windows\NoCommandWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Triggers\TriggerOptions\Windows\NoteTriggerOptionsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

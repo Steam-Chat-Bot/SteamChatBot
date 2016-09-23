@@ -345,11 +345,11 @@ namespace SteamChatBot
                     trigger.OnLoggedOn();
                 }
             }
-            else if (callback.Result == EResult.AccountLogonDenied || callback.Result == EResult.AccountLoginDeniedNeedTwoFactor)
+            else if (callback.Result == EResult.AccountLogonDenied || callback.Result == EResult.AccountLoginDeniedNeedTwoFactor || callback.Result == EResult.InvalidLoginAuthCode)
             {
                 if (callback.Result == EResult.AccountLoginDeniedNeedTwoFactor)
                 {
-                    if (sharedSecret == "")
+                    if (sharedSecret == "" || sharedSecret == null)
                     {
                         string _tfc = Interaction.InputBox("Two factor code (sent via sms): ");
                         twoFactorAuth = _tfc;
@@ -362,7 +362,7 @@ namespace SteamChatBot
                     }
                         
                 }
-                else if (callback.Result == EResult.AccountLogonDenied)
+                else if (callback.Result == EResult.AccountLogonDenied || callback.Result == EResult.InvalidLoginAuthCode)
                 {
                     string _sgc = Interaction.InputBox("Steam guard code (sent to your email at " + callback.EmailDomain + "): ");
                     authCode = _sgc;

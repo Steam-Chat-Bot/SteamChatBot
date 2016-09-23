@@ -32,6 +32,7 @@ namespace SteamChatBot.Triggers
             else if (options.NoCommand != null) OptionsType = OptionType.NoCommand;
             else if (options.TriggerLists != null && options.TriggerNumbers != null) OptionsType = OptionType.ListsAndNumbers;
             else if (options.TriggerLists != null) OptionsType = OptionType.JustLists;
+            else if (options.NoteTriggerOptions != null) OptionsType = OptionType.NoteTriggerOptions;
 
             Type = type;
             Name = name;
@@ -75,7 +76,8 @@ namespace SteamChatBot.Triggers
                     TriggerLists = Options.TriggerLists,
                     TriggerNumbers = Options.TriggerNumbers,
                     AntiSpamTriggerOptions = Options.AntiSpamTriggerOptions,
-                    DiscordOptions = Options.DiscordOptions
+                    DiscordOptions = Options.DiscordOptions,
+                    NoteTriggerOptions = Options.NoteTriggerOptions
                 };
                 string json = JsonConvert.SerializeObject(options, Formatting.Indented);
                 File.WriteAllText(Bot.username + "/triggers/" + Name + ".json", json);
@@ -154,6 +156,9 @@ namespace SteamChatBot.Triggers
                         break;
                     case TriggerType.ModerateChatTrigger:
                         temp.Add(new ModerateChatTrigger(type, name, options));
+                        break;
+                    case TriggerType.NoteTrigger:
+                        temp.Add(new NoteTrigger(type, name, options));
                         break;
                     case TriggerType.PlayGameTrigger:
                         temp.Add(new PlayGameTrigger(type, name, options));
@@ -754,9 +759,12 @@ namespace SteamChatBot.Triggers
                     case OptionType.DiscordTrigger:
                         delay = Options.DiscordOptions.NoCommand.TriggerNumbers.Delay == null ? 0 : Options.DiscordOptions.NoCommand.TriggerNumbers.Delay.Value;
                         break;
+                    case OptionType.NoteTriggerOptions:
+                        delay = Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Delay == null ? 0 : Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Delay.Value;
+                        break;
                 }
             }
-            catch (NullReferenceException nfe) { }
+            catch (NullReferenceException nre) { }
             catch (Exception e)
             {
                 Log.Instance.Error("{0}/{1}: {2}", Bot.username, Name, e.StackTrace);
@@ -849,9 +857,12 @@ namespace SteamChatBot.Triggers
                     case OptionType.DiscordTrigger:
                         ignore = Options.DiscordOptions.NoCommand.TriggerLists.Ignore;
                         break;
+                    case OptionType.NoteTriggerOptions:
+                        ignore = Options.NoteTriggerOptions.NoCommand.TriggerLists.Ignore;
+                        break;
                 }
             }
-            catch (NullReferenceException nfe) { }
+            catch (NullReferenceException nre) { }
             catch (Exception e)
             {
                 Log.Instance.Error("{0}/{1}: {2}", Bot.username, Name, e.StackTrace);
@@ -909,9 +920,12 @@ namespace SteamChatBot.Triggers
                     case OptionType.DiscordTrigger:
                         rooms = Options.DiscordOptions.NoCommand.TriggerLists.Rooms;
                         break;
+                    case OptionType.NoteTriggerOptions:
+                        rooms = Options.NoteTriggerOptions.NoCommand.TriggerLists.Rooms;
+                        break;
                 }
             }
-            catch (NullReferenceException nfe) { }
+            catch (NullReferenceException nre) { }
             catch (Exception e)
             {
                 Log.Instance.Error("{0}/{1}: {2}", Bot.username, Name, e.StackTrace);
@@ -971,9 +985,12 @@ namespace SteamChatBot.Triggers
                     case OptionType.DiscordTrigger:
                         users = Options.DiscordOptions.NoCommand.TriggerLists.User;
                         break;
+                    case OptionType.NoteTriggerOptions:
+                        users = Options.NoteTriggerOptions.NoCommand.TriggerLists.User;
+                        break;
                 }
             }
-            catch (NullReferenceException nfe) { }
+            catch (NullReferenceException nre) { }
             catch (Exception e)
             {
                 Log.Instance.Error("{0}/{1}: {2}", Bot.username, Name, e.StackTrace);
@@ -1026,10 +1043,13 @@ namespace SteamChatBot.Triggers
                     case OptionType.DiscordTrigger:
                         prob = Options.DiscordOptions.NoCommand.TriggerNumbers.Probability == null ? 1 : Options.DiscordOptions.NoCommand.TriggerNumbers.Probability.Value;
                         break;
+                    case OptionType.NoteTriggerOptions:
+                        prob = Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Probability == null ? 1 : Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Probability.Value;
+                        break;
 
                 }
             }
-            catch (NullReferenceException nfe) { }
+            catch (NullReferenceException nre) { }
             catch(Exception e)
             {
                 Log.Instance.Error("{0}/{1}: {2}", Bot.username, Name, e.StackTrace);
@@ -1078,9 +1098,13 @@ namespace SteamChatBot.Triggers
                     case OptionType.DiscordTrigger:
                         to = Options.DiscordOptions.NoCommand.TriggerNumbers.Timeout == null ? 0 : Options.DiscordOptions.NoCommand.TriggerNumbers.Timeout.Value;
                         break;
+                    case OptionType.NoteTriggerOptions:
+                        to = Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Timeout == null ? 0 : Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Timeout.Value;
+                        break;
+
                 }
             }
-            catch (NullReferenceException nfe) { }
+            catch (NullReferenceException nre) { }
             catch (Exception e)
             {
                 Log.Instance.Error("{0}/{1}: {2}", Bot.username, Name, e.StackTrace);

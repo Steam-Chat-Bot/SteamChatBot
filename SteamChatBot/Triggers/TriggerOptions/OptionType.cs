@@ -9,6 +9,7 @@
         JustLists,
         ListsAndNumbers,
         AntiSpamTrigger,
-        DiscordTrigger
+        DiscordTrigger,
+        NoteTriggerOptions
     }
 }

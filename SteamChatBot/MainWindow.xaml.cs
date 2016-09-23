@@ -238,6 +238,7 @@ namespace SteamChatBot
             TriggerNumbers tn = new TriggerNumbers();
             AntiSpamTriggerOptions asto = new AntiSpamTriggerOptions();
             DiscordOptions _do = new DiscordOptions(); // "do" is a keyword
+            NoteTriggerOptions nto = new NoteTriggerOptions();
             TriggerOptionsBase tob = new TriggerOptionsBase();
 
             if (selected == "isUpTrigger" || selected == "leaveChatTrigger" || selected == "kickTrigger"
@@ -383,6 +384,27 @@ namespace SteamChatBot
                     Bot.triggers.Add(trigger);
                 }
             }
+            else if(selected == "noteTrigger")
+            {
+                NoteTriggerOptionsWindow ntow = new NoteTriggerOptionsWindow();
+                ntow.ShowDialog();
+                if(ntow.DialogResult.HasValue && ntow.DialogResult == true)
+                {
+                    NoteTriggerOptions ntow_nto = ntow.NTO;
+                    NoCommand ntow_nc = ntow.NC;
+                    nc = GetNoCommandOptions(ntow_nc);
+                    nto = GetNoteTriggerOptions(ntow_nto);
+                    type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
+
+                    tob.NoteTriggerOptions = nto;
+                    tob.NoteTriggerOptions.NoCommand = nc;
+                    tob.Name = nto.Name;
+                    tob.Type = type;
+                    addedTriggersListBox.Items.Add(string.Format("{0} - {1}", nto.Name, type));
+                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, nto.Name, tob);
+                    Bot.triggers.Add(trigger);
+                }
+            }
             else
             {
                 MessageBox.Show("Unknown Trigger. Please contact the developer.", "Error", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
@@ -403,6 +425,8 @@ namespace SteamChatBot
             }
             catch (Exception err) { throw err; }
         }
+
+        #region option helper methods
 
         private ChatCommand GetChatCommandOptions(ChatCommand c)
         {
@@ -512,5 +536,23 @@ namespace SteamChatBot
             }
             catch (Exception e) { return null; }
         }
+
+        private NoteTriggerOptions GetNoteTriggerOptions(NoteTriggerOptions nto)
+        {
+            try
+            {
+                return new NoteTriggerOptions
+                {
+                    Name = nto.Name,
+                    NoCommand = nto.NoCommand,
+                    DeleteCommand = nto.DeleteCommand,
+                    InfoCommand = nto.InfoCommand,
+                    NoteCommand = nto.NoteCommand
+                };
+            }
+            catch (Exception e) { return null; }
+        }
+
+        #endregion
     }
 }
