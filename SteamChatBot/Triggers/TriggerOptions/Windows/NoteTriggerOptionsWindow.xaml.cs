@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,7 @@ namespace SteamChatBot.Triggers.TriggerOptions.Windows
         private void doneButton_Click(object sender, RoutedEventArgs e)
         {
             ncw.ShowDialog();
-            if(ncw.DialogResult.HasValue && ncw.DialogResult == true)
+            if (ncw.DialogResult.HasValue && ncw.DialogResult == true)
             {
                 NC = ncw.NC;
                 NTO = new NoteTriggerOptions
@@ -39,15 +40,33 @@ namespace SteamChatBot.Triggers.TriggerOptions.Windows
                     Name = NC.Name,
                     NoteCommand = "!note",
                     InfoCommand = "!note_info",
-                    DeleteCommand = "!note_delete"
+                    DeleteCommand = "!note_delete",
+                    SaveTimer = 1000 * 60 * 5,
+                    NoteFile = AppDomain.CurrentDomain.BaseDirectory + "/notes.json",
+                    NotesCommand = "!notes"
                 };
 
                 if (noteCommandBox.Text != "") NTO.NoteCommand = noteCommandBox.Text;
                 if (infoCommandBox.Text != "") NTO.InfoCommand = infoCommandBox.Text;
                 if (deleteCommandBox.Text != "") NTO.DeleteCommand = deleteCommandBox.Text;
+                if (saveTimerBox.Text != "") NTO.SaveTimer = Convert.ToInt32(saveTimerBox.Text);
+                if (noteFileBox.Text != "") NTO.NoteFile = noteFileBox.Text;
+                if (notesCommandBox.Text != "") NTO.NotesCommand = notesCommandBox.Text;
 
                 DialogResult = true;
                 Close();
+            }
+        }
+
+        private void noteFileBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            string file = "";
+            OpenFileDialog ofd = new OpenFileDialog();
+
+            if(ofd.ShowDialog() == true)
+            {
+                file = ofd.FileName;
+                noteFileBox.Text = ofd.FileName;
             }
         }
     }

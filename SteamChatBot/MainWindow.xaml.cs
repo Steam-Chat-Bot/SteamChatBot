@@ -547,7 +547,10 @@ namespace SteamChatBot
                     NoCommand = nto.NoCommand,
                     DeleteCommand = nto.DeleteCommand,
                     InfoCommand = nto.InfoCommand,
-                    NoteCommand = nto.NoteCommand
+                    NoteCommand = nto.NoteCommand,
+                    SaveTimer = nto.SaveTimer,
+                    NoteFile = nto.NoteFile,
+                    NotesCommand = nto.NotesCommand
                 };
             }
             catch (Exception e) { return null; }

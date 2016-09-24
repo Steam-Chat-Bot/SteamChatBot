@@ -18,34 +18,38 @@ namespace SteamChatBot.Triggers
 
         public NoteTrigger(TriggerType type, string name, TriggerOptionsBase options) : base(type, name, options)
         {
-            Options.NoteTriggerOptions.Notes = new Dictionary<SteamID, Dictionary<string, Note>>();
-            saveNoteTimer = new Timer(1000 * 60 * 5);
+            saveNoteTimer = new Timer(options.NoteTriggerOptions.SaveTimer);
             saveNoteTimer.Elapsed += SaveNoteTimer_Elapsed;
         }
 
         private void SaveNoteTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             string json = JsonConvert.SerializeObject(Options.NoteTriggerOptions.Notes);
-            File.WriteAllText(Bot.username + "/notes.json", json);
+            File.WriteAllText(Options.NoteTriggerOptions.NoteFile, json);
+            Log.Instance.Silly("{0}/{1}: Wrote notes to {0}/notes.json", Bot.username, Name);
         }
 
         public override bool OnLoggedOn()
         {
             try
             {
-                string notes = File.ReadAllText(Bot.username + "/notes.json");
-                Options.NoteTriggerOptions.Notes = (Dictionary<SteamID, Dictionary<string, Note>>)JsonConvert.DeserializeObject(notes);
+                Options.NoteTriggerOptions.Notes = JsonConvert.DeserializeObject<Dictionary<ulong, Dictionary<string, Note>>>(File.ReadAllText(Options.NoteTriggerOptions.NoteFile));
+                Log.Instance.Silly(Bot.username + "/" + Name + ": Loaded notes from " + Options.NoteTriggerOptions.NoteFile);
             }
-            catch(FileNotFoundException fnfe)
+            catch (FileNotFoundException fnfe)
             {
-                File.Create(Bot.username + "/notes.json");
+                File.Create(Options.NoteTriggerOptions.NoteFile);
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Log.Instance.Error(e.StackTrace);
+                Log.Instance.Error(e.Message + ": " + e.StackTrace);
             }
-            
+
+            if (Options.NoteTriggerOptions.Notes == null)
+            {
+                Options.NoteTriggerOptions.Notes = new Dictionary<ulong, Dictionary<string, Note>>();
+            }
 
             saveNoteTimer.Start();
 
@@ -59,18 +63,80 @@ namespace SteamChatBot.Triggers
 
         private bool Respond(SteamID roomID, SteamID userID, string message)
         {
-            string[] query = StripCommand(message, Options.NoteTriggerOptions.NoteCommand);
+            Dictionary<string, Note> db;
+            ulong room = roomID.ConvertToUInt64();
+
+            if (!Options.NoteTriggerOptions.Notes.ContainsKey(room))
+            {
+                Options.NoteTriggerOptions.Notes[room] = new Dictionary<string, Note>();
+                db = Options.NoteTriggerOptions.Notes[room];
+            }
+            else
+            {
+                db = Options.NoteTriggerOptions.Notes[room];
+            }
+
+            string[] query = StripCommand(message, Options.NoteTriggerOptions.NotesCommand);
+            if(query != null && query.Length == 1)
+            {
+                List<string> _notes = new List<string>();
+                string notes = "";
+                foreach(string note in db.Keys)
+                {
+                    _notes.Add(note);
+                }
+                notes = string.Join(", ", _notes.ToArray());
+                SendMessageAfterDelay(roomID, "Please see your personal chat for a list of all the notes in this chat room", true);
+                SendMessageAfterDelay(userID, "Notes in " + roomID.ConvertToUInt64() + ": " + notes, false);
+                return true;
+            }
+
+            query = StripCommand(message, Options.NoteTriggerOptions.DeleteCommand);
             if (query != null && query.Length == 2)
             {
                 string name = query[1];
-                Note note = Options.NoteTriggerOptions.Notes[roomID][name];
-                if(note == null)
+                if (!db.ContainsKey(name))
                 {
                     SendMessageAfterDelay(roomID, string.Format("The note \"{0}\" does not exist. Use \"{1}\" to create it.", name, Options.NoteTriggerOptions.NoteCommand + " " + name + " <definition>"), true);
                     return true;
                 }
                 else
                 {
+                    db.Remove(name);
+                    SendMessageAfterDelay(roomID, string.Format("Note \"{0}\" deleted", name), true);
+                    return true;
+                }
+            }
+
+            query = StripCommand(message, Options.NoteTriggerOptions.InfoCommand);
+            if(query != null && query.Length == 2)
+            {
+                string name = query[1];
+                if (!db.ContainsKey(name))
+                {
+                    SendMessageAfterDelay(roomID, string.Format("The note \"{0}\" does not exist. Use \"{1}\" to create it.", name, Options.NoteTriggerOptions.NoteCommand + " " + name + " <definition>"), true);
+                    return true;
+                }
+                else
+                {
+                    Note note = db[name];
+                    SendMessageAfterDelay(roomID, string.Format("The note \"{0}\" with definition \"{1}\" was last modified by {2} on {3}", name, note.Definition, note.ModifiedBy, note.ModifiedWhen), true);
+                    return true;
+                }
+            }
+
+            query = StripCommand(message, Options.NoteTriggerOptions.NoteCommand);
+            if (query != null && query.Length == 2)
+            {
+                string name = query[1];
+                if (!db.ContainsKey(name))
+                {
+                    SendMessageAfterDelay(roomID, string.Format("The note \"{0}\" does not exist. Use \"{1}\" to create it.", name, Options.NoteTriggerOptions.NoteCommand + " " + name + " <definition>"), true);
+                    return true;
+                }
+                else
+                {
+                    Note note = db[name];
                     SendMessageAfterDelay(roomID, "\"" + note.Definition + "\"", true);
                     return true;
                 }
@@ -90,38 +156,23 @@ namespace SteamChatBot.Triggers
                 string definition = string.Join(" ", def);
 
                 note.Definition = definition;
-                note.ModifiedBy = Bot.steamFriends.GetFriendPersonaName(userID) + " <" + userID.ConvertToUInt64().ToString() + ">";
+                note.ModifiedBy = Bot.steamFriends.GetFriendPersonaName(userID) + " (" + userID.ConvertToUInt64().ToString() + ")";
                 note.ModifiedWhen = DateTime.Now.ToString();
 
-                Dictionary<string, Note> innerNote = new Dictionary<string, Note>();
-                innerNote.Add(name, note);
-
-                if (Options.NoteTriggerOptions.Notes == null || Options.NoteTriggerOptions.Notes[roomID] == null || Options.NoteTriggerOptions.Notes[roomID][name] == null)
+                if (!db.ContainsKey(name))
                 {
-                    Options.NoteTriggerOptions.Notes = new Dictionary<SteamID, Dictionary<string, Note>>();
-                    Options.NoteTriggerOptions.Notes.Add(roomID, innerNote);
+                    db.Add(name, note);
                 }
                 else
                 {
-                    Options.NoteTriggerOptions.Notes.Remove(roomID);
-                    Options.NoteTriggerOptions.Notes.Add(roomID, innerNote);
+                    db.Remove(name);
+                    db.Add(name, note);
                 }
 
                 SendMessageAfterDelay(roomID, string.Format("Note \"{0}\" saved", name), true);
                 return true;
             }
-
-            query = StripCommand(message, Options.NoteTriggerOptions.DeleteCommand);
-            if(query != null && query.Length == 2)
-            {
-                string name = query[1];
-                Options.NoteTriggerOptions.Notes[roomID].Remove(name);
-                SendMessageAfterDelay(roomID, string.Format("Note \"{0}\" deleted", name), true);
-                return true;
-            }
             return false;
-
-
         }
     }
 }

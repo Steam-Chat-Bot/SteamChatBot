@@ -244,7 +244,6 @@ namespace SteamChatBot
             manager.Subscribe<SteamUser.LoggedOnCallback>(OnLoggedOn);
             manager.Subscribe<SteamUser.LoggedOffCallback>(OnLoggedOff);
             manager.Subscribe<SteamUser.UpdateMachineAuthCallback>(OnUpdateMachineAuth);
-            manager.Subscribe<SteamUser.AccountInfoCallback>(OnAccountInfo);
 
             manager.Subscribe<SteamFriends.ChatMsgCallback>(OnChatMsg);
             manager.Subscribe<SteamFriends.FriendMsgCallback>(OnFriendMsg);
@@ -253,12 +252,6 @@ namespace SteamChatBot
             manager.Subscribe<SteamFriends.ChatMemberInfoCallback>(OnChatMemberInfo);
 
             Log.Instance.Silly("Callback managers subscribed");
-        }
-
-        private static void OnAccountInfo(SteamUser.AccountInfoCallback callback)
-        {
-            steamFriends.SetPersonaState(EPersonaState.Online);
-            steamFriends.SetPersonaName(displayName);
         }
 
         private static void OnFriendMsg(SteamFriends.FriendMsgCallback callback)
@@ -340,6 +333,8 @@ namespace SteamChatBot
             if (callback.Result == EResult.OK)
             {
                 Log.Instance.Info("Logged in!");
+                steamFriends.SetPersonaState(EPersonaState.Online);
+                steamFriends.SetPersonaName(displayName);
                 foreach (BaseTrigger trigger in triggers)
                 {
                     trigger.OnLoggedOn();

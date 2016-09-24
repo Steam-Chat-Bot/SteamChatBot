@@ -9,8 +9,11 @@ namespace SteamChatBot.Triggers.TriggerOptions
         public string NoteCommand { get; set; }
         public string InfoCommand { get; set; }
         public string DeleteCommand { get; set; }
+        public string NotesCommand { get; set; }
         public NoCommand NoCommand { get; set; }
-        public Dictionary<SteamID, Dictionary<string, Note>> Notes { get; set; }
+        public Dictionary<ulong, Dictionary<string, Note>> Notes { get; set; }
+        public int SaveTimer { get; set; }
+        public string NoteFile { get; set; }
     }
 
     public class Note
