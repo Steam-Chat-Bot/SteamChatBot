@@ -940,12 +940,12 @@ namespace SteamChatBot.Triggers
                 for (int i = 0; i < rooms.Count; i++)
                 {
                     SteamID room = rooms[i];
-                    if (toID == room)
+                    if (toID == SteamHelper.ToChatID(room))
                     {
                         return true;
                     }
                 }
-                return true;
+                return false;
             }
         }
 
