@@ -10,6 +10,7 @@
         ListsAndNumbers,
         AntiSpamTrigger,
         DiscordTrigger,
-        NoteTriggerOptions
+        NoteTriggerOptions,
+        NotificationOptions
     }
 }

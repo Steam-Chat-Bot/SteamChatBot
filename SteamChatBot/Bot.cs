@@ -29,7 +29,6 @@ namespace SteamChatBot
         public static SteamUser steamUser = steamClient.GetHandler<SteamUser>();
         public static SteamFriends steamFriends = steamClient.GetHandler<SteamFriends>();
         public static SteamGameCoordinator steamGC = steamClient.GetHandler<SteamGameCoordinator>();
-
         public static SteamGuardAccount steamGuardAccount = new SteamGuardAccount();
 
         #endregion

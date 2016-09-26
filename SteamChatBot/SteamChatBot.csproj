@@ -131,6 +131,10 @@
       <HintPath>..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PushbulletSharp, Version=2.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PushBulletSharp.2.3.3\lib\portable-windows8+net45\PushbulletSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
       <Private>True</Private>
@@ -247,6 +251,7 @@
     <Compile Include="Triggers\LinkNameTrigger.cs" />
     <Compile Include="Triggers\ModerateTrigger.cs" />
     <Compile Include="Triggers\NoteTrigger.cs" />
+    <Compile Include="Triggers\NotificationTrigger.cs" />
     <Compile Include="Triggers\PlayGameTrigger.cs" />
     <Compile Include="Triggers\TriggerOptions\AntiSpamTriggerOptions.cs" />
     <Compile Include="Triggers\TriggerOptions\ChatCommand.cs" />
@@ -255,6 +260,7 @@
     <Compile Include="Triggers\TriggerOptions\DiscordOptions.cs" />
     <Compile Include="Triggers\TriggerOptions\NoCommand.cs" />
     <Compile Include="Triggers\TriggerOptions\NoteTriggerOptions.cs" />
+    <Compile Include="Triggers\TriggerOptions\NotificationOptions.cs" />
     <Compile Include="Triggers\TriggerOptions\OptionType.cs" />
     <Compile Include="Triggers\TriggerOptions\TriggerLists.cs" />
     <Compile Include="Triggers\TriggerOptions\TriggerNumbers.cs" />
@@ -279,6 +285,9 @@
     </Compile>
     <Compile Include="Triggers\TriggerOptions\Windows\NoteTriggerOptionsWindow.xaml.cs">
       <DependentUpon>NoteTriggerOptionsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Triggers\TriggerOptions\Windows\NotificationOptionsWindow.xaml.cs">
+      <DependentUpon>NotificationOptionsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Triggers\TriggerOptions\Windows\TriggerListWindow.xaml.cs">
       <DependentUpon>TriggerListWindow.xaml</DependentUpon>
@@ -327,6 +336,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Triggers\TriggerOptions\Windows\NoteTriggerOptionsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Triggers\TriggerOptions\Windows\NotificationOptionsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

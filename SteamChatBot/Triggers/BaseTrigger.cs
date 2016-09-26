@@ -33,6 +33,7 @@ namespace SteamChatBot.Triggers
             else if (options.TriggerLists != null && options.TriggerNumbers != null) OptionsType = OptionType.ListsAndNumbers;
             else if (options.TriggerLists != null) OptionsType = OptionType.JustLists;
             else if (options.NoteTriggerOptions != null) OptionsType = OptionType.NoteTriggerOptions;
+            else if (options.NotificationOptions != null) OptionsType = OptionType.NotificationOptions;
 
             Type = type;
             Name = name;
@@ -77,7 +78,8 @@ namespace SteamChatBot.Triggers
                     TriggerNumbers = Options.TriggerNumbers,
                     AntiSpamTriggerOptions = Options.AntiSpamTriggerOptions,
                     DiscordOptions = Options.DiscordOptions,
-                    NoteTriggerOptions = Options.NoteTriggerOptions
+                    NoteTriggerOptions = Options.NoteTriggerOptions,
+                    NotificationOptions = Options.NotificationOptions
                 };
                 string json = JsonConvert.SerializeObject(options, Formatting.Indented);
                 File.WriteAllText(Bot.username + "/triggers/" + Name + ".json", json);
@@ -159,6 +161,9 @@ namespace SteamChatBot.Triggers
                         break;
                     case TriggerType.NoteTrigger:
                         temp.Add(new NoteTrigger(type, name, options));
+                        break;
+                    case TriggerType.NotificationTrigger:
+                        temp.Add(new NotificationTrigger(type, name, options));
                         break;
                     case TriggerType.PlayGameTrigger:
                         temp.Add(new PlayGameTrigger(type, name, options));
@@ -762,6 +767,9 @@ namespace SteamChatBot.Triggers
                     case OptionType.NoteTriggerOptions:
                         delay = Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Delay == null ? 0 : Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Delay.Value;
                         break;
+                    case OptionType.NotificationOptions:
+                        delay = Options.NotificationOptions.NoCommand.TriggerNumbers.Delay == null ? 0 : Options.NotificationOptions.NoCommand.TriggerNumbers.Delay.Value;
+                        break;
                 }
             }
             catch (NullReferenceException nre) { }
@@ -860,6 +868,9 @@ namespace SteamChatBot.Triggers
                     case OptionType.NoteTriggerOptions:
                         ignore = Options.NoteTriggerOptions.NoCommand.TriggerLists.Ignore;
                         break;
+                    case OptionType.NotificationOptions:
+                        ignore = Options.NotificationOptions.NoCommand.TriggerLists.Ignore;
+                        break;
                 }
             }
             catch (NullReferenceException nre) { }
@@ -922,6 +933,9 @@ namespace SteamChatBot.Triggers
                         break;
                     case OptionType.NoteTriggerOptions:
                         rooms = Options.NoteTriggerOptions.NoCommand.TriggerLists.Rooms;
+                        break;
+                    case OptionType.NotificationOptions:
+                        rooms = Options.NotificationOptions.NoCommand.TriggerLists.Rooms;
                         break;
                 }
             }
@@ -988,6 +1002,9 @@ namespace SteamChatBot.Triggers
                     case OptionType.NoteTriggerOptions:
                         users = Options.NoteTriggerOptions.NoCommand.TriggerLists.User;
                         break;
+                    case OptionType.NotificationOptions:
+                        users = Options.NotificationOptions.NoCommand.TriggerLists.User;
+                        break;
                 }
             }
             catch (NullReferenceException nre) { }
@@ -1046,6 +1063,9 @@ namespace SteamChatBot.Triggers
                     case OptionType.NoteTriggerOptions:
                         prob = Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Probability == null ? 1 : Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Probability.Value;
                         break;
+                    case OptionType.NotificationOptions:
+                        prob = Options.NotificationOptions.NoCommand.TriggerNumbers.Probability == null ? 1 : Options.NotificationOptions.NoCommand.TriggerNumbers.Probability.Value;
+                        break;
 
                 }
             }
@@ -1100,6 +1120,9 @@ namespace SteamChatBot.Triggers
                         break;
                     case OptionType.NoteTriggerOptions:
                         to = Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Timeout == null ? 0 : Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Timeout.Value;
+                        break;
+                    case OptionType.NotificationOptions:
+                        to = Options.NotificationOptions.NoCommand.TriggerNumbers.Timeout == null ? 0 : Options.NotificationOptions.NoCommand.TriggerNumbers.Timeout.Value;
                         break;
 
                 }

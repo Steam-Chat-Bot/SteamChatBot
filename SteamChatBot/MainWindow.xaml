@@ -70,6 +70,7 @@
                         <ListBoxItem x:Name="lockChatTrigger" Content="LockChatTrigger - Locks the chat room"/>
                         <ListBoxItem x:Name="moderateChatTrigger" Content="ModerateChatTrigger - Moderates a chat room"/>
                         <ListBoxItem x:Name="noteTrigger" Content="NoteTrigger - Saves notes than can be accessed by anyone in the chat"/>
+                        <ListBoxItem x:Name="notificationTrigger" Content="NotificationTrigger - Sends users notifications"/>
                         <ListBoxItem x:Name="playGameTrigger" Content="PlayGameTrigger - Plays a game (AppID)"/>
                         <ListBoxItem x:Name="unbanTrigger" Content="UnbanTrigger - Unbans a user from chat"/>
                         <ListBoxItem x:Name="unmoderateChatTrigger" Content="UnmoderateChatTrigger - Unmoderates the chat"/>

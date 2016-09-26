@@ -18,6 +18,7 @@
         LockChatTrigger,
         ModerateChatTrigger,
         NoteTrigger,
+        NotificationTrigger,
         PlayGameTrigger,
         UnbanTrigger,
         UnlockChatTrigger,

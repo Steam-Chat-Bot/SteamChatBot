@@ -239,6 +239,8 @@ namespace SteamChatBot
             AntiSpamTriggerOptions asto = new AntiSpamTriggerOptions();
             DiscordOptions _do = new DiscordOptions(); // "do" is a keyword
             NoteTriggerOptions nto = new NoteTriggerOptions();
+            NotificationOptions no = new NotificationOptions();
+
             TriggerOptionsBase tob = new TriggerOptionsBase();
 
             if (selected == "isUpTrigger" || selected == "leaveChatTrigger" || selected == "kickTrigger"
@@ -405,6 +407,27 @@ namespace SteamChatBot
                     Bot.triggers.Add(trigger);
                 }
             }
+            else if(selected == "notificationTrigger")
+            {
+                NotificationOptionsWindow now = new NotificationOptionsWindow();
+                now.ShowDialog();
+                if(now.DialogResult.HasValue && now.DialogResult == true)
+                {
+                    NotificationOptions now_no = now.NO;
+                    NoCommand now_nc = now.NC;
+                    nc = GetNoCommandOptions(now_nc);
+                    no = GetNotificationOptions(now_no);
+                    type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
+
+                    tob.NotificationOptions = no;
+                    tob.NotificationOptions.NoCommand = nc;
+                    tob.Name = Name;
+                    tob.Type = type;
+                    addedTriggersListBox.Items.Add(string.Format("{0} - {1}", no.Name, type));
+                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, no.Name, tob);
+                    Bot.triggers.Add(trigger);
+                }
+            }
             else
             {
                 MessageBox.Show("Unknown Trigger. Please contact the developer.", "Error", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
@@ -551,6 +574,25 @@ namespace SteamChatBot
                     SaveTimer = nto.SaveTimer,
                     NoteFile = nto.NoteFile,
                     NotesCommand = nto.NotesCommand
+                };
+            }
+            catch (Exception e) { return null; }
+        }
+
+        private NotificationOptions GetNotificationOptions(NotificationOptions no)
+        {
+            try
+            {
+                return new NotificationOptions
+                {
+                    Name = no.Name,
+                    NoCommand = no.NoCommand,
+                    APICommand = no.APICommand,
+                    ClearCommand = no.ClearCommand,
+                    DBFile = no.DBFile,
+                    FilterCommand = no.FilterCommand,
+                    SeenCommand = no.SeenCommand,
+                    SaveTimer = no.SaveTimer
                 };
             }
             catch (Exception e) { return null; }

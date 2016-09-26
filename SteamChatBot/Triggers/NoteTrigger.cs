@@ -29,7 +29,7 @@ namespace SteamChatBot.Triggers
             Log.Instance.Silly("{0}/{1}: Wrote notes to {0}/notes.json", Bot.username, Name);
         }
 
-        public override bool OnLoggedOn()
+        public override bool onLoggedOn()
         {
             try
             {
@@ -44,6 +44,7 @@ namespace SteamChatBot.Triggers
             catch (Exception e)
             {
                 Log.Instance.Error(e.Message + ": " + e.StackTrace);
+                return false;
             }
 
             if (Options.NoteTriggerOptions.Notes == null)
