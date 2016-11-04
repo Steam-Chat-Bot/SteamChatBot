@@ -339,6 +339,8 @@ namespace SteamChatBot
             if (callback.Result == EResult.OK)
             {
                 Log.Instance.Info("Logged in!");
+                steamFriends.SetPersonaState(EPersonaState.Online);
+                steamFriends.SetPersonaName(displayName);
                 foreach (BaseTrigger trigger in triggers)
                 {
                     trigger.OnLoggedOn();

@@ -49,7 +49,7 @@ namespace SteamChatBot.Triggers.TriggerOptions.Windows
                 if (noteCommandBox.Text != "") NTO.NoteCommand = noteCommandBox.Text;
                 if (infoCommandBox.Text != "") NTO.InfoCommand = infoCommandBox.Text;
                 if (deleteCommandBox.Text != "") NTO.DeleteCommand = deleteCommandBox.Text;
-                if (saveTimerBox.Text != "" || Convert.ToInt32(saveTimerBox.Text) == 0) NTO.SaveTimer = Convert.ToInt32(saveTimerBox.Text);
+                if (saveTimerBox.Text != "") NTO.SaveTimer = Convert.ToInt32(saveTimerBox.Text);
                 if (noteFileBox.Text != "") NTO.NoteFile = noteFileBox.Text;
                 if (notesCommandBox.Text != "") NTO.NotesCommand = notesCommandBox.Text;
 

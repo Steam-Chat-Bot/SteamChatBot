@@ -26,7 +26,7 @@ namespace SteamChatBot.Triggers
         {
             string json = JsonConvert.SerializeObject(Options.NoteTriggerOptions.Notes);
             File.WriteAllText(Options.NoteTriggerOptions.NoteFile, json);
-            Log.Instance.Silly("{0}/{1}: Wrote notes to {0}/notes.json", Bot.username, Name);
+            Log.Instance.Silly("{0}/{1}: Wrote notes to {2}", Bot.username, Name, Options.NoteTriggerOptions.NoteFile);
         }
 
         public override bool onLoggedOn()

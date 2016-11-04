@@ -36,6 +36,10 @@ namespace SteamChatBot.Triggers
         {
             try
             {
+                if (Options.NotificationOptions.DBFile == AppDomain.CurrentDomain.BaseDirectory + "/notification.json")
+                {
+                    Options.NotificationOptions.DBFile = Bot.username + "/notification.json";
+                }
                 Options.NotificationOptions.DB = JsonConvert.DeserializeObject<Dictionary<ulong, DB>>(File.ReadAllText(Options.NotificationOptions.DBFile));
                 Log.Instance.Silly("{0}/{1}: Read db from {2}", Bot.username, Name, Options.NotificationOptions.DBFile);
             }
