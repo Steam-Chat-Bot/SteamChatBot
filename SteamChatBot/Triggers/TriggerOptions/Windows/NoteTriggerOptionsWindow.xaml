@@ -1,0 +1,25 @@
+﻿<Window x:Class="SteamChatBot.Triggers.TriggerOptions.Windows.NoteTriggerOptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SteamChatBot.Triggers.TriggerOptions.Windows"
+        mc:Ignorable="d"
+        Title="Options" Height="300" Width="300" Icon="/SteamChatBot;component/scb.ico">
+    <Grid>
+        <Button x:Name="doneButton" Content="Done" HorizontalAlignment="Left" Margin="85,210,0,0" VerticalAlignment="Top" Width="126" Height="50" Click="doneButton_Click"/>
+        <Label x:Name="noteCommandLabel" Content="Note command:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="24,28,0,0"/>
+        <TextBox x:Name="noteCommandBox" HorizontalAlignment="Left" Height="23" Margin="182,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="86"/>
+        <Label x:Name="infoCommandLabel" Content="Note info command:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="24,56,0,0"/>
+        <TextBox x:Name="infoCommandBox" HorizontalAlignment="Left" Height="23" Margin="182,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="86"/>
+        <Label x:Name="noteDeleteCommandLabel" Content="Note delete command:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="24,84,0,0"/>
+        <TextBox x:Name="deleteCommandBox" HorizontalAlignment="Left" Height="23" Margin="182,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="86" RenderTransformOrigin="0.518,-0.159"/>
+        <Label x:Name="noteFileLabel" Content="Note file:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="24,138,0,0"/>
+        <TextBox x:Name="noteFileBox" HorizontalAlignment="Left" Height="23" Margin="182,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="86" GotFocus="noteFileBox_GotFocus"/>
+        <Label x:Name="saveTimerLabel" Content="Save timer (ms):" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="24,169,0,0"/>
+        <TextBox x:Name="saveTimerBox" HorizontalAlignment="Left" Height="23" Margin="182,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="86"/>
+        <Label x:Name="notesCommandLabel" Content="All notes command:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="24,112,0,0"/>
+        <TextBox x:Name="notesCommandBox" HorizontalAlignment="Left" Height="23" Margin="182,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="86" RenderTransformOrigin="0.518,-0.159"/>
+
+    </Grid>
+</Window>

@@ -22,8 +22,6 @@ namespace SteamChatBot.Triggers
 
         public bool ReplyEnabled = true;
 
-        #region constructors
-
         public BaseTrigger(TriggerType type, string name, TriggerOptionsBase options)
         {
             if (options.AntiSpamTriggerOptions != null) OptionsType = OptionType.AntiSpamTrigger;
@@ -34,150 +32,13 @@ namespace SteamChatBot.Triggers
             else if (options.NoCommand != null) OptionsType = OptionType.NoCommand;
             else if (options.TriggerLists != null && options.TriggerNumbers != null) OptionsType = OptionType.ListsAndNumbers;
             else if (options.TriggerLists != null) OptionsType = OptionType.JustLists;
+            else if (options.NoteTriggerOptions != null) OptionsType = OptionType.NoteTriggerOptions;
+            else if (options.NotificationOptions != null) OptionsType = OptionType.NotificationOptions;
 
             Type = type;
             Name = name;
             Options = options;
         }
-
-        /*
-        /// <summary>
-        /// Constructor for ChatCommand triggers
-        /// </summary>
-        /// <param name="type">TriggerType</param>
-        /// <param name="name">Name of the trigger</param>
-        /// <param name="chatCommand">ChatCommand object with options</param>
-        public BaseTrigger(TriggerType type, string name, ChatCommand chatCommand)
-        {
-            OptionsType = OptionType.ChatCommand;
-            Type = type;
-            Name = name;
-            Options = new TriggerOptionsBase
-            {
-                Type = type,
-                Name = name,
-                ChatCommand = chatCommand
-            };
-        }
-
-        /// <summary>
-        /// Constructor for ChatReply triggers
-        /// </summary>
-        /// <param name="type">TriggerType</param>
-        /// <param name="name">Name of the trigger</param>
-        /// <param name="chatReply">ChatReply object with options</param>
-        public BaseTrigger(TriggerType type, string name, ChatReply chatReply)
-        {
-            OptionsType = OptionType.ChatReply;
-            Type = type;
-            Name = name;
-            Options = new TriggerOptionsBase
-            {
-                Type = type,
-                Name = name,
-                ChatReply = chatReply
-            };
-        }
-
-        /// <summary>
-        /// Constructor for NoCommand triggers
-        /// </summary>
-        /// <param name="type">TriggerType</param>
-        /// <param name="name">Name of teh trigger</param>
-        /// <param name="noCommand">NoCommand object with options</param>
-        public BaseTrigger(TriggerType type, string name, NoCommand noCommand)
-        {
-            OptionsType = OptionType.NoCommand;
-            Type = type;
-            Name = name;
-            Options = new TriggerOptionsBase
-            {
-                Type = type,
-                Name = name,
-                NoCommand = noCommand
-            };
-        }
-
-        /// <summary>
-        /// Constructor for ChatCommandApi triggers
-        /// </summary>
-        /// <param name="type">TriggerType</param>
-        /// <param name="name">Name of the trigger</param>
-        /// <param name="chatCommandApi">ChatCommandApi object with options</param>
-        public BaseTrigger(TriggerType type, string name, ChatCommandApi chatCommandApi)
-        {
-            OptionsType = OptionType.ChatCommandAPI;
-            Type = type;
-            Name = name;
-            Options = new TriggerOptionsBase
-            {
-                Type = type,
-                Name = name,
-                ChatCommandApi = chatCommandApi
-            };
-        }
-
-        /// <summary>
-        /// Constructor for TriggerLists triggers
-        /// </summary>
-        /// <param name="type">TriggerType</param>
-        /// <param name="name">Name of the trigger</param>
-        /// <param name="tl">TriggerLists object with options</param>
-        public BaseTrigger(TriggerType type, string name, TriggerLists tl)
-        {
-            OptionsType = OptionType.JustLists;
-            Type = type;
-            Name = name;
-            Options = new TriggerOptionsBase
-            {
-                Type = type,
-                Name = name,
-                TriggerLists = tl
-            };
-        }
-
-        /// <summary>
-        /// Constructor for AntiSpamTrigger
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="name"></param>
-        /// <param name="options"></param>
-        public BaseTrigger(TriggerType type, string name, AntiSpamTriggerOptions options)
-        {
-            OptionsType = OptionType.AntiSpamTrigger;
-            Type = type;
-            Name = name;
-            Options = new TriggerOptionsBase
-            {
-                Type = type,
-                Name = name,
-                AntiSpamTriggerOptions = options
-            };
-        }
-
-        /// <summary>
-        /// Constructor for DiscordTrigger
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="name"></param>
-        /// <param name="options"></param>
-        public BaseTrigger(TriggerType type, string name, DiscordOptions options)
-        {
-            OptionsType = OptionType.DiscordTrigger;
-            Type = type;
-            Name = name;
-            Options = new TriggerOptionsBase
-            {
-                Type = type,
-                Name = name,
-                DiscordOptions = options
-            };
-        }
-
-        */
-
-        #endregion
-
 
         /// <summary>
         /// If there is an error, log it easily
@@ -216,7 +77,10 @@ namespace SteamChatBot.Triggers
                     TriggerLists = Options.TriggerLists,
                     TriggerNumbers = Options.TriggerNumbers,
                     AntiSpamTriggerOptions = Options.AntiSpamTriggerOptions,
-                    DiscordOptions = Options.DiscordOptions
+                    DiscordOptions = Options.DiscordOptions,
+                    NoteTriggerOptions = Options.NoteTriggerOptions,
+                    NotificationOptions = Options.NotificationOptions,
+                    MessageIntervalOptions = Options.MessageIntervalOptions
                 };
                 string json = JsonConvert.SerializeObject(options, Formatting.Indented);
                 File.WriteAllText(Bot.username + "/triggers/" + Name + ".json", json);
@@ -269,6 +133,9 @@ namespace SteamChatBot.Triggers
                     case TriggerType.BanTrigger:
                         temp.Add(new BanTrigger(type, name, options));
                         break;
+                    case TriggerType.ChangeNameTrigger:
+                        temp.Add(new ChangeNameTrigger(type, name, options));
+                        break;
                     case TriggerType.ChatReplyTrigger:
                         temp.Add(new ChatReplyTrigger(type, name, options));
                         break;
@@ -277,6 +144,9 @@ namespace SteamChatBot.Triggers
                         break;
                     case TriggerType.DoormatTrigger:
                         temp.Add(new DoormatTrigger(type, name, options));
+                        break;
+                    case TriggerType.GoogleTrigger:
+                        temp.Add(new GoogleTrigger(type, name, options));
                         break;
                     case TriggerType.IsUpTrigger:
                         temp.Add(new IsUpTrigger(type, name, options));
@@ -293,8 +163,17 @@ namespace SteamChatBot.Triggers
                     case TriggerType.LockChatTrigger:
                         temp.Add(new LockChatTrigger(type, name, options));
                         break;
+                    case TriggerType.MessageIntervalTrigger:
+                        temp.Add(new MessageIntervalTrigger(type, name, options));
+                        break;
                     case TriggerType.ModerateChatTrigger:
                         temp.Add(new ModerateChatTrigger(type, name, options));
+                        break;
+                    case TriggerType.NoteTrigger:
+                        temp.Add(new NoteTrigger(type, name, options));
+                        break;
+                    case TriggerType.NotificationTrigger:
+                        temp.Add(new NotificationTrigger(type, name, options));
                         break;
                     case TriggerType.PlayGameTrigger:
                         temp.Add(new PlayGameTrigger(type, name, options));
@@ -310,6 +189,9 @@ namespace SteamChatBot.Triggers
                         break;
                     case TriggerType.WeatherTrigger:
                         temp.Add(new WeatherTrigger(type, name, options));
+                        break;
+                    case TriggerType.YoutubeTrigger:
+                        temp.Add(new YoutubeTrigger(type, name, options));
                         break;
                     default:
                         break;
@@ -743,7 +625,7 @@ namespace SteamChatBot.Triggers
             {
                 try
                 {
-                    bool messageSent = respondToEnteredMessage(roomID, userID);
+                    bool messageSent = respondToLeftMessage(roomID, userID);
                     if(messageSent)
                     {
                         DisableForTimeout();
@@ -895,9 +777,15 @@ namespace SteamChatBot.Triggers
                     case OptionType.DiscordTrigger:
                         delay = Options.DiscordOptions.NoCommand.TriggerNumbers.Delay == null ? 0 : Options.DiscordOptions.NoCommand.TriggerNumbers.Delay.Value;
                         break;
+                    case OptionType.NoteTriggerOptions:
+                        delay = Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Delay == null ? 0 : Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Delay.Value;
+                        break;
+                    case OptionType.NotificationOptions:
+                        delay = Options.NotificationOptions.NoCommand.TriggerNumbers.Delay == null ? 0 : Options.NotificationOptions.NoCommand.TriggerNumbers.Delay.Value;
+                        break;
                 }
             }
-            catch (NullReferenceException nfe) { }
+            catch (NullReferenceException nre) { }
             catch (Exception e)
             {
                 Log.Instance.Error("{0}/{1}: {2}", Bot.username, Name, e.StackTrace);
@@ -990,9 +878,15 @@ namespace SteamChatBot.Triggers
                     case OptionType.DiscordTrigger:
                         ignore = Options.DiscordOptions.NoCommand.TriggerLists.Ignore;
                         break;
+                    case OptionType.NoteTriggerOptions:
+                        ignore = Options.NoteTriggerOptions.NoCommand.TriggerLists.Ignore;
+                        break;
+                    case OptionType.NotificationOptions:
+                        ignore = Options.NotificationOptions.NoCommand.TriggerLists.Ignore;
+                        break;
                 }
             }
-            catch (NullReferenceException nfe) { }
+            catch (NullReferenceException nre) { }
             catch (Exception e)
             {
                 Log.Instance.Error("{0}/{1}: {2}", Bot.username, Name, e.StackTrace);
@@ -1050,9 +944,15 @@ namespace SteamChatBot.Triggers
                     case OptionType.DiscordTrigger:
                         rooms = Options.DiscordOptions.NoCommand.TriggerLists.Rooms;
                         break;
+                    case OptionType.NoteTriggerOptions:
+                        rooms = Options.NoteTriggerOptions.NoCommand.TriggerLists.Rooms;
+                        break;
+                    case OptionType.NotificationOptions:
+                        rooms = Options.NotificationOptions.NoCommand.TriggerLists.Rooms;
+                        break;
                 }
             }
-            catch (NullReferenceException nfe) { }
+            catch (NullReferenceException nre) { }
             catch (Exception e)
             {
                 Log.Instance.Error("{0}/{1}: {2}", Bot.username, Name, e.StackTrace);
@@ -1067,12 +967,12 @@ namespace SteamChatBot.Triggers
                 for (int i = 0; i < rooms.Count; i++)
                 {
                     SteamID room = rooms[i];
-                    if (toID == room)
+                    if (toID == SteamHelper.ToChatID(room))
                     {
                         return true;
                     }
                 }
-                return true;
+                return false;
             }
         }
 
@@ -1112,9 +1012,15 @@ namespace SteamChatBot.Triggers
                     case OptionType.DiscordTrigger:
                         users = Options.DiscordOptions.NoCommand.TriggerLists.User;
                         break;
+                    case OptionType.NoteTriggerOptions:
+                        users = Options.NoteTriggerOptions.NoCommand.TriggerLists.User;
+                        break;
+                    case OptionType.NotificationOptions:
+                        users = Options.NotificationOptions.NoCommand.TriggerLists.User;
+                        break;
                 }
             }
-            catch (NullReferenceException nfe) { }
+            catch (NullReferenceException nre) { }
             catch (Exception e)
             {
                 Log.Instance.Error("{0}/{1}: {2}", Bot.username, Name, e.StackTrace);
@@ -1167,10 +1073,16 @@ namespace SteamChatBot.Triggers
                     case OptionType.DiscordTrigger:
                         prob = Options.DiscordOptions.NoCommand.TriggerNumbers.Probability == null ? 1 : Options.DiscordOptions.NoCommand.TriggerNumbers.Probability.Value;
                         break;
+                    case OptionType.NoteTriggerOptions:
+                        prob = Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Probability == null ? 1 : Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Probability.Value;
+                        break;
+                    case OptionType.NotificationOptions:
+                        prob = Options.NotificationOptions.NoCommand.TriggerNumbers.Probability == null ? 1 : Options.NotificationOptions.NoCommand.TriggerNumbers.Probability.Value;
+                        break;
 
                 }
             }
-            catch (NullReferenceException nfe) { }
+            catch (NullReferenceException nre) { }
             catch(Exception e)
             {
                 Log.Instance.Error("{0}/{1}: {2}", Bot.username, Name, e.StackTrace);
@@ -1219,9 +1131,16 @@ namespace SteamChatBot.Triggers
                     case OptionType.DiscordTrigger:
                         to = Options.DiscordOptions.NoCommand.TriggerNumbers.Timeout == null ? 0 : Options.DiscordOptions.NoCommand.TriggerNumbers.Timeout.Value;
                         break;
+                    case OptionType.NoteTriggerOptions:
+                        to = Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Timeout == null ? 0 : Options.NoteTriggerOptions.NoCommand.TriggerNumbers.Timeout.Value;
+                        break;
+                    case OptionType.NotificationOptions:
+                        to = Options.NotificationOptions.NoCommand.TriggerNumbers.Timeout == null ? 0 : Options.NotificationOptions.NoCommand.TriggerNumbers.Timeout.Value;
+                        break;
+
                 }
             }
-            catch (NullReferenceException nfe) { }
+            catch (NullReferenceException nre) { }
             catch (Exception e)
             {
                 Log.Instance.Error("{0}/{1}: {2}", Bot.username, Name, e.StackTrace);

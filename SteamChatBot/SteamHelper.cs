@@ -10,6 +10,8 @@ namespace SteamChatBot
 {
     class SteamHelper
     {
+        public Dictionary<SteamID, string> ChatRoomMembers { get; set; }
+
         public static SteamID ToClanID(SteamID steamID)
         {
             if(steamID.AccountInstance == (uint)SteamID.ChatInstanceFlags.Clan)

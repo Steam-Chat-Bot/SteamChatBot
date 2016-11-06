@@ -1,0 +1,24 @@
+﻿<Window x:Class="SteamChatBot.Triggers.TriggerOptions.Windows.NotificationOptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SteamChatBot.Triggers.TriggerOptions.Windows"
+        mc:Ignorable="d"
+        Title="Options" Height="349.624" Width="300">
+    <Grid>
+        <Label x:Name="dbFileLabel" Content="Database File:" HorizontalAlignment="Left" Margin="20,158,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="dbFileBox" HorizontalAlignment="Left" Height="23" Margin="123,158,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="148" GotFocus="dbFileBox_GotFocus"/>
+        <Label x:Name="saveTimerLabel" Content="Save timer:" HorizontalAlignment="Left" Margin="20,186,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="saveTimerBox" HorizontalAlignment="Left" Height="23" Margin="123,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="148"/>
+        <Button x:Name="doneButton" Content="Done" HorizontalAlignment="Left" Margin="73,233,0,0" VerticalAlignment="Top" Width="143" Height="52" Click="doneButton_Click"/>
+        <Label x:Name="apiCommandLabel" Content="API command:" HorizontalAlignment="Left" Margin="20,19,0,0" VerticalAlignment="Top" AllowDrop="True"/>
+        <TextBox x:Name="apiCommandBox" HorizontalAlignment="Left" Height="23" Margin="123,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="148"/>
+        <Label x:Name="seenCommandLabel" Content="Seen command:" HorizontalAlignment="Left" Margin="20,47,0,0" VerticalAlignment="Top" AllowDrop="True"/>
+        <TextBox x:Name="seenCommandBox" HorizontalAlignment="Left" Height="23" Margin="123,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="148"/>
+        <Label x:Name="filterCommandLabel" Content="Filter command:" HorizontalAlignment="Left" Margin="20,70,0,0" VerticalAlignment="Top" AllowDrop="True"/>
+        <TextBox x:Name="filterCommandBox" HorizontalAlignment="Left" Height="23" Margin="123,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="148"/>
+        <Label x:Name="clearCommandLabel" Content="Clear command:" HorizontalAlignment="Left" Margin="20,98,0,0" VerticalAlignment="Top" AllowDrop="True"/>
+        <TextBox x:Name="clearCommandBox" HorizontalAlignment="Left" Height="23" Margin="123,99,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="148"/>
+    </Grid>
+</Window>

@@ -17,22 +17,14 @@ namespace SteamChatBot.Triggers
 
         public override bool respondToChatInvite(SteamID roomID, string roomName, SteamID inviterId)
         {
-            if(Options.TriggerLists.Rooms == null)
+            if (Options.TriggerLists.Rooms.Contains(roomID) || Options.TriggerLists.Rooms == null || Options.TriggerLists.Rooms.Count == 0)
             {
                 Bot.steamFriends.JoinChat(roomID);
                 return true;
             }
             else
             {
-                if (Options.TriggerLists.Rooms.Contains(roomID))
-                {
-                    Bot.steamFriends.JoinChat(roomID);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
         }
     }

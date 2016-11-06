@@ -29,7 +29,6 @@ namespace SteamChatBot
         public static SteamUser steamUser = steamClient.GetHandler<SteamUser>();
         public static SteamFriends steamFriends = steamClient.GetHandler<SteamFriends>();
         public static SteamGameCoordinator steamGC = steamClient.GetHandler<SteamGameCoordinator>();
-
         public static SteamGuardAccount steamGuardAccount = new SteamGuardAccount();
 
         #endregion
@@ -93,8 +92,16 @@ namespace SteamChatBot
                 Directory.CreateDirectory(username + "/");
             }
             File.WriteAllText(username + "/login.json", json);
-            File.AppendAllText("chatbots.txt", username + "\n");
-            File.SetAttributes("chatbots.txt", File.GetAttributes("chatbots.txt") | FileAttributes.Hidden);
+
+            if(!File.Exists("chatbots.txt"))
+            {
+                File.Create("chatbots.txt");
+            }
+
+            if (!File.ReadAllText("chatbots.txt").Contains(username + "\n"))
+            {
+                File.AppendAllText("chatbots.txt", username + "\n");
+            }
         }
 
         #endregion
@@ -181,6 +188,11 @@ namespace SteamChatBot
 
             isRunning = true;
 
+            foreach(BaseTrigger trigger in triggers)
+            {
+                trigger.OnLoad();
+            }
+
             Log.Instance.Silly("Updating SteamKit2 servers...");
             SteamDirectory.Initialize().Wait();
 
@@ -244,7 +256,7 @@ namespace SteamChatBot
             manager.Subscribe<SteamUser.LoggedOnCallback>(OnLoggedOn);
             manager.Subscribe<SteamUser.LoggedOffCallback>(OnLoggedOff);
             manager.Subscribe<SteamUser.UpdateMachineAuthCallback>(OnUpdateMachineAuth);
-            manager.Subscribe<SteamUser.AccountInfoCallback>(OnAccountInfo);
+            manager.Subscribe<SteamUser.LoginKeyCallback>(OnLoginKeyCallback);
 
             manager.Subscribe<SteamFriends.ChatMsgCallback>(OnChatMsg);
             manager.Subscribe<SteamFriends.FriendMsgCallback>(OnFriendMsg);
@@ -255,7 +267,7 @@ namespace SteamChatBot
             Log.Instance.Silly("Callback managers subscribed");
         }
 
-        private static void OnAccountInfo(SteamUser.AccountInfoCallback callback)
+        private static void OnLoginKeyCallback(SteamUser.LoginKeyCallback callback)
         {
             steamFriends.SetPersonaState(EPersonaState.Online);
             steamFriends.SetPersonaName(displayName);
@@ -340,16 +352,18 @@ namespace SteamChatBot
             if (callback.Result == EResult.OK)
             {
                 Log.Instance.Info("Logged in!");
+                steamFriends.SetPersonaState(EPersonaState.Online);
+                steamFriends.SetPersonaName(displayName);
                 foreach (BaseTrigger trigger in triggers)
                 {
                     trigger.OnLoggedOn();
                 }
             }
-            else if (callback.Result == EResult.AccountLogonDenied || callback.Result == EResult.AccountLoginDeniedNeedTwoFactor)
+            else if (callback.Result == EResult.AccountLogonDenied || callback.Result == EResult.AccountLoginDeniedNeedTwoFactor || callback.Result == EResult.InvalidLoginAuthCode)
             {
                 if (callback.Result == EResult.AccountLoginDeniedNeedTwoFactor)
                 {
-                    if (sharedSecret == "")
+                    if (sharedSecret == "" || sharedSecret == null)
                     {
                         string _tfc = Interaction.InputBox("Two factor code (sent via sms): ");
                         twoFactorAuth = _tfc;
@@ -362,7 +376,7 @@ namespace SteamChatBot
                     }
                         
                 }
-                else if (callback.Result == EResult.AccountLogonDenied)
+                else if (callback.Result == EResult.AccountLogonDenied || callback.Result == EResult.InvalidLoginAuthCode)
                 {
                     string _sgc = Interaction.InputBox("Steam guard code (sent to your email at " + callback.EmailDomain + "): ");
                     authCode = _sgc;

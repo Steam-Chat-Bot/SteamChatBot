@@ -60,23 +60,29 @@
                         <ListBoxItem x:Name="autojoinChatTrigger" Content="AutojoinChatTrigger - Autojoins chat room(s)"/>
                         <ListBoxItem x:Name="banTrigger" Content="BanTrigger - Bans a user from chat"/>
                         <ListBoxItem x:Name="banCheckTrigger" Content="BanCheckTrigger - Checks SteamCommunity for bans"/>
+                        <ListBoxItem x:Name="changeNameTrigger" Content="ChangeNameTrigger - Changes the bots name"/>
                         <ListBoxItem x:Name="chatReplyTrigger" Content="ChatReplyTrigger - Responds to a match in chat"/>
                         <ListBoxItem x:Name="discordTrigger" Content="DiscordTrigger - Discord Relay for Steam Chat"/>
                         <ListBoxItem x:Name="doormatTrigger" Content="DoormatTrigger - Greets a user as they enter chat"/>
+                        <ListBoxItem x:Name="googleTrigger" Content="GoogleTrigger - Searches google and returns the top result"/>
                         <ListBoxItem x:Name="isUpTrigger" Content="IsUpTrigger - Determines if a website is online"/>
                         <ListBoxItem x:Name="kickTrigger" Content="KickTrigger - Kicks a SteamID from chat"/>
                         <ListBoxItem x:Name="leaveChatTrigger" Content="LeaveChatTrigger - Commands the bot to leave chat"/>
                         <ListBoxItem x:Name="linkNameTrigger" Content="LinkNameTrigger - Gets the title of the website from a link"/>
                         <ListBoxItem x:Name="lockChatTrigger" Content="LockChatTrigger - Locks the chat room"/>
+                        <ListBoxItem x:Name="messageIntervalTrigger" Content="MessageIntervalTrigger - Sends a message to a chat room every time the interval passes"/>
                         <ListBoxItem x:Name="moderateChatTrigger" Content="ModerateChatTrigger - Moderates a chat room"/>
+                        <ListBoxItem x:Name="noteTrigger" Content="NoteTrigger - Saves notes than can be accessed by anyone in the chat"/>
+                        <ListBoxItem x:Name="notificationTrigger" Content="NotificationTrigger - Sends users notifications"/>
                         <ListBoxItem x:Name="playGameTrigger" Content="PlayGameTrigger - Plays a game (AppID)"/>
                         <ListBoxItem x:Name="unbanTrigger" Content="UnbanTrigger - Unbans a user from chat"/>
                         <ListBoxItem x:Name="unmoderateChatTrigger" Content="UnmoderateChatTrigger - Unmoderates the chat"/>
                         <ListBoxItem x:Name="weatherTrigger" Content="WeatherTrigger - Gets the weather for a certain location"/>
+                        <ListBoxItem x:Name="youtubeTrigger" Content="YoutubeTrigger - Query youtube for the top video result"/>
                     </ListBox>
                     <Button x:Name="minusTriggerButton" Content="-" Grid.Column="1" HorizontalAlignment="Left" Margin="208,428,0,0" VerticalAlignment="Top" Width="44" FontSize="14.667" Click="minusTriggerButton_Click" Height="27"/>
                     <ListBox x:Name="addedTriggersListBox" Grid.Column="2" HorizontalAlignment="Left" Height="418" Margin="75,10,0,0" VerticalAlignment="Top" Width="275"/>
-                    <Button x:Name="plusTriggerButton" Content="+" Grid.Column="1" HorizontalAlignment="Left" Margin="159,428,0,0" Width="44" FontSize="14.667" Click="plusTriggerButton_Click" RenderTransformOrigin="0.5,0.5"/>
+                    <Button x:Name="plusTriggerButton" Content="+" Grid.Column="1" HorizontalAlignment="Left" Margin="159,428,0,0" Height="27" Width="44" FontSize="14.667" Click="plusTriggerButton_Click" RenderTransformOrigin="0.5,0.5"/>
                 </Grid>
             </TabItem>
         </TabControl>

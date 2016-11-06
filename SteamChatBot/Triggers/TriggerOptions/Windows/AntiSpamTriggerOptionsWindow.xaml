@@ -26,7 +26,7 @@
         <Button x:Name="doneButton" Content="Done" HorizontalAlignment="Left" Margin="278,126,0,0" VerticalAlignment="Top" Width="87" Height="81" Click="doneButton_Click"/>
         <Label x:Name="label" Content="Admins:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="adminsBox" HorizontalAlignment="Left" Height="23" Margin="117,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="label_Copy4" Content="Resolution:" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy4" Content="Resolution (ms):" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="resolutionBox" HorizontalAlignment="Left" Height="23" Margin="117,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="label_Copy10" Content="Resolution Amount:" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="amountBox" HorizontalAlignment="Left" Height="23" Margin="129,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108"/>

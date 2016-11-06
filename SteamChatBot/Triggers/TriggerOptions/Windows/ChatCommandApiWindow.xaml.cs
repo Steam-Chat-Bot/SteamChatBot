@@ -22,7 +22,9 @@ namespace SteamChatBot.Triggers.TriggerOptions.Windows
     public partial class ChatCommandApiWindow : Window
     {
         public ChatCommandApi CCA { get; set; }
+        public ChatCommand CC { get; set; }
 
+        ChatCommandWindow ccw = new ChatCommandWindow();
         public ChatCommandApiWindow()
         {
             InitializeComponent();
@@ -30,62 +32,35 @@ namespace SteamChatBot.Triggers.TriggerOptions.Windows
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            if (commandBox.Text == "" || nameBox.Text == "" || apiBox.Text == "")
+            if (apiBox.Text == "")
             {
-                MessageBox.Show("You must include a name, API key, and a command.", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                MessageBox.Show("You must include an API key", "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
             }
             else
             {
-                CCA = new ChatCommandApi()
+                ccw.ShowDialog();
+                if (ccw.DialogResult.HasValue && ccw.DialogResult == true)
                 {
-                    Name = "",
-                    ApiKey = "",
-                    ChatCommand = new ChatCommand(),
-                };
-
-                CCA.ChatCommand.Command = commandBox.Text;
-                CCA.Name = nameBox.Text;
-                CCA.ApiKey = apiBox.Text;
-
-                List<SteamID> ignores = new List<SteamID>();
-                List<SteamID> rooms = new List<SteamID>();
-                List<SteamID> users = new List<SteamID>();
-                if (delayBox.Text == "") CCA.ChatCommand.TriggerNumbers.Delay = null;
-                else CCA.ChatCommand.TriggerNumbers.Delay = Convert.ToInt32(delayBox.Text);
-
-                if (probBox.Text == "") CCA.ChatCommand.TriggerNumbers.Probability = null;
-                else CCA.ChatCommand.TriggerNumbers.Probability = (float)Convert.ToDouble(probBox.Text);
-
-                if (timeoutBox.Text == "") CCA.ChatCommand.TriggerNumbers.Timeout = null;
-                else CCA.ChatCommand.TriggerNumbers.Timeout = Convert.ToInt32(timeoutBox.Text);
-
-                if (ignoresBox.Text.Split(',').Length > 0 && ignoresBox.Text != "")
-                {
-                    foreach (string ignore in ignoresBox.Text.Split(','))
+                    CC = ccw.CC;
+                    CCA = new ChatCommandApi()
                     {
-                        ignores.Add(new SteamID(Convert.ToUInt64(ignore)));
-                    }
-                }
-                if (roomsBox.Text.Split(',').Length > 0 && roomsBox.Text != "")
-                {
-                    foreach (string room in roomsBox.Text.Split(','))
-                    {
-                        rooms.Add(new SteamID(Convert.ToUInt64(room)));
-                    }
-                }
-                if (usersBox.Text.Split(',').Length > 0 && usersBox.Text != "")
-                {
-                    foreach (string user in usersBox.Text.Split(','))
-                    {
-                        users.Add(new SteamID(Convert.ToUInt64(user)));
-                    }
-                }
+                        Name = CC.Name,
+                        ApiKey = "",
+                        ChatCommand = new ChatCommand()
+                    };
 
-                CCA.ChatCommand.TriggerLists.Ignore = ignores;
-                CCA.ChatCommand.TriggerLists.Rooms = rooms;
-                CCA.ChatCommand.TriggerLists.User = users;
-                DialogResult = true;
-                Close();
+                    if (apiBox.Text == "")
+                    {
+                        MessageBox.Show("You must include an API key.", "Error", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
+                    }
+                    else
+                    {
+                        CCA.ApiKey = apiBox.Text;
+                    }
+
+                    DialogResult = true;
+                    Close();
+                }
             }
         }
     }

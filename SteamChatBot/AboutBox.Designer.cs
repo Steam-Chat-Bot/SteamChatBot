@@ -99,9 +99,9 @@
             this.labelVersion.AutoSize = true;
             this.labelVersion.Location = new System.Drawing.Point(3, 203);
             this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(72, 13);
+            this.labelVersion.Size = new System.Drawing.Size(84, 13);
             this.labelVersion.TabIndex = 14;
-            this.labelVersion.Text = "Version 0.0.1";
+            this.labelVersion.Text = "Version" + AssemblyVersion;
             // 
             // labelCopyright
             // 

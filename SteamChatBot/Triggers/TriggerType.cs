@@ -17,10 +17,16 @@
         LinkNameTrigger,
         LockChatTrigger,
         ModerateChatTrigger,
+        NoteTrigger,
+        NotificationTrigger,
         PlayGameTrigger,
         UnbanTrigger,
         UnlockChatTrigger,
         UnmoderateChatTrigger,
-        WeatherTrigger
+        WeatherTrigger,
+        YoutubeTrigger,
+        ChangeNameTrigger,
+        GoogleTrigger,
+        MessageIntervalTrigger
     }
 }

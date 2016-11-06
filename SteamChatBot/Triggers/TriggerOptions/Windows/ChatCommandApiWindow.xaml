@@ -5,27 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SteamChatBot.Triggers.TriggerOptions.Windows"
         mc:Ignorable="d"
-        Title="Options" Height="324.62" Width="410.334" Icon="/SteamChatBot;component/scb.ico" ResizeMode="NoResize">
+        Title="Options" Height="194.04" Width="237.041" Icon="/SteamChatBot;component/scb.ico" ResizeMode="NoResize">
     <Grid>
-        <Label x:Name="delayLabel" Content="Delay (ms):" HorizontalAlignment="Left" Margin="29,73,0,0" VerticalAlignment="Top" Visibility="Visible" Height="28" Width="70"/>
-        <TextBox x:Name="delayBox" HorizontalAlignment="Left" Height="22" Margin="104,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="2"/>
-        <Label x:Name="timeoutLabel" Content="Timeout (ms):" HorizontalAlignment="Left" Margin="14,106,0,0" VerticalAlignment="Top" Visibility="Visible" Height="26" Width="85"/>
-        <TextBox x:Name="timeoutBox" HorizontalAlignment="Left" Height="22" Margin="104,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="3"/>
-        <Label x:Name="probLabel" Content="Probability (%):" HorizontalAlignment="Left" Margin="8,142,0,0" VerticalAlignment="Top" Visibility="Visible" Height="27" Width="93"/>
-        <TextBox x:Name="probBox" HorizontalAlignment="Left" Height="22" Margin="104,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="4"/>
-        <Label x:Name="roomsLabel" Content="Rooms:" HorizontalAlignment="Left" Margin="49,186,0,0" VerticalAlignment="Top" Visibility="Visible" Height="29" Width="50"/>
-        <TextBox x:Name="roomsBox" HorizontalAlignment="Left" Height="22" Margin="104,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="5"/>
-        <Label x:Name="usersLabel" Content="Users:" HorizontalAlignment="Left" Margin="57,216,0,0" VerticalAlignment="Top" Visibility="Visible" Height="27" Width="42"/>
-        <TextBox x:Name="usersBox" HorizontalAlignment="Left" Height="22" Margin="104,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="6"/>
-        <Label x:Name="ignoresLabel" Content="Ignores:" HorizontalAlignment="Left" Margin="45,245,0,0" VerticalAlignment="Top" Visibility="Visible" Height="30" Width="54"/>
-        <TextBox x:Name="ignoresBox" HorizontalAlignment="Left" Height="22" Margin="104,249,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="7"/>
-        <Button x:Name="button" Content="Done" HorizontalAlignment="Left" Margin="250,142,0,0" VerticalAlignment="Top" Width="112" Height="58" Click="button_Click" TabIndex="9"/>
-        <Label x:Name="label" Content="* Name:" HorizontalAlignment="Left" Margin="204,42,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="nameBox" HorizontalAlignment="Left" Height="22" Margin="262,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" TabIndex="8"/>
-        <Label x:Name="commandLabel" Content="* Command:" HorizontalAlignment="Left" Margin="25,30,0,0" VerticalAlignment="Top" Visibility="Visible" Height="28" Width="74"/>
-        <TextBox x:Name="commandBox" HorizontalAlignment="Left" Height="22" Margin="104,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="1"/>
-        <Label x:Name="apiLabel" Content="* API Key:" HorizontalAlignment="Left" Margin="34,6,0,0" VerticalAlignment="Top" Visibility="Visible" Height="28" Width="65"/>
-        <TextBox x:Name="apiBox" HorizontalAlignment="Left" Height="22" Margin="104,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="0"/>
+
+        <Button x:Name="button" Content="Done" HorizontalAlignment="Left" Margin="65,76,0,0" VerticalAlignment="Top" Width="112" Height="58" Click="button_Click" TabIndex="9"/>
+        <TextBox x:Name="apiBox" HorizontalAlignment="Left" Height="22" Margin="104,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Visibility="Visible" TabIndex="0"/>
+        <TextBlock x:Name="apiBlock" HorizontalAlignment="Left" Margin="49,6,0,0" TextWrapping="Wrap" Text="* API Key (click to go to API website):" VerticalAlignment="Top" Width="50"/>
 
     </Grid>
 </Window>

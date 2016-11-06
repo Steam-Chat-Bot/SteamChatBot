@@ -9,6 +9,9 @@
         JustLists,
         ListsAndNumbers,
         AntiSpamTrigger,
-        DiscordTrigger
+        DiscordTrigger,
+        NoteTriggerOptions,
+        NotificationOptions,
+        MessageIntervalOptions
     }
 }
