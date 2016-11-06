@@ -91,8 +91,44 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.7.4137.9688, Culture=neutral, PublicKeyToken=a4292a325f69b123, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Discord.Net, Version=0.9.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Discord.Net.0.9.4\lib\net45\Discord.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis, Version=1.18.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.18.0\lib\net45\Google.Apis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.18.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.18.0\lib\net45\Google.Apis.Auth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.18.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.18.0\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.18.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.18.0\lib\net45\Google.Apis.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.18.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.18.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.YouTube.v3, Version=1.18.0.655, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.YouTube.v3.1.18.0.655\lib\net45\Google.Apis.YouTube.v3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -220,6 +256,10 @@
     <Reference Include="WindowsFormsIntegration">
       <Private>True</Private>
     </Reference>
+    <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, PublicKeyToken=431cba815f6a8b5b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Zlib.Portable.Signed.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -235,7 +275,9 @@
     <Compile Include="Bot.cs" />
     <Compile Include="Triggers\AntispamTrigger.cs" />
     <Compile Include="Triggers\BanCheckTrigger.cs" />
+    <Compile Include="Triggers\ChangeNameTrigger.cs" />
     <Compile Include="Triggers\DiscordTrigger.cs" />
+    <Compile Include="Triggers\GoogleTrigger.cs" />
     <Compile Include="Triggers\LockChatTrigger.cs" />
     <Compile Include="SteamHelper.cs" />
     <Compile Include="Triggers\AcceptChatInviteTrigger.cs" />
@@ -249,6 +291,7 @@
     <Compile Include="Triggers\KickTrigger.cs" />
     <Compile Include="Triggers\LeaveChatTrigger.cs" />
     <Compile Include="Triggers\LinkNameTrigger.cs" />
+    <Compile Include="Triggers\MessageIntervalTrigger.cs" />
     <Compile Include="Triggers\ModerateTrigger.cs" />
     <Compile Include="Triggers\NoteTrigger.cs" />
     <Compile Include="Triggers\NotificationTrigger.cs" />
@@ -258,6 +301,7 @@
     <Compile Include="Triggers\TriggerOptions\ChatCommandApi.cs" />
     <Compile Include="Triggers\TriggerOptions\ChatReply.cs" />
     <Compile Include="Triggers\TriggerOptions\DiscordOptions.cs" />
+    <Compile Include="Triggers\TriggerOptions\MessageIntervalOptions.cs" />
     <Compile Include="Triggers\TriggerOptions\NoCommand.cs" />
     <Compile Include="Triggers\TriggerOptions\NoteTriggerOptions.cs" />
     <Compile Include="Triggers\TriggerOptions\NotificationOptions.cs" />
@@ -280,6 +324,9 @@
     <Compile Include="Triggers\TriggerOptions\Windows\DiscordTriggerOptionsWindow.xaml.cs">
       <DependentUpon>DiscordTriggerOptionsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Triggers\TriggerOptions\Windows\MessageIntervalOptionsWindow.xaml.cs">
+      <DependentUpon>MessageIntervalOptionsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Triggers\TriggerOptions\Windows\NoCommandWindow.xaml.cs">
       <DependentUpon>NoCommandWindow.xaml</DependentUpon>
     </Compile>
@@ -297,6 +344,7 @@
     <Compile Include="Triggers\UnlockChatTrigger.cs" />
     <Compile Include="Triggers\UnmoderateTrigger.cs" />
     <Compile Include="Triggers\WeatherTrigger.cs" />
+    <Compile Include="Triggers\YoutubeTrigger.cs" />
     <Compile Include="UserInfo.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -328,6 +376,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Triggers\TriggerOptions\Windows\DiscordTriggerOptionsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Triggers\TriggerOptions\Windows\MessageIntervalOptionsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

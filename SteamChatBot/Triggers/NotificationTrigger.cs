@@ -64,15 +64,15 @@ namespace SteamChatBot.Triggers
 
         public override bool respondToFriendMessage(SteamID userID, string message)
         {
-            return Respond(userID, userID, message);
+            return Respond(userID, userID, message, false);
         }
 
         public override bool respondToChatMessage(SteamID roomID, SteamID chatterId, string message)
         {
-            return Respond(roomID, chatterId, message);
+            return Respond(roomID, chatterId, message, true);
         }
 
-        private bool Respond(SteamID toID, SteamID userID, string message)
+        private bool Respond(SteamID toID, SteamID userID, string message, bool room)
         {
             bool messageSent = false;
             CheckIfDBExists(userID);
@@ -87,12 +87,12 @@ namespace SteamChatBot.Triggers
             {
                 if (!db.ContainsKey(Convert.ToUInt64(query[1])) || db[Convert.ToUInt64(query[1])] == null)
                 {
-                    SendMessageAfterDelay(toID, "The user " + query[1] + " was not found.", true);
+                    SendMessageAfterDelay(toID, "The user " + query[1] + " was not found.", room);
                     messageSent = true;
                 }
                 else
                 {
-                    SendMessageAfterDelay(toID, string.Format("I last saw {0} on {1} at {2}", db[Convert.ToUInt64(query[1])].name, db[Convert.ToUInt64(query[1])].seen.ToShortDateString(), db[Convert.ToUInt64(query[1])].seen.ToShortTimeString()), true);
+                    SendMessageAfterDelay(toID, string.Format("I last saw {0} on {1} at {2}", db[Convert.ToUInt64(query[1])].name, db[Convert.ToUInt64(query[1])].seen.ToShortDateString(), db[Convert.ToUInt64(query[1])].seen.ToShortTimeString()), room);
                     messageSent = true;
                 }
             }
@@ -100,7 +100,7 @@ namespace SteamChatBot.Triggers
             query = StripCommand(message, Options.NotificationOptions.APICommand);
             if(query != null && userID != toID)
             {
-                SendMessageAfterDelay(toID, "This command will only work in private to protect privacy.", true);
+                SendMessageAfterDelay(toID, "This command will only work in private to protect privacy.", room);
                 messageSent = true;
             }
             else if(query != null && query.Length == 2 && userID == toID)
@@ -118,12 +118,12 @@ namespace SteamChatBot.Triggers
                 PushResponse response = client.PushNote(note);
                 if(response == null)
                 {
-                    SendMessageAfterDelay(toID, "Your push failed. Most likely your API key is incorrect.", false);
+                    SendMessageAfterDelay(toID, "Your push failed. Most likely your API key is incorrect.", room);
                     messageSent = true;
                 }
                 else
                 {
-                    SendMessageAfterDelay(toID, "Your push was a success.", false);
+                    SendMessageAfterDelay(toID, "Your push was a success.", room);
                     messageSent = true;
                 }
             }
@@ -131,7 +131,7 @@ namespace SteamChatBot.Triggers
             query = StripCommand(message, Options.NotificationOptions.FilterCommand);
             if(query != null && query.Length == 1)
             {
-                SendMessageAfterDelay(toID, "Available sub commands: add, list, clear", true);
+                SendMessageAfterDelay(toID, "Available sub commands: add, list, clear, delete", room);
                 messageSent = true;
             }
             else if(query != null && query.Length >= 2)
@@ -148,7 +148,7 @@ namespace SteamChatBot.Triggers
                     }
 
                     db[userID].pb.filter = words;
-                    SendMessageAfterDelay(toID, "Your filter has been successfully modified.", true);
+                    SendMessageAfterDelay(toID, "Your filter has been successfully modified.", room);
                     messageSent = true;
                 }
                 else if(query[1] == "list" && query.Length == 2)
@@ -168,7 +168,13 @@ namespace SteamChatBot.Triggers
                 else if(query[1] == "clear" && query.Length == 2)
                 {
                     db[userID].pb.filter.Clear();
-                    SendMessageAfterDelay(toID, "Your filter has been cleared", true);
+                    SendMessageAfterDelay(toID, "Your filter has been cleared", room);
+                    messageSent = true;
+                }
+                else if(query[1] == "delete" && query.Length == 3)
+                {
+                    db[userID].pb.filter.Remove(query[2]);
+                    SendMessageAfterDelay(toID, "The filter \"" + query[2] + "\" has been removed", room);
                     messageSent = true;
                 }
             }
@@ -177,7 +183,7 @@ namespace SteamChatBot.Triggers
             if(query != null)
             {
                 db[userID] = null;
-                SendMessageAfterDelay(toID, "Your database file has been cleared.", true);
+                SendMessageAfterDelay(toID, "Your database file has been cleared.", room);
                 messageSent = true;
             }
 

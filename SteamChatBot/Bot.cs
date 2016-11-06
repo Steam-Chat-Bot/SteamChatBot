@@ -92,8 +92,16 @@ namespace SteamChatBot
                 Directory.CreateDirectory(username + "/");
             }
             File.WriteAllText(username + "/login.json", json);
-            File.AppendAllText("chatbots.txt", username + "\n");
-            File.SetAttributes("chatbots.txt", File.GetAttributes("chatbots.txt") | FileAttributes.Hidden);
+
+            if(!File.Exists("chatbots.txt"))
+            {
+                File.Create("chatbots.txt");
+            }
+
+            if (!File.ReadAllText("chatbots.txt").Contains(username + "\n"))
+            {
+                File.AppendAllText("chatbots.txt", username + "\n");
+            }
         }
 
         #endregion
@@ -179,6 +187,11 @@ namespace SteamChatBot
             }
 
             isRunning = true;
+
+            foreach(BaseTrigger trigger in triggers)
+            {
+                trigger.OnLoad();
+            }
 
             Log.Instance.Silly("Updating SteamKit2 servers...");
             SteamDirectory.Initialize().Wait();

@@ -14,5 +14,6 @@
         public DiscordOptions DiscordOptions { get; set; }
         public NoteTriggerOptions NoteTriggerOptions { get; set; }
         public NotificationOptions NotificationOptions { get; set; }
+        public MessageIntervalOptions MessageIntervalOptions { get; set; }
     }
 }

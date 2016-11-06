@@ -240,20 +240,20 @@ namespace SteamChatBot
             DiscordOptions _do = new DiscordOptions(); // "do" is a keyword
             NoteTriggerOptions nto = new NoteTriggerOptions();
             NotificationOptions no = new NotificationOptions();
+            MessageIntervalOptions mio = new MessageIntervalOptions();
 
             TriggerOptionsBase tob = new TriggerOptionsBase();
 
             if (selected == "isUpTrigger" || selected == "leaveChatTrigger" || selected == "kickTrigger"
                 || selected == "banTrigger" || selected == "unbanTrigger" || selected == "lockTrigger"
                 || selected == "unlockTrigger" || selected == "moderateTrigger" || selected == "unmoderateTrigger"
-                || selected == "playGameTrigger")
+                || selected == "playGameTrigger" || selected == "changeNameTrigger" || selected == "googleTrigger")
             {
                 ChatCommandWindow ccw = new ChatCommandWindow();
                 ccw.ShowDialog();
                 if (ccw.DialogResult.HasValue && ccw.DialogResult.Value)
                 {
-                    ChatCommand ccw_cc = ccw.CC;
-                    cc = GetChatCommandOptions(ccw_cc);
+                    cc = ccw.CC;
 
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
                     addedTriggersListBox.Items.Add(string.Format("{0} - {1}", cc.Name, type.ToString()));
@@ -271,8 +271,7 @@ namespace SteamChatBot
                 crw.ShowDialog();
                 if (crw.DialogResult.HasValue && crw.DialogResult.Value)
                 {
-                    ChatReply crw_cr = crw.CR;
-                    cr = GetChatReplyOptions(crw_cr);
+                    cr = crw.CR;
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
 
                     tob.ChatReply = cr;
@@ -289,8 +288,7 @@ namespace SteamChatBot
                 ncw.ShowDialog();
                 if (ncw.DialogResult.HasValue && ncw.DialogResult.Value)
                 {
-                    NoCommand ncw_nc = ncw.NC;
-                    nc = GetNoCommandOptions(ncw_nc);
+                    nc = ncw.NC;
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
 
                     tob.NoCommand = nc;
@@ -301,17 +299,26 @@ namespace SteamChatBot
                     Bot.triggers.Add(trigger);
                 }
             }
-            else if (selected == "banCheckTrigger" || selected == "weatherTrigger")
+            else if (selected == "banCheckTrigger" || selected == "weatherTrigger" || selected == "youtubeTrigger")
             {
                 ChatCommandApiWindow ccaw = new ChatCommandApiWindow();
+                switch (selected)
+                {
+                    case "banCheckTrigger":
+                        ccaw.apiBlock.PreviewMouseDown += (sender1, e1) => Ccaw_PreviewMouseDown_Steam(sender1, e1, ccaw);
+                        break;
+                    case "weatherTrigger":
+                        ccaw.apiBlock.PreviewMouseDown += (sender1, e1) => Ccaw_PreviewMouseDown_Wunderground(sender1, e1, ccaw);
+                        break;
+                    case "youtubeTrigger":
+                        ccaw.apiBlock.PreviewMouseDown += (sender1, e1) => Ccaw_PreviewMouseDown1_Google(sender1, e1, ccaw);
+                        break;
+                }
                 ccaw.ShowDialog();
                 if (ccaw.DialogResult.HasValue && ccaw.DialogResult.Value)
                 {
-                    ChatCommandApi ccaw_cca = ccaw.CCA;
-                    ChatCommand ccaw_cc = ccaw.CC;
-
-                    cca = GetChatCommandApiOptions(ccaw_cca);
-                    cc = GetChatCommandOptions(ccaw_cc);
+                    cca = ccaw.CCA;
+                    cc = ccaw.CC;
 
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
 
@@ -330,8 +337,7 @@ namespace SteamChatBot
                 tlw.ShowDialog();
                 if(tlw.DialogResult.HasValue && tlw.DialogResult.Value)
                 {
-                    TriggerLists tlw_tl = tlw.TL;
-                    tl = GetTriggerListOptions(tlw_tl);
+                    tl = tlw.TL;
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
 
                     tob.TriggerLists = tl;
@@ -348,10 +354,8 @@ namespace SteamChatBot
                 astow.ShowDialog();
                 if(astow.DialogResult.HasValue && astow.DialogResult.Value)
                 {
-                    AntiSpamTriggerOptions astow_asto = astow.ASTO;
-                    NoCommand astow_nc = astow.NC;
-                    asto = GetAntispamTriggerOptions(astow_asto);
-                    nc = GetNoCommandOptions(astow_nc);
+                    asto = astow.ASTO;
+                    nc = astow.NC;
 
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
 
@@ -371,10 +375,8 @@ namespace SteamChatBot
                 dtow.ShowDialog();
                 if(dtow.DialogResult.HasValue && dtow.DialogResult.Value)
                 {
-                    DiscordOptions dtow_do = dtow.DO;
-                    NoCommand dtow_nc = dtow.NC;
-                    _do = GetDiscordOptions(dtow_do);
-                    nc = GetNoCommandOptions(dtow_nc);
+                    _do = dtow.DO;
+                    nc = dtow.NC;
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
 
                     tob.DiscordOptions = _do;
@@ -392,10 +394,8 @@ namespace SteamChatBot
                 ntow.ShowDialog();
                 if(ntow.DialogResult.HasValue && ntow.DialogResult == true)
                 {
-                    NoteTriggerOptions ntow_nto = ntow.NTO;
-                    NoCommand ntow_nc = ntow.NC;
-                    nc = GetNoCommandOptions(ntow_nc);
-                    nto = GetNoteTriggerOptions(ntow_nto);
+                    nc = ntow.NC;
+                    nto = ntow.NTO;
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
 
                     tob.NoteTriggerOptions = nto;
@@ -413,10 +413,8 @@ namespace SteamChatBot
                 now.ShowDialog();
                 if(now.DialogResult.HasValue && now.DialogResult == true)
                 {
-                    NotificationOptions now_no = now.NO;
-                    NoCommand now_nc = now.NC;
-                    nc = GetNoCommandOptions(now_nc);
-                    no = GetNotificationOptions(now_no);
+                    nc = now.NC;
+                    no = now.NO;
                     type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
 
                     tob.NotificationOptions = no;
@@ -428,10 +426,43 @@ namespace SteamChatBot
                     Bot.triggers.Add(trigger);
                 }
             }
+            else if(selected == "messageIntervalTrigger")
+            {
+                MessageIntervalOptionsWindow miow = new MessageIntervalOptionsWindow();
+                miow.ShowDialog();
+                if(miow.DialogResult.HasValue && miow.DialogResult == true)
+                {
+                    mio = miow.MIO;
+                    type = (TriggerType)Enum.Parse(typeof(TriggerType), char.ToUpper(selected[0]) + selected.Substring(1));
+
+                    tob.MessageIntervalOptions = mio;
+                    tob.Name = Name;
+                    tob.Type = type;
+                    addedTriggersListBox.Items.Add(string.Format("{0} - {1}", mio.Name, type));
+                    BaseTrigger trigger = (BaseTrigger)Activator.CreateInstance(Type.GetType("SteamChatBot.Triggers." + type.ToString()), type, mio.Name, tob);
+                    Bot.triggers.Add(trigger);
+
+                }
+            }
             else
             {
                 MessageBox.Show("Unknown Trigger. Please contact the developer.", "Error", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
             }
+        }
+
+        private void Ccaw_PreviewMouseDown1_Google(object sender, MouseButtonEventArgs e, ChatCommandApiWindow ccaw)
+        {
+            Process.Start("https://developers.google.com/youtube/v3/");
+        }
+
+        private void Ccaw_PreviewMouseDown_Wunderground(object sender, MouseButtonEventArgs e, ChatCommandApiWindow ccaw)
+        {
+            Process.Start("https://www.wunderground.com/weather/api/");
+        }
+
+        private void Ccaw_PreviewMouseDown_Steam(object sender, MouseButtonEventArgs e, ChatCommandApiWindow ccaw)
+        {
+            Process.Start("http://steamcommunity.com/dev/");
         }
 
         private void minusTriggerButton_Click(object sender, RoutedEventArgs e)
@@ -448,156 +479,5 @@ namespace SteamChatBot
             }
             catch (Exception err) { throw err; }
         }
-
-        #region option helper methods
-
-        private ChatCommand GetChatCommandOptions(ChatCommand c)
-        {
-            try
-            {
-                return new ChatCommand
-                {
-                    Name = c.Name,
-                    Command = c.Command,
-                    TriggerLists = c.TriggerLists,
-                    TriggerNumbers = c.TriggerNumbers
-                };
-            }
-            catch (Exception e) { return null; }
-        }
-
-        private ChatReply GetChatReplyOptions(ChatReply c)
-        {
-            try
-            {
-                return new ChatReply
-                {
-                    Name = c.Name,
-                    Matches = c.Matches,
-                    Responses = c.Responses,
-                    TriggerLists = c.TriggerLists,
-                    TriggerNumbers = c.TriggerNumbers
-                };
-            }
-            catch (Exception e) { return null; }
-        }
-
-        private NoCommand GetNoCommandOptions(NoCommand n)
-        {
-            try
-            {
-                return new NoCommand
-                {
-                    Name = n.Name,
-                    TriggerLists = n.TriggerLists,
-                    TriggerNumbers = n.TriggerNumbers
-                };
-            }
-            catch (Exception e) { return null; }
-        }
-
-        private ChatCommandApi GetChatCommandApiOptions(ChatCommandApi c)
-        {
-            try
-            {
-                return new ChatCommandApi
-                {
-                    ApiKey = c.ApiKey,
-                    Name = c.Name,
-                    ChatCommand = c.ChatCommand
-                };
-            }
-            catch (Exception e) { return null; }
-        }
-
-        private TriggerLists GetTriggerListOptions(TriggerLists tl)
-        {
-            try
-            {
-                return new TriggerLists
-                {
-                    Name = tl.Name,
-                    Rooms = tl.Rooms,
-                    User = tl.User,
-                    Ignore = tl.Ignore
-                };
-            }
-            catch (Exception e) { return null; }
-        }
-
-        private AntiSpamTriggerOptions GetAntispamTriggerOptions(AntiSpamTriggerOptions asto)
-        {
-            try
-            {
-                return new AntiSpamTriggerOptions
-                {
-                    Name = asto.Name,
-                    admins = asto.admins,
-                    NoCommand = asto.NoCommand,
-                    msgPenalty = asto.msgPenalty,
-                    ptimer = asto.ptimer,
-                    timers = asto.timers,
-                    score = asto.score,
-                    warnMessage = asto.warnMessage
-                };
-            }
-            catch (Exception e) { return null; }
-        }
-
-        private DiscordOptions GetDiscordOptions(DiscordOptions _do)
-        {
-            try
-            {
-                return new DiscordOptions
-                {
-                    Name = _do.Name,
-                    NoCommand = _do.NoCommand,
-                    Token = _do.Token,
-                    DiscordServerID = _do.DiscordServerID,
-                    SteamChat = _do.SteamChat
-                };
-            }
-            catch (Exception e) { return null; }
-        }
-
-        private NoteTriggerOptions GetNoteTriggerOptions(NoteTriggerOptions nto)
-        {
-            try
-            {
-                return new NoteTriggerOptions
-                {
-                    Name = nto.Name,
-                    NoCommand = nto.NoCommand,
-                    DeleteCommand = nto.DeleteCommand,
-                    InfoCommand = nto.InfoCommand,
-                    NoteCommand = nto.NoteCommand,
-                    SaveTimer = nto.SaveTimer,
-                    NoteFile = nto.NoteFile,
-                    NotesCommand = nto.NotesCommand
-                };
-            }
-            catch (Exception e) { return null; }
-        }
-
-        private NotificationOptions GetNotificationOptions(NotificationOptions no)
-        {
-            try
-            {
-                return new NotificationOptions
-                {
-                    Name = no.Name,
-                    NoCommand = no.NoCommand,
-                    APICommand = no.APICommand,
-                    ClearCommand = no.ClearCommand,
-                    DBFile = no.DBFile,
-                    FilterCommand = no.FilterCommand,
-                    SeenCommand = no.SeenCommand,
-                    SaveTimer = no.SaveTimer
-                };
-            }
-            catch (Exception e) { return null; }
-        }
-
-        #endregion
     }
 }

@@ -23,6 +23,10 @@
         UnbanTrigger,
         UnlockChatTrigger,
         UnmoderateChatTrigger,
-        WeatherTrigger
+        WeatherTrigger,
+        YoutubeTrigger,
+        ChangeNameTrigger,
+        GoogleTrigger,
+        MessageIntervalTrigger
     }
 }

@@ -79,7 +79,8 @@ namespace SteamChatBot.Triggers
                     AntiSpamTriggerOptions = Options.AntiSpamTriggerOptions,
                     DiscordOptions = Options.DiscordOptions,
                     NoteTriggerOptions = Options.NoteTriggerOptions,
-                    NotificationOptions = Options.NotificationOptions
+                    NotificationOptions = Options.NotificationOptions,
+                    MessageIntervalOptions = Options.MessageIntervalOptions
                 };
                 string json = JsonConvert.SerializeObject(options, Formatting.Indented);
                 File.WriteAllText(Bot.username + "/triggers/" + Name + ".json", json);
@@ -132,6 +133,9 @@ namespace SteamChatBot.Triggers
                     case TriggerType.BanTrigger:
                         temp.Add(new BanTrigger(type, name, options));
                         break;
+                    case TriggerType.ChangeNameTrigger:
+                        temp.Add(new ChangeNameTrigger(type, name, options));
+                        break;
                     case TriggerType.ChatReplyTrigger:
                         temp.Add(new ChatReplyTrigger(type, name, options));
                         break;
@@ -140,6 +144,9 @@ namespace SteamChatBot.Triggers
                         break;
                     case TriggerType.DoormatTrigger:
                         temp.Add(new DoormatTrigger(type, name, options));
+                        break;
+                    case TriggerType.GoogleTrigger:
+                        temp.Add(new GoogleTrigger(type, name, options));
                         break;
                     case TriggerType.IsUpTrigger:
                         temp.Add(new IsUpTrigger(type, name, options));
@@ -155,6 +162,9 @@ namespace SteamChatBot.Triggers
                         break;
                     case TriggerType.LockChatTrigger:
                         temp.Add(new LockChatTrigger(type, name, options));
+                        break;
+                    case TriggerType.MessageIntervalTrigger:
+                        temp.Add(new MessageIntervalTrigger(type, name, options));
                         break;
                     case TriggerType.ModerateChatTrigger:
                         temp.Add(new ModerateChatTrigger(type, name, options));
@@ -179,6 +189,9 @@ namespace SteamChatBot.Triggers
                         break;
                     case TriggerType.WeatherTrigger:
                         temp.Add(new WeatherTrigger(type, name, options));
+                        break;
+                    case TriggerType.YoutubeTrigger:
+                        temp.Add(new YoutubeTrigger(type, name, options));
                         break;
                     default:
                         break;

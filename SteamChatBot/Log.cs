@@ -125,7 +125,7 @@ namespace SteamChatBot
         {
             if (disposed)
                 return;
-            string formattedString = String.Format(
+            string formattedString = string.Format(
                 "[{0}{1}] {2}: {3}",
                 GetLogBotName(),
                 DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),

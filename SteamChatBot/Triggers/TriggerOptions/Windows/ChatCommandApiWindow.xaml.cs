@@ -44,12 +44,19 @@ namespace SteamChatBot.Triggers.TriggerOptions.Windows
                     CC = ccw.CC;
                     CCA = new ChatCommandApi()
                     {
-                        Name = "",
+                        Name = CC.Name,
                         ApiKey = "",
                         ChatCommand = new ChatCommand()
                     };
 
-                    CCA.ApiKey = apiBox.Text;
+                    if (apiBox.Text == "")
+                    {
+                        MessageBox.Show("You must include an API key.", "Error", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
+                    }
+                    else
+                    {
+                        CCA.ApiKey = apiBox.Text;
+                    }
 
                     DialogResult = true;
                     Close();

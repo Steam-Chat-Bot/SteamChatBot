@@ -11,6 +11,7 @@
         AntiSpamTrigger,
         DiscordTrigger,
         NoteTriggerOptions,
-        NotificationOptions
+        NotificationOptions,
+        MessageIntervalOptions
     }
 }
