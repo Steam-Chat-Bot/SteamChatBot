@@ -423,9 +423,9 @@ namespace SteamChatBot
 
         static void OnChatMemberInfo(SteamFriends.ChatMemberInfoCallback callback)
         {
-            Log.Instance.Info("ChatStateChange " + callback.StateChangeInfo.StateChange + " in " + callback.ChatRoomID + " acted on " + callback.StateChangeInfo.ChatterActedBy + " by " + callback.StateChangeInfo.ChatterActedBy);
             if(callback.Type == EChatInfoType.StateChange)
             {
+                Log.Instance.Info("ChatStateChange " + callback.StateChangeInfo.StateChange + " in " + callback.ChatRoomID + " acted on " + callback.StateChangeInfo.ChatterActedBy + " by " + callback.StateChangeInfo.ChatterActedBy);
                 if (callback.StateChangeInfo.StateChange == EChatMemberStateChange.Entered) {
                     foreach (BaseTrigger trigger in triggers)
                     {
