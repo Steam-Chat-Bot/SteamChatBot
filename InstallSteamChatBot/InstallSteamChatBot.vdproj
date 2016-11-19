@@ -868,6 +868,12 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_47C77DC92052D85DF9D505984D19BB50"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_14E830CDB10D4AE98E92F0C4537AF0FA"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1333,12 +1339,6 @@
         "OwnerKey" = "8:_F4AA763F5BBDD7DF2B776DB34C0D94F6"
         "MsmSig" = "8:_UNDEFINED"
         }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_47C77DC92052D85DF9D505984D19BB50"
-        "MsmSig" = "8:_UNDEFINED"
-        }
     }
     "Configurations"
     {
@@ -1678,7 +1678,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -2143,7 +2143,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -4033,7 +4033,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SteamChatBot"
         "ProductCode" = "8:{622EE759-9BEE-4B99-893F-6B7BDDABC50F}"
-        "PackageCode" = "8:{58DA360B-3485-4E3E-A6FC-2554997C4288}"
+        "PackageCode" = "8:{DC7A091F-215B-4FBD-9FCE-11269D55C983}"
         "UpgradeCode" = "8:{22BC55B7-C54E-476E-A6DE-6FC3813DAF59}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
