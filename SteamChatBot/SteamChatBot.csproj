@@ -458,6 +458,7 @@
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
+    <PreBuildEvent>del $(SolutionDir)\$(ConfigurationName).zip</PreBuildEvent>
   </PropertyGroup>
   <!--
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -477,6 +478,6 @@
       <FilesToZip Include="$(TargetDir)\*.dll" />
       <FilesToZip Include="$(TargetDir)\SteamChatBot.exe" />
     </ItemGroup>
-    <MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(FilesToZip)" ZipFileName="$(SolutionDir)\$(ConfigurationName)-$(SolutionName).zip" CompressionLevel="BestCompression" RemoveRoot="$(TargetDir)\" />
+    <MSBuild.ExtensionPack.Compression.Zip TaskAction="Create" CompressFiles="@(FilesToZip)" ZipFileName="$(SolutionDir)\$(ConfigurationName).zip" CompressionLevel="BestCompression" RemoveRoot="$(TargetDir)\" />
   </Target>
 </Project>
