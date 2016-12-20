@@ -47,9 +47,9 @@ namespace SteamChatBot.Triggers
         /// <param name="name"></param>
         /// <param name="error"></param>
         /// <returns>error string</returns>
-        protected string IfError(string cbn, string name, string error)
+        protected string IfError(string cbn, string name, Exception error)
         {
-            return string.Format("{0}/{1}: Error: {2}", cbn, name, error);
+            return string.Format("{0}/{1}: {2}: {3}", cbn, name, error.Message, error.StackTrace);
         }
 
         #region trigger read-write
@@ -139,6 +139,9 @@ namespace SteamChatBot.Triggers
                     case TriggerType.ChatReplyTrigger:
                         temp.Add(new ChatReplyTrigger(type, name, options));
                         break;
+                    case TriggerType.ChooseTrigger:
+                        temp.Add(new ChooseTrigger(type, name, options));
+                        break;
                     case TriggerType.DiscordTrigger:
                         temp.Add(new DiscordTrigger(type, name, options));
                         break;
@@ -177,6 +180,9 @@ namespace SteamChatBot.Triggers
                         break;
                     case TriggerType.PlayGameTrigger:
                         temp.Add(new PlayGameTrigger(type, name, options));
+                        break;
+                    case TriggerType.TranslateTrigger:
+                        temp.Add(new TranslateTrigger(type, name, options));
                         break;
                     case TriggerType.UnbanTrigger:
                         temp.Add(new UnbanTrigger(type, name, options));
@@ -224,7 +230,7 @@ namespace SteamChatBot.Triggers
             }
             catch (Exception e)
             {
-                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e));
                 return false;
             }
         }
@@ -241,7 +247,7 @@ namespace SteamChatBot.Triggers
             }
             catch (Exception e)
             {
-                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e));
                 return false;
             }
         }
@@ -258,7 +264,7 @@ namespace SteamChatBot.Triggers
             }
             catch (Exception e)
             {
-                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e));
                 return false;
             }
         }
@@ -280,7 +286,7 @@ namespace SteamChatBot.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e));
                     return false;
                 }
             }
@@ -300,7 +306,7 @@ namespace SteamChatBot.Triggers
             }
             catch (Exception e)
             {
-                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e));
                 return false;
             }
         }
@@ -328,7 +334,7 @@ namespace SteamChatBot.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e));
                     return false;
                 }
             }
@@ -354,7 +360,7 @@ namespace SteamChatBot.Triggers
             }
             catch (Exception e)
             {
-                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e));
                 return false;
             }
         }
@@ -381,7 +387,7 @@ namespace SteamChatBot.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e));
                     return false;
                 }
             }
@@ -407,7 +413,7 @@ namespace SteamChatBot.Triggers
             }
             catch (Exception e)
             {
-                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e));
                 return false;
             }
         }
@@ -434,7 +440,7 @@ namespace SteamChatBot.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e));
                     return false;
                 }
             }
@@ -461,7 +467,7 @@ namespace SteamChatBot.Triggers
             }
             catch (Exception e)
             {
-                Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                Log.Instance.Error(IfError(Bot.username, Name, e));
                 return false;
             }
         }
@@ -490,7 +496,7 @@ namespace SteamChatBot.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e));
                     return false;
                 }
             }
@@ -519,7 +525,7 @@ namespace SteamChatBot.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e));
                     return false;
                 }
             }
@@ -548,7 +554,7 @@ namespace SteamChatBot.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e));
                     return false;
                 }
             }
@@ -577,7 +583,7 @@ namespace SteamChatBot.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e));
                     return false;
                 }
             }
@@ -606,7 +612,7 @@ namespace SteamChatBot.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e));
                     return false;
                 }
             }
@@ -634,7 +640,7 @@ namespace SteamChatBot.Triggers
                 }
                 catch (Exception e)
                 {
-                    Log.Instance.Error(IfError(Bot.username, Name, e.StackTrace));
+                    Log.Instance.Error(IfError(Bot.username, Name, e));
                     return false;
                 }
             }

@@ -27,6 +27,8 @@
         YoutubeTrigger,
         ChangeNameTrigger,
         GoogleTrigger,
-        MessageIntervalTrigger
+        MessageIntervalTrigger,
+        ChooseTrigger,
+        TranslateTrigger
     }
 }

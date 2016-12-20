@@ -171,6 +171,14 @@ namespace SteamChatBot
             Console.ForegroundColor = _LogColor(level);
             Console.WriteLine(line);
             Console.ForegroundColor = DefaultConsoleColor;
+            if(level == LogLevel.Error)
+            {
+                if(!Directory.Exists(Bot.username + "/logs/errors"))
+                {
+                    Directory.CreateDirectory(Bot.username + "/logs/errors");
+                }
+                File.WriteAllText(Bot.username + "/logs/errors/err_" + (long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds + ".txt", line);
+            }
         }
 
         // Determine the string equivalent of the LogLevel.

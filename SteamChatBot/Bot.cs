@@ -98,7 +98,7 @@ namespace SteamChatBot
                 File.Create("chatbots.txt");
             }
 
-            if (!File.ReadAllText("chatbots.txt").Contains(username + "\n"))
+            if (!File.ReadAllText("chatbots.txt").Contains(username))
             {
                 File.AppendAllText("chatbots.txt", username + "\n");
             }

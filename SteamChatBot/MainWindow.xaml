@@ -62,6 +62,7 @@
                         <ListBoxItem x:Name="banCheckTrigger" Content="BanCheckTrigger - Checks SteamCommunity for bans"/>
                         <ListBoxItem x:Name="changeNameTrigger" Content="ChangeNameTrigger - Changes the bots name"/>
                         <ListBoxItem x:Name="chatReplyTrigger" Content="ChatReplyTrigger - Responds to a match in chat"/>
+                        <ListBoxItem x:Name="chooseTrigger" Content="ChooseTrigger - Chooses one item from a list"/>
                         <ListBoxItem x:Name="discordTrigger" Content="DiscordTrigger - Discord Relay for Steam Chat"/>
                         <ListBoxItem x:Name="doormatTrigger" Content="DoormatTrigger - Greets a user as they enter chat"/>
                         <ListBoxItem x:Name="googleTrigger" Content="GoogleTrigger - Searches google and returns the top result"/>
@@ -75,6 +76,7 @@
                         <ListBoxItem x:Name="noteTrigger" Content="NoteTrigger - Saves notes than can be accessed by anyone in the chat"/>
                         <ListBoxItem x:Name="notificationTrigger" Content="NotificationTrigger - Sends users notifications"/>
                         <ListBoxItem x:Name="playGameTrigger" Content="PlayGameTrigger - Plays a game (AppID)"/>
+                        <ListBoxItem x:Name="translateTrigger" Content="TranslateTrigger - Translates text from hablaa.com"/>
                         <ListBoxItem x:Name="unbanTrigger" Content="UnbanTrigger - Unbans a user from chat"/>
                         <ListBoxItem x:Name="unmoderateChatTrigger" Content="UnmoderateChatTrigger - Unmoderates the chat"/>
                         <ListBoxItem x:Name="weatherTrigger" Content="WeatherTrigger - Gets the weather for a certain location"/>

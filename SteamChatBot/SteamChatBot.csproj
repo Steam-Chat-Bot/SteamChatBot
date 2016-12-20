@@ -273,9 +273,11 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Bot.cs" />
+    <Compile Include="Parser.cs" />
     <Compile Include="Triggers\AntispamTrigger.cs" />
     <Compile Include="Triggers\BanCheckTrigger.cs" />
     <Compile Include="Triggers\ChangeNameTrigger.cs" />
+    <Compile Include="Triggers\ChooseTrigger.cs" />
     <Compile Include="Triggers\DiscordTrigger.cs" />
     <Compile Include="Triggers\GoogleTrigger.cs" />
     <Compile Include="Triggers\LockChatTrigger.cs" />
@@ -296,6 +298,7 @@
     <Compile Include="Triggers\NoteTrigger.cs" />
     <Compile Include="Triggers\NotificationTrigger.cs" />
     <Compile Include="Triggers\PlayGameTrigger.cs" />
+    <Compile Include="Triggers\TranslateTrigger.cs" />
     <Compile Include="Triggers\TriggerOptions\AntiSpamTriggerOptions.cs" />
     <Compile Include="Triggers\TriggerOptions\ChatCommand.cs" />
     <Compile Include="Triggers\TriggerOptions\ChatCommandApi.cs" />

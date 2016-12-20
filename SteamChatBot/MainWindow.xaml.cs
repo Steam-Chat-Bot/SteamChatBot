@@ -247,7 +247,8 @@ namespace SteamChatBot
             if (selected == "isUpTrigger" || selected == "leaveChatTrigger" || selected == "kickTrigger"
                 || selected == "banTrigger" || selected == "unbanTrigger" || selected == "lockTrigger"
                 || selected == "unlockTrigger" || selected == "moderateTrigger" || selected == "unmoderateTrigger"
-                || selected == "playGameTrigger" || selected == "changeNameTrigger" || selected == "googleTrigger")
+                || selected == "playGameTrigger" || selected == "changeNameTrigger" || selected == "googleTrigger"
+                || selected == "chooseTrigger" || selected == "translateTrigger")
             {
                 ChatCommandWindow ccw = new ChatCommandWindow();
                 ccw.ShowDialog();
