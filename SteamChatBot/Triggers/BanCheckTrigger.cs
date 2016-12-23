@@ -37,7 +37,13 @@ namespace SteamChatBot.Triggers
                 SendMessageAfterDelay(toID, "You must declare a Steam API key to use this trigger.", room);
                 return false;
             }
-            if(query != null && query[1] != null)
+
+            if(query != null && query.Length == 1)
+            {
+                SendMessageAfterDelay(toID, "Usage: " + Options.ChatCommandApi.ChatCommand.Command + " <steamid64>", room);
+                return true;
+            }
+            else if(query != null && query[1] != null)
             {
                 if (query[1] != null)
                 {

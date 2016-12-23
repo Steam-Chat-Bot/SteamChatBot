@@ -31,7 +31,12 @@ namespace SteamChatBot.Triggers
         private bool Respond(SteamID toID, string message, bool room)
         {
             string[] query = StripCommand(message, Options.ChatCommandApi.ChatCommand.Command);
-            if (query != null && query[1] != null)
+            if (query != null && query.Length == 1)
+            {
+                SendMessageAfterDelay(toID, "Usage: " + Options.ChatCommand.Command + " <city,zip,etc>", room);
+                return true;
+            }
+            else if (query != null && query[1] != null)
             {
                 if (Options.ChatCommandApi.ApiKey == null)
                 {

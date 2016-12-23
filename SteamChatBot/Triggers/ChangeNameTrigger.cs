@@ -26,7 +26,12 @@ namespace SteamChatBot.Triggers
         private bool Respond(SteamID toID, SteamID userID, string message, bool room)
         {
             string[] query = StripCommand(message, Options.ChatCommand.Command);
-            if(query != null && query.Length >= 2)
+            if (query != null && query.Length == 1)
+            {
+                SendMessageAfterDelay(toID, "Usage: " + Options.ChatCommand.Command + " <new name>", room);
+                return true;
+            }
+            else if (query != null && query.Length >= 2)
             {
                 string name = "";
                 for (int i = 1; i < query.Length; i++)

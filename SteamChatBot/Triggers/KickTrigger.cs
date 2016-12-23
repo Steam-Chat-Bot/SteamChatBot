@@ -23,7 +23,12 @@ namespace SteamChatBot.Triggers
         private bool Respond(SteamID toID, SteamID userID, string message)
         {
             string[] query = StripCommand(message, Options.ChatCommand.Command);
-            if(query != null && query[1] != null)
+            if (query != null && query.Length == 1)
+            {
+                SendMessageAfterDelay(toID, "Usage: " + Options.ChatCommand.Command + " <steamid64>", true);
+                return true;
+            }
+            else if (query != null && query[1] != null)
             {
                 Bot.steamFriends.KickChatMember(toID, new SteamID(Convert.ToUInt64(query[1])));
                 return true;

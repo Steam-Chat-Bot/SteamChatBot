@@ -41,7 +41,12 @@ namespace SteamChatBot.Triggers
         private bool Respond(SteamID toID, SteamID userID, string message, bool room)
         {
             string[] query = StripCommand(message, Options.ChatCommand.Command);
-            if (query != null && query.Length == 4)
+            if (query != null && query.Length == 1)
+            {
+                SendMessageAfterDelay(toID, "Usage: " + Options.ChatCommand.Command + " <word> <fromlang> <tolang>", room);
+                return true;
+            }
+            else if (query != null && query.Length == 4)
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri("http://hablaa.com/hs/translation/" + query[1] + "/" + query[2] + "-" + query[3] + "/"));
                 try {

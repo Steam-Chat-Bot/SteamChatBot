@@ -312,6 +312,7 @@ namespace SteamChatBot
                         ccaw.apiBlock.PreviewMouseDown += (sender1, e1) => Ccaw_PreviewMouseDown_Wunderground(sender1, e1, ccaw);
                         break;
                     case "youtubeTrigger":
+                        MessageBox.Show("You MUST name your project \"Steam Chat Bot\" or else this trigger will not work!", "Information", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
                         ccaw.apiBlock.PreviewMouseDown += (sender1, e1) => Ccaw_PreviewMouseDown1_Google(sender1, e1, ccaw);
                         break;
                 }

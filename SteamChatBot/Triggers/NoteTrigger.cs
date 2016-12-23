@@ -93,7 +93,12 @@ namespace SteamChatBot.Triggers
             }
 
             query = StripCommand(message, Options.NoteTriggerOptions.DeleteCommand);
-            if (query != null && query.Length == 2)
+            if(query != null && query.Length == 1)
+            {
+                SendMessageAfterDelay(roomID, "Usage: " + Options.NoteTriggerOptions.DeleteCommand + " <note name>", true);
+                return true;
+            }
+            else if (query != null && query.Length == 2)
             {
                 string name = query[1];
                 if (!db.ContainsKey(name))
@@ -110,7 +115,12 @@ namespace SteamChatBot.Triggers
             }
 
             query = StripCommand(message, Options.NoteTriggerOptions.InfoCommand);
-            if(query != null && query.Length == 2)
+            if (query != null && query.Length == 1)
+            {
+                SendMessageAfterDelay(roomID, "Usage: " + Options.NoteTriggerOptions.InfoCommand + " <note name>", true);
+                return true;
+            }
+            else if (query != null && query.Length == 2)
             {
                 string name = query[1];
                 if (!db.ContainsKey(name))
@@ -127,7 +137,12 @@ namespace SteamChatBot.Triggers
             }
 
             query = StripCommand(message, Options.NoteTriggerOptions.NoteCommand);
-            if (query != null && query.Length == 2)
+            if (query != null && query.Length == 1)
+            {
+                SendMessageAfterDelay(roomID, "Usage: " + Options.NoteTriggerOptions.NoteCommand + " <note name> [note content]", true);
+                return true;
+            }
+            else if (query != null && query.Length == 2)
             {
                 string name = query[1];
                 if (!db.ContainsKey(name))

@@ -18,18 +18,23 @@ namespace SteamChatBot.Triggers
 
         public override bool respondToFriendMessage(SteamID userID, string message)
         {
-            return Respond(userID, message);
+            return Respond(userID, message, false);
         }
 
         public override bool respondToChatMessage(SteamID roomID, SteamID chatterId, string message)
         {
-            return Respond(roomID, message);
+            return Respond(roomID, message, true);
         }
 
-        private bool Respond(SteamID toID, string message)
+        private bool Respond(SteamID toID, string message, bool room)
         {
             string[] query = StripCommand(message, Options.ChatCommand.Command);
-            if(query != null)
+            if (query != null && query.Length == 1)
+            {
+                SendMessageAfterDelay(toID, "Usage: " + Options.ChatCommand.Command + " <appid OR \"clear\">", room);
+                return true;
+            }
+            else if (query != null && query.Length == 2)
             {
                 var gamesPlayed = new ClientMsgProtobuf<CMsgClientGamesPlayed>(EMsg.ClientGamesPlayed);
                 if(query[1] == "clear")

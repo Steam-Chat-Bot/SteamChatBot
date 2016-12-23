@@ -24,7 +24,7 @@ namespace SteamChatBot.Triggers
         private bool Respond(SteamID roomID, string message)
         {
             string[] query = StripCommand(message, Options.ChatCommand.Command);
-            if(query != null)
+            if (query != null)
             {
                 var msg = new ClientMsg<MsgClientChatAction>();
                 msg.Body.SteamIdChat = SteamHelper.ToChatID(roomID);
